@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Breath Sounds · Pocket Pulmo</title>
+<meta name="description" content="Every breath sound sorted into normal, loudness changes, continuous and discontinuous adventitious sounds, with a sound to play for each.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F3F5F0; --surface:#FFFFFF; --ink:#1E2A22; --muted:#65725F; --line:#E0E6DA; --line-strong:#CBD5C4;
+  --accent:#4E6E52; --accent-ink:#FFFFFF; --accent-soft:#E4ECE1; --band:#EEF2EA; --shadow:0 1px 2px rgba(30,42,34,.05),0 4px 16px rgba(30,42,34,.05);
+  --c-beta:#4E729A; --c-anti:#7A62A0; --c-combo:#3F7D69; --c-xan:#9A6534; --c-bio:#9A5572; --c-masto:#5F7F3A; --c-ltm:#8A7432; --c-abx:#A4524A; --c-muco:#3F7F8A; --c-ster:#7E5E44; --c-dil:#66736C;
+  --good:#3C7A4E; --good-bg:#E4F1E6; --warn:#A4524A; --warn-bg:#F6E9E6;
+  --f-display:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:12px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141A16; --surface:#1B231D; --ink:#E2E9DF; --muted:#9BA897; --line:#29342B; --line-strong:#374438;
+  --accent:#A3C2A2; --accent-ink:#141A16; --accent-soft:#243126; --band:#1F2821; --shadow:0 1px 2px rgba(0,0,0,.3);
+  --c-beta:#8FB0D6; --c-anti:#B6A2D6; --c-combo:#86C2AC; --c-xan:#D6A67A; --c-bio:#D69AB4; --c-masto:#A8C689; --c-ltm:#D1BD7E; --c-abx:#DE978F; --c-muco:#86BFC8; --c-ster:#C9A58A; --c-dil:#A6B3AC;
+  --good:#8FCB9E; --good-bg:#1E3324; --warn:#E3A097; --warn-bg:#3A2420; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141A16; --surface:#1B231D; --ink:#E2E9DF; --muted:#9BA897; --line:#29342B; --line-strong:#374438;
+  --accent:#A3C2A2; --accent-ink:#141A16; --accent-soft:#243126; --band:#1F2821; --shadow:0 1px 2px rgba(0,0,0,.3);
+  --c-beta:#8FB0D6; --c-anti:#B6A2D6; --c-combo:#86C2AC; --c-xan:#D6A67A; --c-bio:#D69AB4; --c-masto:#A8C689; --c-ltm:#D1BD7E; --c-abx:#DE978F; --c-muco:#86BFC8; --c-ster:#C9A58A; --c-dil:#A6B3AC;
+  --good:#8FCB9E; --good-bg:#1E3324; --warn:#E3A097; --warn-bg:#3A2420; color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;margin:0}
+button{font:inherit;color:inherit}
+/* ---------- shared site nav: brand + Look up / Practice menus + Search ---------- */
+.site-nav{background:var(--surface);border-bottom:1px solid var(--line);position:relative;z-index:40}
+.site-nav .in{max-width:1440px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.site-brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:16px;letter-spacing:-.01em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.site-brand .mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:12.5px;font-weight:800;letter-spacing:.02em}
+.site-menus{display:flex;align-items:center;gap:6px}
+.menu{position:relative}
+.menu > summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:999px;font-family:var(--f-display);font-weight:600;font-size:14.5px;color:var(--muted);user-select:none;-webkit-user-select:none}
+.menu > summary::-webkit-details-marker{display:none}
+.menu > summary:hover{color:var(--ink);background:var(--band)}
+.menu > summary.on{color:var(--ink);background:var(--accent-soft)}
+.menu[open] > summary{color:var(--ink);background:var(--accent-soft)}
+.menu > summary .chev{transition:transform .15s}
+.menu[open] > summary .chev{transform:rotate(180deg)}
+.menu > summary:focus-visible,.site-brand:focus-visible,.mi:focus-visible,.sr:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.menu .panel{position:absolute;right:0;top:calc(100% + 8px);width:360px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 40px rgba(20,30,22,.16),0 2px 6px rgba(20,30,22,.06);padding:8px;display:grid;gap:2px}
+.menu .ptitle{margin:6px 10px 4px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mi{display:flex;align-items:flex-start;gap:12px;padding:10px;border-radius:12px;text-decoration:none;color:var(--ink)}
+.mi:hover{background:var(--band)}
+.mi[aria-current]{background:var(--accent-soft)}
+.mi .ico{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent)}
+.mi[aria-current] .ico{background:var(--accent);color:var(--accent-ink)}
+.mi b{display:block;font-family:var(--f-display);font-size:14.5px;font-weight:700;line-height:1.3}
+.mi span span{display:block;font-size:13px;color:var(--muted);line-height:1.35;margin-top:1px}
+
+/* search (nav panel and the landing page hero share this) */
+.srch{display:grid;gap:8px}
+.srch .sbox{display:flex;align-items:center;gap:10px;border:1px solid var(--line-strong);border-radius:12px;background:var(--bg);padding:0 12px}
+.srch .sbox:focus-within{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.srch .sbox svg{flex:none;color:var(--muted)}
+.srch input{flex:1;min-width:0;font:inherit;font-size:16px;color:var(--ink);background:none;border:0;outline:none;padding:12px 0}
+.srch input::-webkit-search-cancel-button{cursor:pointer}
+.sres{list-style:none;margin:0;padding:0;display:grid;gap:2px;max-height:min(60vh,440px);overflow:auto}
+.sres:empty{display:none}
+.sr{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;align-items:baseline;padding:9px 10px;border-radius:10px;text-decoration:none;color:var(--ink)}
+.sr:hover,.sr.act{background:var(--band)}
+.sr .sg{grid-row:span 2;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:2px 8px;border-radius:999px;white-space:nowrap;align-self:start;margin-top:2px}
+.sr b{font-family:var(--f-display);font-weight:700;font-size:14.5px;line-height:1.3}
+.sr span.ss{font-size:13px;color:var(--muted);line-height:1.35}
+.snote{font-size:13px;color:var(--muted);margin:2px 4px}
+.snote a{color:var(--accent)}
+.menu .panel.search{width:440px;padding:12px}
+.menu > summary.sbtn{padding:9px 12px}
+
+@media (max-width:760px){
+  .site-nav .in{padding:8px 12px}
+  .site-menus{gap:2px}
+  .menu{position:static}
+  .menu > summary{padding:9px 11px;font-size:14px}
+  .menu .panel,.menu .panel.search{left:8px;right:8px;width:auto;top:calc(100% + 4px)}
+  .menu > summary.sbtn .lbl{display:none}
+}
+@media (max-width:480px){.site-brand .bt{display:none}}
+@media (prefers-reduced-motion:reduce){.menu > summary .chev{transition:none}}
+@media print{.site-nav{display:none}}
+.mbadge{display:inline-block;margin-left:6px;min-width:20px;padding:0 7px;border-radius:999px;background:var(--warn);color:var(--surface);font:700 12px/1.6 var(--f-body);font-style:normal;text-align:center;vertical-align:1px;letter-spacing:0}
+.mbadge[hidden]{display:none}
+
+
+.wrap{max-width:1040px;margin:0 auto;padding:36px 24px 56px;display:flex;flex-direction:column;gap:44px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+h1,h2,h3{font-family:var(--f-display);letter-spacing:-.02em;margin:0;color:var(--ink)}
+h1{font-weight:700;font-size:clamp(28px,4vw,40px);line-height:1.1;text-wrap:balance}
+h2{font-weight:700;font-size:24px;line-height:1.2}
+h3{font-weight:700;font-size:17px;letter-spacing:-.01em;line-height:1.3}
+.sub{color:var(--muted);margin:10px 0 0;font-size:15px;max-width:64ch}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.jump a{font-size:13.5px;font-weight:600;padding:7px 14px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);text-decoration:none}
+.jump a:hover{border-color:var(--accent)}
+section{display:flex;flex-direction:column;gap:16px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px}
+.sec-head p{margin:0;font-size:13.5px;color:var(--muted)}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.callout{background:var(--accent-soft);border-radius:var(--r);padding:14px 18px;font-size:15px}
+.callout-title{font-family:var(--f-display);font-weight:700;color:var(--ink);margin-bottom:4px}
+.note{font-size:13.5px;color:var(--muted);margin:0}
+
+/* buttons + player */
+.btn{font-weight:600;font-size:14px;padding:8px 14px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+.btn.primary,.btn.playing{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.sndb .eq{display:none;align-items:flex-end;gap:2px;height:12px}
+.sndb.playing .eq{display:inline-flex}
+.sndb .eq i{width:3px;height:4px;border-radius:2px;background:currentColor;animation:eq .8s ease-in-out infinite}
+.sndb .eq i:nth-child(2){animation-delay:.2s}.sndb .eq i:nth-child(3){animation-delay:.4s}
+@keyframes eq{0%,100%{height:3px}50%{height:12px}}
+
+/* classification map */
+.map{display:grid;grid-template-columns:1fr 1fr 2fr;gap:14px;align-items:stretch}
+.grp{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.grp h3{display:flex;align-items:center;gap:8px}
+.grp h3 .n{display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--accent);color:var(--accent-ink);font-size:13px;flex:none}
+.grp p{margin:0;font-size:13.5px;color:var(--muted)}
+.subs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.subg{background:var(--band);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.subg b{font-family:var(--f-display);font-size:14.5px}
+.subg span{font-size:12.5px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips a{font-size:13px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--accent-soft);color:var(--ink);text-decoration:none;border:1px solid transparent}
+.chips a:hover{border-color:var(--accent)}
+
+/* sound cards */
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+.scard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;display:grid;gap:10px;min-width:0;scroll-margin-top:16px}
+.scard:target{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft),var(--shadow)}
+.shead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.shead h3 small{display:block;font-family:var(--f-body);font-size:12.5px;font-weight:600;color:var(--muted);letter-spacing:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--band);color:var(--muted)}
+.diag{background:var(--band);border-radius:12px;padding:6px 10px}
+.diag svg{display:block;width:100%;max-width:300px;height:auto;margin:0 auto}
+.diag .base{fill:none;stroke:var(--ink);stroke-linecap:round}
+.diag .faint{stroke:var(--muted)}
+.diag .ax{stroke:var(--line-strong);stroke-width:1}
+.diag .adv{fill:none;stroke:var(--warn);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.diag .dot{fill:var(--warn)}
+.diag text{font-family:var(--f-display);font-size:9px;font-weight:700;fill:var(--muted)}
+.facts{display:grid;gap:6px;margin:0}
+.facts div{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:10px;font-size:14px;line-height:1.45}
+.facts dt{font-weight:700;color:var(--accent);font-size:13px;padding-top:1px}
+.facts dd{margin:0}
+.tip{font-size:13.5px;background:var(--accent-soft);border-radius:10px;padding:8px 12px;margin:0}
+
+/* compare tables */
+.tbox{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow);overflow-x:auto}
+.t{width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.4}
+.t th{background:var(--accent);color:var(--accent-ink);text-align:left;font-weight:700;font-size:13px;padding:11px 14px;white-space:nowrap}
+.t td{padding:10px 14px;border-top:1px solid var(--line);vertical-align:top}
+.t td:first-child{font-weight:700;font-size:13px;color:var(--muted);white-space:nowrap}
+.t tbody tr:nth-child(even) td{background:var(--band)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.stack{display:none;gap:10px}
+.stack .scard h3{font-size:16px}
+@media (max-width:600px){.cmp .tbox{display:none}.cmp .stack{display:grid}}
+
+.quizlink{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--accent);color:var(--accent-ink);border-radius:var(--r);padding:16px 20px;text-decoration:none;box-shadow:var(--shadow)}
+.quizlink b{display:block;font-family:var(--f-display);font-size:16px}
+.quizlink span span{display:block;font-size:14px;opacity:.9}
+.quizlink .go{font-size:22px;font-weight:700;flex:none}
+.quizlink:hover{filter:brightness(1.06)}
+
+footer{padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;display:grid;gap:6px}
+footer p{margin:0}
+
+@media (max-width:900px){.map{grid-template-columns:1fr 1fr}.map .adv{grid-column:1/-1}.cmp{grid-template-columns:1fr}}
+@media (max-width:760px){
+  .wrap{padding:24px 16px 40px;gap:36px}
+  .cards{grid-template-columns:1fr}
+  .grp,.scard{padding:16px}
+}
+@media (max-width:520px){.map{grid-template-columns:1fr}.subs{grid-template-columns:1fr}.facts div{grid-template-columns:1fr;gap:0}}
+@media (prefers-reduced-motion:reduce){.sndb .eq i{animation:none;height:9px}html{scroll-behavior:auto}}
+@media print{body{background:#fff}.jump,.sndb,.quizlink{display:none}}
+</style>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22%234E6E52%22/%3E%3Cg%20transform%3D%22translate%284%204%29%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%203.5v7.5M12%2011l-2.6%202.4M12%2011l2.6%202.4%22/%3E%3Cpath%20d%3D%22M9.3%206.6C6.4%207.4%204%2011.3%204%2015.6%204%2018.4%205.2%2020%207.1%2020c1.5%200%202.4-1%202.4-2.6V7.4c0-.5-.1-.8-.2-.8z%22/%3E%3Cpath%20d%3D%22M14.7%206.6c2.9.8%205.3%204.7%205.3%209%200%202.8-1.2%204.4-3.1%204.4-1.5%200-2.4-1-2.4-2.6V7.4c0-.5.1-.8.2-.8z%22/%3E%3C/g%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Pocket Pulmo">
+<meta name="application-name" content="Pocket Pulmo">
+<meta name="theme-color" content="#4E6E52">
+<script>
+/* Review my mistakes: one deck of every question missed in any quiz, saved on this device.
+   Items: { id, src, kind:"choice"|"num", s, v[], q, r[], a, o[], ord[], x, d[], unit, tol, work[], final, n, t } */
+window.PPMistakes = (function () {
+  "use strict";
+  var KEY = "pp:mistakes", CAP = 300;
+  var SRC = {
+    o2:   { n: "O₂ device cases", k: "var(--accent)" },
+    med:  { n: "Med cases",       k: "var(--c-abx)" },
+    medq: { n: "Medication quiz", k: "var(--c-beta)" },
+    math: { n: "O₂ math",         k: "var(--c-xan)" },
+    abg:  { n: "ABG practice",    k: "var(--c-anti)" },
+    assess: { n: "Assessment lab", k: "var(--c-muco)" }
+  };
+  function load() { try { var v = JSON.parse(localStorage.getItem(KEY) || "[]"); return Array.isArray(v) ? v : []; } catch (e) { return []; } }
+  function save(list) { try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {} badges(list.length); }
+  function hash(str) { var h = 5381; for (var i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0; return (h >>> 0).toString(36); }
+  function id(src, s, q) { return src + "-" + hash((s || "") + "|" + (q || "")); }
+
+  function add(item) {
+    if (!item || !item.src || !item.q) return;
+    item.id = item.id || id(item.src, item.s, item.q);
+    var list = load(), old = null;
+    list = list.filter(function (x) { if (x.id === item.id) { old = x; return false; } return true; });
+    item.n = (old ? old.n || 1 : 0) + 1;
+    item.t = Date.now();
+    list.unshift(item);
+    if (list.length > CAP) list = list.slice(0, CAP);
+    save(list);
+  }
+  function remove(itemId) {
+    var list = load(), keep = list.filter(function (x) { return x.id !== itemId; });
+    if (keep.length !== list.length) save(keep);
+  }
+  /* record one answer: wrong → into the deck, right → out of it */
+  function record(item, right) {
+    item.id = item.id || id(item.src, item.s, item.q);
+    if (right) remove(item.id); else add(item);
+  }
+  function badges(n) {
+    if (n === undefined) n = load().length;
+    document.querySelectorAll("[data-pp-mistakes]").forEach(function (el) {
+      el.textContent = n; el.hidden = !n;
+      el.setAttribute("aria-label", n + " to review");
+    });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { badges(); });
+  else badges();
+  window.addEventListener("storage", function (e) { if (e.key === KEY) badges(); });
+
+  return {
+    SRC: SRC, id: id, add: add, remove: remove, record: record, badges: badges,
+    all: load, count: function () { return load().length; },
+    clear: function (src) { save(src ? load().filter(function (x) { return x.src !== src; }) : []); }
+  };
+})();
+</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site">
+  <div class="in">
+    <a class="site-brand" href="index.html"><span class="mark" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v7.5M12 11l-2.6 2.4M12 11l2.6 2.4"/><path d="M9.3 6.6C6.4 7.4 4 11.3 4 15.6 4 18.4 5.2 20 7.1 20c1.5 0 2.4-1 2.4-2.6V7.4c0-.5-.1-.8-.2-.8z"/><path d="M14.7 6.6c2.9.8 5.3 4.7 5.3 9 0 2.8-1.2 4.4-3.1 4.4-1.5 0-2.4-1-2.4-2.6V7.4c0-.5.1-.8.2-.8z"/></svg></span><span class="bt">Pocket Pulmo</span></a>
+    <div class="site-menus">
+      <details class="menu">
+        <summary class="mlook on">Look up <svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <div class="panel">
+          <p class="ptitle">Quick reference</p>
+        <a class="mi" data-id="abg" href="abg-o2.html#abg"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></span><span><b>ABG values</b><span>Normal ranges, ROME, the O₂ dissociation curve</span></span></a>
+        <a class="mi" data-id="meds" href="meds.html#table"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 20.5 3.5 13.5a4.95 4.95 0 0 1 7-7l7 7a4.95 4.95 0 0 1-7 7zM7 10l7 7"/></svg></span><span><b>Medications</b><span>46 respiratory drugs, every detail</span></span></a>
+        <a class="mi" data-id="o2" href="abg-o2.html#o2"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h11a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h7"/></svg></span><span><b>O₂ devices</b><span>Flow, FiO₂ and when to use each of the 6 devices</span></span></a>
+        <a class="mi" data-id="formulas" href="formulas.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 5H6l6 7-6 7h12"/></svg></span><span><b>Formulas</b><span>Total flow, tank duration, O₂ content, drug math</span></span></a>
+        <a class="mi" data-id="gas" href="gas.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="6" width="10" height="15" rx="4"/><path d="M10 6V3h4v3M7 11h10"/></svg></span><span><b>Gas cylinders</b><span>Colors, uses and pin index for every medical gas</span></span></a>
+        <a class="mi" data-id="sounds" href="sounds.html" aria-current="page"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 2v2M5 2v2M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/></svg></span><span><b>Breath sounds</b><span>Hear every breath sound, sorted by type</span></span></a>
+        <a class="mi" data-id="mem" href="meds.html#mem"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></span><span><b>Mnemonics</b><span>Memory aids for every drug class</span></span></a>
+        </div>
+      </details>
+      <details class="menu">
+        <summary class="mprac">Practice <svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <div class="panel">
+          <p class="ptitle">Test yourself</p>
+        <a class="mi" data-id="cases" href="o2-cases.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h3"/></svg></span><span><b>O₂ device cases</b><span>51 patient scenarios: pick the right device</span></span></a>
+        <a class="mi" data-id="medcases" href="med-cases.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 20.5 3.5 13.5a4.95 4.95 0 0 1 7-7l7 7a4.95 4.95 0 0 1-7 7zM7 10l7 7"/></svg></span><span><b>Med cases</b><span>178 clinical scenarios: pick the drug, spot the side effect</span></span></a>
+        <a class="mi" data-id="mathq" href="math-quiz.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18h.01M12 18h.01"/></svg></span><span><b>O₂ math quiz</b><span>Total flow and cylinder duration problems</span></span></a>
+        <a class="mi" data-id="abgq" href="abg-practice.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span><span><b>ABG practice</b><span>Unlimited random gases with worked answers</span></span></a>
+        <a class="mi" data-id="assess" href="assess.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 5.65-7 10-7 10z"/></svg></span><span><b>Assessment sim lab</b><span>Vital signs, chest exam and 21 patients to assess</span></span></a>
+        <a class="mi" data-id="vent" href="vent.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></span><span><b>Vent practice lab</b><span>Bedside ventilator simulator: modes, alarms, troubleshooting</span></span></a>
+        <a class="mi" data-id="medq" href="meds.html#quiz"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.5 2.5L16 9.5"/></svg></span><span><b>Medication quiz</b><span>NBRC-style questions on all 46 drugs</span></span></a>
+        <a class="mi" data-id="flash" href="meds.html#flash"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="13" height="13" rx="2"/><path d="M8 4h10a2 2 0 0 1 2 2v10"/></svg></span><span><b>Med flashcards</b><span>Flip through drugs and track what you know</span></span></a>
+        <a class="mi" data-id="review" href="review.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5"/></svg></span><span><b>Review my mistakes <em class="mbadge" data-pp-mistakes hidden></em></b><span>Every question you’ve missed, in one deck</span></span></a>
+        </div>
+      </details>
+      <details class="menu search-menu">
+        <summary class="sbtn" aria-label="Search the site"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="lbl">Search</span></summary>
+        <div class="panel search">
+          <form class="srch" role="search">
+            <label class="sbox"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="Search a drug, device, gas or formula" aria-label="Search the site" autocomplete="off"></label>
+            <ul class="sres"></ul>
+          </form>
+        </div>
+      </details>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header>
+    <p class="eyebrow">Pocket Pulmo</p>
+    <h1>Breath Sounds</h1>
+    <p class="sub">Every breath sound sorted into groups, with a sound to play for each one. The little diagram on each card shows breathing in (up) and out (down). Thick lines are louder, and red marks show the extra sound and when in the breath it happens.</p>
+    <nav class="jump" aria-label="On this page">
+      <a href="#map">How they’re sorted</a><a href="#normal">Normal</a><a href="#loud">Loudness</a><a href="#cont">Continuous</a><a href="#disc">Discontinuous</a><a href="#compare">Tell them apart</a>
+    </nav>
+  </header>
+
+  <section id="map" aria-labelledby="map-h">
+    <div class="sec-head"><h2 id="map-h">How breath sounds are sorted</h2><p>Tap any sound to jump to it</p></div>
+    <div class="map" id="mapGrid"></div>
+  </section>
+
+  <section id="normal" aria-labelledby="normal-h">
+    <div class="sec-head"><h2 id="normal-h">1 · Normal breath sounds</h2><p>Loud and high near the big airways, soft and low out in the lungs</p></div>
+    <div class="cards" data-group="normal"></div>
+    <div class="callout"><div class="callout-title">Right sound, wrong place</div>A normal sound becomes abnormal when you hear it somewhere it doesn’t belong. Bronchial breath sounds out over the lung fields mean the lung is solid enough to carry sound from the airways, as in <b>consolidation</b> (pneumonia) or at the top edge of an effusion.</div>
+  </section>
+
+  <section id="loud" aria-labelledby="loud-h">
+    <div class="sec-head"><h2 id="loud-h">2 · Changes in loudness</h2><p>The normal sound, just quieter or gone</p></div>
+    <div class="cards" data-group="loud"></div>
+  </section>
+
+  <section id="cont" aria-labelledby="cont-h">
+    <div class="sec-head"><h2 id="cont-h">3 · Adventitious: continuous</h2><p>Extra sounds that are musical and last a while (over ¼ second)</p></div>
+    <div class="cards" data-group="cont"></div>
+  </section>
+
+  <section id="disc" aria-labelledby="disc-h">
+    <div class="sec-head"><h2 id="disc-h">4 · Adventitious: discontinuous</h2><p>Extra sounds that are short pops or creaks</p></div>
+    <div class="cards" data-group="disc"></div>
+  </section>
+
+  <section id="compare" aria-labelledby="cmp-h">
+    <div class="sec-head"><h2 id="cmp-h">Tell them apart</h2><p>The ones that get mixed up most</p></div>
+    <div class="cmp">
+      <div class="tbox"><table class="t">
+        <thead><tr><th></th><th>Wheezes</th><th>Rhonchi</th><th>Stridor</th></tr></thead>
+        <tbody>
+          <tr><td>Pitch</td><td>High, musical</td><td>Low, snoring</td><td>High, loud</td></tr>
+          <tr><td>When</td><td>Mostly breathing out</td><td>Mostly breathing out</td><td>Breathing in</td></tr>
+          <tr><td>Where</td><td>Lung fields</td><td>Over the large airways</td><td>Neck (upper airway)</td></tr>
+          <tr><td>After a cough</td><td>No change</td><td>Often clears or changes</td><td>No change</td></tr>
+          <tr><td>First move</td><td>Bronchodilator</td><td>Cough, suction, airway clearance</td><td>Get help; racemic epi, cool mist, heliox</td></tr>
+        </tbody></table></div>
+      <div class="tbox"><table class="t">
+        <thead><tr><th></th><th>Fine crackles</th><th>Coarse crackles</th><th>Pleural rub</th></tr></thead>
+        <tbody>
+          <tr><td>Pitch</td><td>High, soft pops</td><td>Low, loud, bubbling</td><td>Low, grating creak</td></tr>
+          <tr><td>When</td><td>Late inspiration</td><td>Early inspiration (and expiration)</td><td>End of inspiration and start of expiration</td></tr>
+          <tr><td>Where</td><td>Bases, dependent areas</td><td>Anywhere there are secretions</td><td>One small spot, often lower lateral chest</td></tr>
+          <tr><td>After a cough</td><td>No change</td><td>May change or clear</td><td>No change</td></tr>
+          <tr><td>Think of</td><td>Atelectasis, fibrosis, early CHF</td><td>Pulmonary edema, pneumonia, secretions</td><td>Pleurisy, PE, pneumonia</td></tr>
+        </tbody></table></div>
+    </div>
+    <div class="callout"><div class="callout-title">Old names you’ll still see</div><b>Rales</b> = crackles. <b>Sibilant rhonchi</b> = wheezes. <b>Sonorous rhonchi</b> (or “low-pitched wheezes”) = rhonchi. Chart the sound, where you heard it and when in the breath: “Coarse crackles, RLL, early inspiration, clear after cough.”</div>
+    <a class="quizlink" href="assess.html#drill-snd"><span><b>Test your ears</b><span>Name that breath sound: a random sound, four choices, keep your streak going.</span></span><span class="go" aria-hidden="true">→</span></a>
+  </section>
+
+  <footer>
+    <p>The sounds are generated by the site (no recordings), so they work offline. They show the differences in pitch and timing; real chests sound richer and messier. Headphones help, since phone and laptop speakers lose the low sounds. On an iPhone, turn off silent mode.</p>
+    <p>For exam study. Follow your program’s references for terminology.</p>
+  </footer>
+</main>
+
+<script>
+/* Pocket Pulmo breath sounds. Every sound is generated in the browser (filtered noise, tones and clicks),
+   so it works offline and there are no recordings to license. They're teaching approximations: real
+   chests sound richer, so use them to learn the differences (timing, pitch, continuous vs popping). */
+window.PPLung = (function () {
+  "use strict";
+  var SR = 22050, ctx = null, src = null, endCb = null, cache = {};
+
+  function rng(seed) { seed = seed >>> 0 || 1; return function () { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }; }
+  function biquad(type, f, q) {
+    var w = 2 * Math.PI * f / SR, cs = Math.cos(w), sn = Math.sin(w), a = sn / (2 * q), b0, b1, b2;
+    if (type === "lp") { b0 = (1 - cs) / 2; b1 = 1 - cs; b2 = b0; }
+    else if (type === "hp") { b0 = (1 + cs) / 2; b1 = -(1 + cs); b2 = b0; }
+    else { b0 = a; b1 = 0; b2 = -a; }
+    var a0 = 1 + a, a1 = -2 * cs / a0, a2 = (1 - a) / a0; b0 /= a0; b1 /= a0; b2 /= a0;
+    var x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+    return function (x) { var y = b0 * x + b1 * x1 + b2 * x2 - a1 * y1 - a2 * y2; x2 = x1; x1 = x; y2 = y1; y1 = y; return y; };
+  }
+  var smooth = function (x) { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
+
+  /* ---------- text finding → sound recipe ---------- */
+  function parse(text, zone) {
+    var t = String(text || "").toLowerCase(), s = { base: "ves", g: 1 };
+    if (zone === "tr") s.base = "bronch";
+    if (/bronchial/.test(t)) s.base = "bronch";
+    if (/diminish|decreased air|shallow/.test(t)) { if (s.base === "bronch") s.g = .55; else s.base = "dim"; }
+    if (/absent/.test(t)) s.base = "absent";
+    if (/crackle/.test(t)) { if (/fine|velcro/.test(t)) s.fine = 1; if (/coarse/.test(t) || !s.fine) s.coarse = 1; }
+    if (/wheez/.test(t)) { s.wheeze = /scattered/.test(t) ? .55 : 1; s.poly = /diffuse/.test(t) ? 3 : 2; }
+    if (/rhonch/.test(t)) s.rhonchi = 1;
+    if (/stridor/.test(t)) s.stridor = /soft/.test(t) ? .5 : 1;
+    if (/transmitted upper/.test(t)) s.stridor = .22;
+    if (/gurgl/.test(t)) s.gurgle = 1;
+    if (/friction|pleural rub/.test(t)) s.rub = 1;
+    if (/prolonged exp/.test(t) || (s.wheeze && !/scattered/.test(t))) s.prolonged = 1;
+    return s;
+  }
+
+  /* ---------- the generator ---------- */
+  function render(spec) {
+    var key = JSON.stringify(spec); if (cache[key]) return cache[key];
+    var r = rng(spec.seed || 12345), cycles = 3;
+    var B = spec.base, tube = B === "bronch" || B === "trach";
+    var ti = spec.prolonged ? 1.0 : B === "trach" ? 1.2 : B === "bv" ? 1.3 : 1.25,
+      te = spec.prolonged ? 2.7 : B === "trach" ? 1.3 : B === "bv" ? 1.3 : 1.9,
+      gap = B === "trach" ? .3 : B === "bronch" ? .22 : .04, cyc = ti + gap + te + .45;
+    var N = Math.round((cyc * cycles + .4) * SR), out = new Float32Array(N), i, k, c;
+
+    /* 1. airflow noise */
+    var lpF = { bv: 900, bronch: 1500, trach: 2400 }[B] || 520, hpF = { bv: 150, bronch: 220, trach: 260 }[B] || 100;
+    var lp1 = biquad("lp", lpF, .7), lp2 = biquad("lp", lpF, .7), hp = biquad("hp", hpF, .7), res = B === "trach" ? biquad("bp", 950, 1.6) : biquad("bp", 750, 2.2);
+    var gBase = ({ ves: 1, dim: .28, bv: 1, bronch: 1, trach: 1, absent: 0 }[B]) * (spec.g || 1), gMix = { bv: 1.9, bronch: 1.25, trach: 1.6 }[B] || 2.6;
+    for (i = 0; i < N; i++) {
+      var tt = i / SR, ph = tt % cyc, e = 0;
+      if (ph < ti) e = Math.pow(ph / ti, .8) * smooth((ti - ph) / .12) * smooth(ph / .08);
+      else if (ph > ti + gap && ph < ti + gap + te) {
+        var x = (ph - ti - gap) / te;
+        e = tube ? .95 * Math.pow(Math.sin(Math.PI * x), .5) : B === "bv" ? .8 * Math.pow(Math.sin(Math.PI * x), .6) : .38 * Math.exp(-x / .28) * smooth(x / .04);
+      }
+      var w = r() * 2 - 1, v = hp(lp2(lp1(w)));
+      if (tube) v = .55 * v + .9 * res(w);
+      out[i] = v * e * gBase * gMix;
+    }
+
+    /* 2. heart sounds, quiet in the background (you'd hear them through any stethoscope) */
+    var hr = 76 / 60, hb = function (t0, f, len, a) {
+      var s0 = Math.round(t0 * SR), L = Math.round(len * SR);
+      for (k = 0; k < L && s0 + k < N; k++) { var q = k / SR; out[s0 + k] += a * Math.sin(2 * Math.PI * f * q) * Math.sin(Math.PI * k / L); }
+    };
+    for (var tb = .2; tb < N / SR - .4; tb += 1 / hr) { hb(tb, 48, .09, spec.base === "absent" ? .22 : .1); hb(tb + .32, 64, .07, spec.base === "absent" ? .16 : .07); }
+
+    /* 3. adventitious sounds */
+    var crackle = function (t0, f, decay, a) {
+      var s0 = Math.round(t0 * SR), L = Math.round(decay * 6 * SR), p = r() * Math.PI;
+      for (k = 0; k < L && s0 + k < N; k++) { var q = k / SR; out[s0 + k] += a * Math.exp(-q / decay) * Math.sin(2 * Math.PI * f * q + p); }
+    };
+    var tone = function (t0, len, f0, glide, harm, a, wob) {
+      var s0 = Math.round(t0 * SR), L = Math.round(len * SR), phs = 0;
+      for (k = 0; k < L && s0 + k < N; k++) {
+        var x = k / L, f = f0 * (1 - glide * x) * (1 + (wob || 0) * Math.sin(2 * Math.PI * 5.5 * k / SR)), env = smooth(x / .12) * smooth((1 - x) / .15);
+        phs += 2 * Math.PI * f / SR; var v = 0;
+        for (var h = 0; h < harm.length; h++) v += harm[h] * Math.sin((h + 1) * phs);
+        out[s0 + k] += a * env * v;
+      }
+    };
+    for (c = 0; c < cycles; c++) {
+      var t0 = c * cyc, te0 = t0 + ti + gap;
+      if (spec.fine) { var nf = 9 + Math.floor(r() * 7); for (k = 0; k < nf; k++) crackle(t0 + ti * (.5 + .46 * r()), 700 + r() * 450, .0014 + r() * .0008, 1.1 + r() * .5); }
+      if (spec.coarse) {
+        var nc = 5 + Math.floor(r() * 4); for (k = 0; k < nc; k++) crackle(t0 + ti * (.05 + .6 * r()), 190 + r() * 170, .0045 + r() * .003, 1.0 + r() * .4);
+        for (k = 0; k < 3; k++) crackle(te0 + te * .35 * r(), 170 + r() * 150, .005, .7 + r() * .3);
+      }
+      if (spec.wheeze && (spec.wheeze >= 1 || c !== 1)) {
+        for (k = 0; k < (spec.poly || 2); k++) tone(te0 + .05 + k * .07, te * (.82 - k * .1), 420 + k * 170 + r() * 80, .12, [1, .25, .08], .16 * spec.wheeze, .01);
+      }
+      if (spec.rhonchi) {
+        tone(te0 + .02, te * .75, 125 + r() * 30, .1, [1, .6, .45, .3, .2, .12], .09, .04);
+        tone(t0 + ti * .25, ti * .65, 140 + r() * 20, -.05, [1, .5, .35, .2], .05, .04);
+      }
+      if (spec.stridor) {
+        tone(t0 + .05, ti * .95, 920 + r() * 60, .03, [1, .5, .3, .15], .2 * spec.stridor, .015);
+        if (spec.stridor >= 1) tone(t0 + .1, ti * .85, 1380, .02, [1, .3], .06, .01);
+      }
+      if (spec.gurgle) {
+        for (k = 0; k < 14; k++) crackle(t0 + (ti + gap + te) * r(), 110 + r() * 120, .007, .35 + r() * .25);
+        tone(te0, te * .6, 105, .1, [1, .5, .3], .05, .06);
+      }
+      if (spec.rub) {
+        var bp = biquad("bp", 260, 1.4), rubAt = [t0 + ti * .7, te0 + .05];
+        rubAt.forEach(function (ra) {
+          var s0 = Math.round(ra * SR), L = Math.round(.38 * SR);
+          for (k = 0; k < L && s0 + k < N; k++) { var gate = Math.pow(Math.max(0, Math.sin(2 * Math.PI * 27 * k / SR + 3 * Math.sin(2 * Math.PI * 4 * k / SR))), 2) * Math.sin(Math.PI * k / L); out[s0 + k] += 3 * bp(r() * 2 - 1) * gate; }
+        });
+      }
+    }
+
+    /* 4. gentle limiter + fades */
+    var fade = Math.round(.05 * SR);
+    for (i = 0; i < N; i++) { var y = Math.tanh(out[i] * 1.1) * .85; if (i < fade) y *= i / fade; if (N - i < fade) y *= (N - i) / fade; out[i] = y; }
+    cache[key] = out; return out;
+  }
+
+  /* ---------- playback ---------- */
+  function stop() {
+    if (src) { try { src.onended = null; src.stop(); } catch (e) {} src = null; }
+    var cb = endCb; endCb = null; if (cb) cb();
+  }
+  function play(spec, onEnd) {
+    stop();
+    if (!ctx) { try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return false; } }
+    if (ctx.state === "suspended") ctx.resume();
+    var data = render(spec), buf = ctx.createBuffer(1, data.length, SR);
+    buf.getChannelData(0).set(data);
+    src = ctx.createBufferSource(); src.buffer = buf; src.connect(ctx.destination);
+    endCb = onEnd || null;
+    var me = src; src.onended = function () { if (src === me) { src = null; var cb = endCb; endCb = null; if (cb) cb(); } };
+    src.start();
+    return true;
+  }
+
+  /* the sounds students should know, for the reference table and the listening drill */
+  var SOUNDS = [
+    ["ves", "Vesicular (normal)", { base: "ves" }, "Soft and low-pitched. You hear it all through inspiration and only briefly at the start of expiration."],
+    ["bronch", "Bronchial", { base: "bronch" }, "Loud, harsh and hollow, with a pause between breaths and expiration as long as inspiration. Normal over the trachea; over the lung it means consolidation."],
+    ["dim", "Diminished", { base: "dim" }, "The same soft sound, just much quieter. Think hyperinflation (COPD), shallow breathing, effusion, pneumothorax or obesity."],
+    ["wheeze", "Wheezes", { base: "ves", wheeze: 1, poly: 3, prolonged: 1 }, "Musical, high-pitched tones on a long expiration. Narrowed airways: asthma, COPD, CHF."],
+    ["rhonchi", "Rhonchi", { base: "ves", rhonchi: 1 }, "Low-pitched snoring or gurgling, mostly on expiration. Secretions in the large airways; often changes after a cough."],
+    ["fine", "Fine crackles", { base: "ves", fine: 1 }, "Short, high-pitched pops late in inspiration, like rubbing hair by your ear or pulling Velcro. Atelectasis, fibrosis, early CHF."],
+    ["coarse", "Coarse crackles", { base: "ves", coarse: 1 }, "Louder, lower, bubbling pops early in inspiration (and sometimes expiration). Secretions or fluid: pneumonia, pulmonary edema, bronchiectasis."],
+    ["stridor", "Stridor", { base: "bronch", stridor: 1 }, "Loud, high-pitched and inspiratory, loudest over the neck. Upper-airway narrowing: croup, epiglottitis, post-extubation swelling."],
+    ["rub", "Pleural friction rub", { base: "ves", rub: 1 }, "Creaking or grating, like walking on fresh snow, at the end of inspiration and start of expiration. Inflamed pleura."],
+    ["bv", "Bronchovesicular", { base: "bv" }, "Medium pitch, inspiration and expiration about equal. Normal near the mainstem bronchi.", true],
+    ["trach", "Tracheal", { base: "trach" }, "Very loud, harsh and high, with a pause between breaths. Normal over the trachea in the neck.", true],
+    ["absent", "Absent", { base: "absent" }, "No breath sounds at all, only faint heart sounds. No air moving in that area.", true]
+  ];
+  function byKey(k) { for (var i = 0; i < SOUNDS.length; i++) if (SOUNDS[i][0] === k) return SOUNDS[i]; return null; }
+
+  return { parse: parse, play: play, stop: stop, render: render, SOUNDS: SOUNDS, byKey: byKey, playing: function () { return !!src; } };
+})();
+
+</script>
+<script>
+(function () {
+  "use strict";
+  var L = window.PPLung;
+  /* k: key in PPLung.SOUNDS · g: group · d: diagram recipe */
+  var S = [
+    { k: "trach", g: "normal", n: "Tracheal", tags: ["Very loud", "High pitch", "In = out, with a pause"],
+      d: { i: 55, gap: 14, e: 55, w: 6 },
+      like: "Harsh, hollow air rushing through a tube.", where: "Over the trachea in the neck.", means: "Normal there. Rarely listened to except for stridor." },
+    { k: "bronch", g: "normal", n: "Bronchial", tags: ["Loud", "High pitch", "Out longer than in"],
+      d: { i: 40, gap: 14, e: 70, w: 5 },
+      like: "Loud and hollow, with a clear pause between in and out.", where: "Over the manubrium (lower trachea).", means: "Normal there. Over the lung fields it means consolidation." },
+    { k: "bv", g: "normal", n: "Bronchovesicular", tags: ["Medium", "Medium pitch", "In = out"],
+      d: { i: 55, gap: 0, e: 55, w: 4 },
+      like: "In between the two: softer than bronchial, louder than vesicular.", where: "Next to the sternum (1st–2nd intercostal spaces) and between the shoulder blades.", means: "Normal near the mainstem bronchi." },
+    { k: "ves", g: "normal", n: "Vesicular", tags: ["Soft", "Low pitch", "In 3 : out 1"],
+      d: { i: 78, gap: 0, e: 26, w: 4, we: 2 },
+      like: "Soft rustling, like wind through leaves. You hear it all the way in and barely on the way out.", where: "Most of the lung fields.", means: "Normal healthy lung." },
+    { k: "dim", g: "loud", n: "Diminished", tags: ["Quiet", "Low pitch"],
+      d: { i: 78, gap: 0, e: 26, w: 1.6, we: 1, dash: 1 },
+      like: "Vesicular turned way down. Easy to miss, so compare side to side.", where: "One area or everywhere.", means: "Less air moving or more between the lung and your stethoscope: shallow breathing, COPD (hyperinflation), obesity, effusion, pneumothorax, atelectasis.",
+      tip: "Everywhere and quiet in a patient who looks tired is a warning sign: not enough air is moving." },
+    { k: "absent", g: "loud", n: "Absent", tags: ["Silent", "Heart sounds only"],
+      d: { absent: 1 },
+      like: "Nothing but faint heart sounds.", where: "Over the affected area.", means: "No air moving there: large pneumothorax, large effusion, a mucus plug blocking a bronchus, pneumonectomy.",
+      tip: "Absent on the left right after intubation? Think right mainstem intubation: check the cm mark at the teeth and the chest X-ray, then pull the tube back." },
+    { k: "wheeze", g: "cont", n: "Wheezes", old: "Old name: sibilant rhonchi", tags: ["High pitch", "Musical", "Expiration"],
+      d: { i: 45, gap: 4, e: 100, w: 3, we: 2, adv: "wheeze" },
+      like: "Whistling or squeaking notes, usually on a long breath out.", where: "Lung fields, often everywhere.", means: "Narrowed airways: asthma, COPD, CHF (“cardiac asthma”). One note in one spot can mean a single blockage (foreign body, tumor).",
+      tip: "Silent chest in severe asthma is worse than wheezing: almost no air is moving." },
+    { k: "rhonchi", g: "cont", n: "Rhonchi", old: "Old name: sonorous rhonchi", tags: ["Low pitch", "Snoring", "Mostly expiration"],
+      d: { i: 78, gap: 0, e: 40, w: 4, we: 2, adv: "rhonchi" },
+      like: "Low snoring or rumbling, like someone snoring in another room.", where: "Over the trachea and large airways.", means: "Secretions in the large airways.",
+      tip: "Have the patient cough, then listen again. Rhonchi that clear point to secretions you can suction." },
+    { k: "stridor", g: "cont", n: "Stridor", tags: ["High pitch", "Loud", "Inspiration"],
+      d: { i: 40, gap: 14, e: 70, w: 5, adv: "stridor" },
+      like: "Loud, high crowing on the breath in, often heard without a stethoscope.", where: "Loudest over the neck.", means: "Upper-airway narrowing: croup, epiglottitis, swelling after extubation, foreign body.",
+      tip: "Stridor is an airway emergency. Get help early." },
+    { k: "fine", g: "disc", n: "Fine crackles", old: "Old name: rales", tags: ["High pitch", "Short pops", "Late inspiration"],
+      d: { i: 78, gap: 0, e: 26, w: 4, we: 2, adv: "fine" },
+      like: "Rubbing a lock of hair between your fingers by your ear, or Velcro pulling apart.", where: "Bases and dependent areas first.", means: "Collapsed alveoli popping open: atelectasis, pulmonary fibrosis, early CHF.",
+      tip: "Atelectasis crackles often clear after a few deep breaths or incentive spirometry." },
+    { k: "coarse", g: "disc", n: "Coarse crackles", old: "Old name: coarse rales", tags: ["Low pitch", "Bubbling", "Early inspiration"],
+      d: { i: 78, gap: 0, e: 26, w: 4, we: 2, adv: "coarse" },
+      like: "Louder, wetter bubbling, like blowing through a straw into water.", where: "Anywhere there’s fluid or secretions.", means: "Fluid or mucus in the larger airways: pulmonary edema, pneumonia, bronchiectasis, chronic bronchitis.",
+      tip: "They may change after a cough. Pink, frothy sputum with crackles means pulmonary edema." },
+    { k: "rub", g: "disc", n: "Pleural friction rub", tags: ["Low pitch", "Creaking", "End-in & start-out"],
+      d: { i: 78, gap: 0, e: 26, w: 4, we: 2, adv: "rub" },
+      like: "Creaking leather, or walking on fresh snow.", where: "One small spot, often the lower lateral chest.", means: "Inflamed pleura rubbing together: pleurisy, pneumonia, PE.",
+      tip: "Ask the patient to hold their breath. A pleural rub stops; a pericardial rub keeps going with the heartbeat." }
+  ];
+
+  /* ---------- the little in/out diagram ---------- */
+  function diagram(d) {
+    var x0 = d.absent ? 12 : Math.round((170 - d.i - d.gap - d.e) / 2), base = 50, H = 32, s = '<svg viewBox="0 0 170 62" role="img" aria-hidden="true"><line class="ax" x1="6" y1="' + base + '" x2="164" y2="' + base + '"/>';
+    if (d.absent) return s + '<text x="85" y="40" text-anchor="middle">no breath sounds</text><text x="40" y="60" text-anchor="middle">in</text><text x="120" y="60" text-anchor="middle">out</text></svg>';
+    var ax = x0 + d.i, ex0 = ax + d.gap, ex1 = ex0 + d.e, top = base - H;
+    var we = d.we || d.w, dash = d.dash ? ' stroke-dasharray="5 4"' : "";
+    s += '<path class="base' + (d.dash ? " faint" : "") + '" d="M' + x0 + " " + base + "L" + ax + " " + top + '" stroke-width="' + d.w + '"' + dash + "/>";
+    s += '<path class="base' + (d.dash || we < d.w ? " faint" : "") + '" d="M' + ex0 + " " + top + "L" + ex1 + " " + base + '" stroke-width="' + we + '"' + dash + "/>";
+    s += '<text x="' + (x0 + d.i / 2 - 6) + '" y="60" text-anchor="middle">in</text><text x="' + (ex0 + d.e / 2 + 6) + '" y="60" text-anchor="middle">out</text>';
+    /* point and outward normal at fraction f along the in or out stroke */
+    var P = function (seg, f, off) {
+      var a = seg === "i" ? [x0, base, ax, top] : [ex0, top, ex1, base], dx = a[2] - a[0], dy = a[3] - a[1], l = Math.hypot(dx, dy);
+      var nx = seg === "i" ? dy / l : -dy / l, ny = seg === "i" ? -dx / l : dx / l;
+      if (ny > 0) { nx = -nx; ny = -ny; }
+      return [a[0] + dx * f + nx * off, a[1] + dy * f + ny * off];
+    };
+    var wave = function (seg, f0, f1, off, amp, n) {
+      var pts = [], k, m = 60;
+      for (k = 0; k <= m; k++) { var f = f0 + (f1 - f0) * k / m, p = P(seg, f, off + amp * Math.sin(k / m * n * 2 * Math.PI)); pts.push(p[0].toFixed(1) + " " + p[1].toFixed(1)); }
+      return '<path class="adv" d="M' + pts.join("L") + '"/>';
+    };
+    var dots = function (seg, fs, off, r, hollow) { return fs.map(function (f) { var p = P(seg, f, off); return '<circle class="' + (hollow ? "adv" : "dot") + '" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + r + '"/>'; }).join(""); };
+    if (d.adv === "fine") s += dots("i", [.56, .63, .7, .76, .82, .88, .94], 6, 1.7);
+    if (d.adv === "coarse") s += dots("i", [.1, .2, .32, .45, .57], 7, 3.2, true) + dots("o", [.22, .5], 7, 3.2, true);
+    if (d.adv === "wheeze") s += wave("o", .06, .86, 8, 2.4, 12);
+    if (d.adv === "rhonchi") s += wave("o", .05, .85, 8, 3.6, 4) + wave("i", .35, .9, 8, 3, 4);
+    if (d.adv === "stridor") s += wave("i", .06, .96, 8, 2.4, 9);
+    if (d.adv === "rub") { var z = [], k; for (k = 0; k <= 8; k++) { var p = k <= 4 ? P("i", .74 + k * .065, 7 + (k % 2 ? 5 : 0)) : P("o", (k - 4) * .07, 7 + (k % 2 ? 5 : 0)); z.push(p[0].toFixed(1) + " " + p[1].toFixed(1)); } s += '<path class="adv" d="M' + z.join("L") + '"/>'; }
+    return s + "</svg>";
+  }
+
+  /* ---------- classification map ---------- */
+  var chip = function (k) { var x = S.filter(function (q) { return q.k === k; })[0]; return '<a href="#s-' + k + '">' + x.n + "</a>"; };
+  document.getElementById("mapGrid").innerHTML =
+    '<div class="grp"><h3><span class="n">1</span>Normal</h3><p>What healthy lungs sound like. Loudest and highest over the trachea, softest out in the lungs.</p><div class="chips">' + ["trach", "bronch", "bv", "ves"].map(chip).join("") + "</div></div>" +
+    '<div class="grp"><h3><span class="n">2</span>Loudness</h3><p>The normal sound, but quieter or missing.</p><div class="chips">' + ["dim", "absent"].map(chip).join("") + "</div></div>" +
+    '<div class="grp adv"><h3><span class="n">3–4</span>Adventitious (extra) sounds</h3><p>Sounds added on top of the normal breath sound.</p><div class="subs">' +
+      '<div class="subg"><b>Continuous</b><span>Musical, lasts over ¼ second</span><div class="chips">' + ["wheeze", "rhonchi", "stridor"].map(chip).join("") + "</div></div>" +
+      '<div class="subg"><b>Discontinuous</b><span>Short pops or creaks</span><div class="chips">' + ["fine", "coarse", "rub"].map(chip).join("") + "</div></div></div></div>";
+
+  /* ---------- sound cards ---------- */
+  var esc = function (t) { return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;"); };
+  document.querySelectorAll("[data-group]").forEach(function (box) {
+    box.innerHTML = S.filter(function (x) { return x.g === box.dataset.group; }).map(function (x) {
+      return '<article class="scard" id="s-' + x.k + '"><div class="shead"><h3>' + x.n + (x.old ? "<small>" + x.old + "</small>" : "") + "</h3>" +
+        (L ? '<button class="btn sndb" type="button" data-k="' + x.k + '"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span>▶ Play</span></button>' : "") + "</div>" +
+        '<div class="tags">' + x.tags.map(function (t) { return "<span>" + t + "</span>"; }).join("") + "</div>" +
+        '<div class="diag">' + diagram(x.d) + "</div>" +
+        '<dl class="facts"><div><dt>Sounds like</dt><dd>' + esc(x.like) + "</dd></div><div><dt>Heard</dt><dd>" + esc(x.where) + "</dd></div><div><dt>Means</dt><dd>" + esc(x.means) + "</dd></div></dl>" +
+        (x.tip ? '<p class="tip">' + esc(x.tip) + "</p>" : "") + "</article>";
+    }).join("");
+  });
+
+  /* ---------- one sound at a time ---------- */
+  if (L) document.querySelectorAll(".sndb").forEach(function (btn) {
+    var txt = btn.lastChild, spec = L.byKey(btn.dataset.k)[2];
+    var idle = function () { btn.classList.remove("playing"); txt.textContent = "▶ Play again"; };
+    btn.onclick = function () {
+      if (btn.classList.contains("playing")) { L.stop(); return; }
+      if (L.play(spec, idle)) { btn.classList.add("playing"); txt.textContent = "■ Stop"; }
+    };
+  });
+  /* phones: each comparison column becomes its own small card so nothing hides off-screen */
+  document.querySelectorAll(".cmp .tbox").forEach(function (box) {
+    var t = box.querySelector("table"), heads = [].slice.call(t.querySelectorAll("thead th")), rows = [].slice.call(t.querySelectorAll("tbody tr"));
+    var st = document.createElement("div"); st.className = "stack";
+    st.innerHTML = heads.slice(1).map(function (h, j) {
+      return '<div class="scard"><h3>' + h.textContent + '</h3><dl class="facts">' + rows.map(function (r) { return "<div><dt>" + r.cells[0].textContent + "</dt><dd>" + r.cells[j + 1].innerHTML + "</dd></div>"; }).join("") + "</dl></div>";
+    }).join("");
+    box.parentNode.insertBefore(st, box.nextSibling);
+  });
+  window.addEventListener("pagehide", function () { if (L) L.stop(); });
+})();
+</script>
+<script>window.RTQ_INDEX=[{"g":"Page","t":"ABG values","s":"Normal ranges, ROME, the O₂ dissociation curve","u":"abg-o2.html#abg","k":"reference look up chart","w":6},{"g":"Page","t":"Medications","s":"46 respiratory drugs, every detail","u":"meds.html#table","k":"reference look up chart","w":6},{"g":"Page","t":"O₂ devices","s":"Flow, FiO₂ and when to use each of the 6 devices","u":"abg-o2.html#o2","k":"reference look up chart","w":6},{"g":"Page","t":"Formulas","s":"Total flow, tank duration, O₂ content, drug math","u":"formulas.html","k":"reference look up chart","w":6},{"g":"Page","t":"Gas cylinders","s":"Colors, uses and pin index for every medical gas","u":"gas.html","k":"reference look up chart","w":6},{"g":"Page","t":"Breath sounds","s":"Hear every breath sound, sorted by type","u":"sounds.html","k":"reference look up chart","w":6},{"g":"Page","t":"Mnemonics","s":"Memory aids for every drug class","u":"meds.html#mem","k":"reference look up chart","w":6},{"g":"Practice","t":"O₂ device cases","s":"51 patient scenarios: pick the right device","u":"o2-cases.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Med cases","s":"178 clinical scenarios: pick the drug, spot the side effect","u":"med-cases.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"O₂ math quiz","s":"Total flow and cylinder duration problems","u":"math-quiz.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"ABG practice","s":"Unlimited random gases with worked answers","u":"abg-practice.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Assessment sim lab","s":"Vital signs, chest exam and 21 patients to assess","u":"assess.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Vent practice lab","s":"Bedside ventilator simulator: modes, alarms, troubleshooting","u":"vent.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Medication quiz","s":"NBRC-style questions on all 46 drugs","u":"meds.html#quiz","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Med flashcards","s":"Flip through drugs and track what you know","u":"meds.html#flash","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Review my mistakes","s":"Every question you’ve missed, in one deck","u":"review.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Total flow calculator","s":"Enter FiO₂ and O₂ flow to get total flow","u":"formulas.html#total-flow","k":"calculate","w":3},{"g":"Practice","t":"Cylinder duration calculator","s":"Size, gauge pressure and flow → minutes left","u":"formulas.html#cylinder","k":"calculate tank time","w":3},{"g":"ABG","t":"pH","s":"7.35 – 7.45 · acid–base balance overall","u":"abg-o2.html#abg","k":"acidosis alkalosis acid base abg normal values arterial blood gas","w":4},{"g":"ABG","t":"PaCO₂","s":"35 – 45 mmHg (40) · ventilation, the lungs’ side","u":"abg-o2.html#abg","k":"carbon dioxide co2 ventilation abg normal values arterial blood gas","w":4},{"g":"ABG","t":"HCO₃⁻","s":"22 – 24 mEq/L · the kidneys’ (metabolic) side","u":"abg-o2.html#abg","k":"bicarbonate bicarb abg normal values arterial blood gas","w":4},{"g":"ABG","t":"PaO₂","s":"80 – 100 mmHg · oxygenation · < 80 = hypoxemia","u":"abg-o2.html#abg","k":"oxygen oxygenation hypoxemia abg normal values arterial blood gas","w":4},{"g":"ABG","t":"SaO₂","s":"98 – 100% · SpO₂ by pulse ox 95 – 100%","u":"abg-o2.html#abg","k":"saturation spo2 sat pulse oximetry abg normal values arterial blood gas","w":4},{"g":"ABG","t":"Base excess","s":"±2 mEq/L · the kidneys’ (metabolic) side","u":"abg-o2.html#abg","k":"be base deficit abg normal values arterial blood gas","w":4},{"g":"ABG","t":"ROME","s":"Respiratory Opposite, Metabolic Equal","u":"abg-o2.html#abg","k":"mnemonic acid base interpretation abg normal values arterial blood gas","w":4},{"g":"ABG","t":"Respiratory acidosis","s":"pH ↓ · PaCO₂ ↑ · hypoventilation","u":"abg-practice.html","k":"resp acidosis copd hypoventilation co2 retention abg arterial blood gas interpret","w":3},{"g":"ABG","t":"Respiratory alkalosis","s":"pH ↑ · PaCO₂ ↓ · hyperventilation","u":"abg-practice.html","k":"resp alkalosis hyperventilation anxiety abg arterial blood gas interpret","w":3},{"g":"ABG","t":"Metabolic acidosis","s":"pH ↓ · HCO₃⁻ ↓ · DKA, lactic acidosis, renal failure","u":"abg-practice.html","k":"met acidosis dka kussmaul bicarb low abg arterial blood gas interpret","w":3},{"g":"ABG","t":"Metabolic alkalosis","s":"pH ↑ · HCO₃⁻ ↑ · vomiting, NG suction, diuretics","u":"abg-practice.html","k":"met alkalosis vomiting bicarb high abg arterial blood gas interpret","w":3},{"g":"ABG","t":"Compensation","s":"Uncompensated, partially or fully compensated","u":"abg-practice.html","k":"compensated partial full uncompensated abg arterial blood gas interpret","w":3},{"g":"ABG","t":"Interpret an ABG","s":"Practice on random gases with worked answers","u":"abg-practice.html","k":"interpretation analyze read abg practice abg arterial blood gas interpret","w":3},{"g":"O₂ device","t":"Nasal cannula","s":"1–6 L/min · 24–45% · low flow · humidify at 4 L+","u":"abg-o2.html#o2","k":"nc cannula humidify above 4 bubble humidifier oxygen device delivery","w":4},{"g":"O₂ device","t":"Simple face mask","s":"5–10 L/min · 40–60% · low flow","u":"abg-o2.html#o2","k":"simple mask minimum 5 oxygen device delivery","w":4},{"g":"O₂ device","t":"Partial rebreather","s":"10–15 L/min (keep bag inflated) · 40–60% · high flow","u":"abg-o2.html#o2","k":"prb reservoir bag oxygen device delivery","w":4},{"g":"O₂ device","t":"Non-rebreather","s":"10–15 L/min · 70–100% · high flow","u":"abg-o2.html#o2","k":"nrb nonrebreather non rebreather reservoir bag one-way valve oxygen device delivery","w":4},{"g":"O₂ device","t":"Venturi mask","s":"2–12 L/min · 24–50% · high flow, fixed FiO₂","u":"abg-o2.html#o2","k":"air entrainment venti mask copd jet adapter oxygen device delivery","w":4},{"g":"O₂ device","t":"High-flow nasal cannula","s":"Up to 60 L/min · 21–100% · high flow, heated humidity","u":"abg-o2.html#o2","k":"hfnc high flow optiflow oxygen device delivery","w":4},{"g":"O₂ device","t":"Low flow vs. high flow","s":"Which devices are which, and why FiO₂ changes with RR / VT","u":"abg-o2.html#o2","k":"concept fio2 varies oxygen device delivery","w":4},{"g":"Formula","t":"Total flow","s":"O₂ flow × (air parts + O₂ parts)","u":"formulas.html#total-flow","k":"total flow formula venturi calculation formula","w":3},{"g":"Formula","t":"Air : O₂ entrainment ratio","s":"(100 − FiO₂) ÷ (FiO₂ − 21) · ratio table","u":"formulas.html#total-flow","k":"ratio magic box 3:1 1:1 calculation formula","w":3},{"g":"Formula","t":"FiO₂ of a mixed gas","s":"[(O₂ × 1.0) + (air × 0.21)] ÷ total flow","u":"formulas.html#total-flow","k":"mixed fio2 blend calculation formula","w":3},{"g":"Formula","t":"Is the total flow enough?","s":"Total flow ≥ 3 × minute ventilation","u":"formulas.html#total-flow","k":"adequate minute ventilation tandem calculation formula","w":3},{"g":"Formula","t":"Cylinder duration","s":"(psig − residual) × factor ÷ L/min","u":"formulas.html#cylinder","k":"tank duration how long formula calculation formula","w":3},{"g":"Formula","t":"Cylinder factors","s":"D 0.16 · E 0.28 · M 1.56 · G 2.41 · H/K 3.14","u":"formulas.html#cylinder","k":"tank factor e cylinder h cylinder calculation formula","w":3},{"g":"Formula","t":"Arterial O₂ content (CaO₂)","s":"(Hb × 1.34 × SaO₂) + (PaO₂ × 0.003) · normal 16–20 mL/dL","u":"formulas.html#o2-content","k":"cao2 oxygen content total oxygen dissolved bound hemoglobin 1.34 0.003 calculation formula","w":3},{"g":"Formula","t":"Arterial–venous O₂ difference","s":"C(a–v)O₂ = CaO₂ − CvO₂ · normal ≈ 5 mL/dL","u":"formulas.html#o2-content","k":"a-v difference avdo2 cvo2 mixed venous svo2 extraction calculation formula","w":3},{"g":"Formula","t":"O₂ content calculator","s":"Hb, SaO₂ and PaO₂ → CaO₂, plus the a–v difference","u":"formulas.html#o2-content","k":"calculate cao2 calculation formula","w":3},{"g":"Formula","t":"Nasal cannula FiO₂ estimate","s":"21% + 4% per L/min","u":"formulas.html#estimates","k":"cannula fio2 estimate 4 percent per liter calculation formula","w":3},{"g":"Formula","t":"Heliox flow correction","s":"80/20 × 1.8 · 70/30 × 1.6","u":"formulas.html#estimates","k":"heliox factor flowmeter calculation formula","w":3},{"g":"Formula","t":"Percent solution → mg/mL","s":"% × 10 = mg/mL · 1:1000 = 1 mg/mL","u":"formulas.html#drug-math","k":"drug math dose percent solution concentration calculation formula","w":3},{"g":"Formula","t":"Dose → volume","s":"mL = dose (mg) ÷ mg/mL","u":"formulas.html#drug-math","k":"drug math dose volume ml calculation formula","w":3},{"g":"Formula","t":"Weight-based dose","s":"mg/kg × kg · lb ÷ 2.2 = kg","u":"formulas.html#drug-math","k":"drug math mg/kg weight pediatric calculation formula","w":3},{"g":"ABG","t":"O₂ dissociation curve","s":"PaO₂ vs. SaO₂ · S-shaped curve","u":"abg-o2.html#curve","k":"oxyhemoglobin oxygen dissociation curve hbo2 hemoglobin","w":4},{"g":"ABG","t":"60 / 90 rule","s":"PaO₂ 60 mmHg ≈ SaO₂ 90%","u":"abg-o2.html#curve","k":"60 90 rule sixty ninety saturation pao2 sao2","w":4},{"g":"ABG","t":"P50","s":"PaO₂ at 50% saturation · normal ≈ 27 mmHg","u":"abg-o2.html#curve","k":"p50 affinity","w":4},{"g":"ABG","t":"Right shift (CADET)","s":"CO₂↑, acid, 2,3-DPG↑, exercise, temp↑ → releases O₂","u":"abg-o2.html#curve","k":"right shift cadet face right curve shift","w":4},{"g":"ABG","t":"Left shift","s":"CO₂↓, alkalosis, cold, CO, fetal Hb → holds O₂","u":"abg-o2.html#curve","k":"left shift curve carbon monoxide fetal","w":4},{"g":"Vent","t":"Vent practice lab","s":"30 simulated patients on the ventilator","u":"vent.html","k":"ventilator mechanical ventilation simulator vent lab icu patients ards copd dka pulmonary embolism weaning sbt bipap obesity tbi guillain barre myasthenia als pregnancy smoke inhalation","w":3},{"g":"Vent","t":"Ventilator modes","s":"VC-AC, PC-AC, SIMV, CPAP/PS, CPAP, BiPAP","u":"vent.html","k":"mode ac simv psv pressure support bipap cpap volume control pressure control","w":3},{"g":"Vent","t":"DOPE","s":"Displacement, Obstruction, Pneumothorax, Equipment","u":"vent.html","k":"dope troubleshooting vent alarm high pressure low pressure","w":3},{"g":"Vent","t":"Plateau pressure & auto-PEEP","s":"Inspiratory and expiratory holds","u":"vent.html","k":"pplat plateau auto-peep autopeep driving pressure compliance resistance pip","w":3},{"g":"Vent","t":"Ventilator circuit change","s":"Put the steps in order","u":"vent.html","k":"circuit change procedure","w":3},{"g":"Vent","t":"Vent troubleshooting","s":"Disconnect, secretions, kinked tube, mainstem, pneumothorax, cuff leak","u":"vent.html","k":"disconnect mucus plug biting mainstem pneumothorax cuff leak extubation flow starvation","w":3},{"g":"Assessment","t":"Assessment sim lab","s":"21 patients: vitals, inspection, palpation, percussion, auscultation","u":"assess.html","k":"patient assessment physical exam bedside simulator","w":3},{"g":"Assessment","t":"Normal vital signs","s":"Adult: HR 60–100 · RR 12–20 · BP < 120/80 · temp 36.5–37.5 °C","u":"assess.html#normals","k":"vitals heart rate respiratory rate blood pressure temperature normal adult","w":3},{"g":"Assessment","t":"Pediatric vital signs","s":"Normal HR, RR and BP by age","u":"assess.html#normals","k":"children infant newborn toddler peds pediatric vitals","w":3},{"g":"Assessment","t":"Chest exam findings","s":"Breath sounds, percussion, fremitus and trachea by condition","u":"assess.html#normals","k":"percussion dull hyperresonant fremitus tactile tracheal shift consolidation effusion","w":3},{"g":"Assessment","t":"Breath sounds","s":"Hear them, sorted: normal, loudness, continuous, discontinuous","u":"sounds.html","k":"auscultation adventitious listen hear audio classification continuous discontinuous","w":3},{"g":"Assessment","t":"Vesicular breath sounds","s":"Normal · soft, low · in 3 : out 1 · most lung fields","u":"sounds.html#s-ves","k":"vesicular normal breath sounds","w":3},{"g":"Assessment","t":"Bronchovesicular breath sounds","s":"Normal near mainstem bronchi · in = out","u":"sounds.html#s-bv","k":"bronchovesicular normal breath sounds","w":3},{"g":"Assessment","t":"Bronchial breath sounds","s":"Loud, high, pause · normal over manubrium, consolidation elsewhere","u":"sounds.html#s-bronch","k":"bronchial tubular consolidation breath sounds","w":3},{"g":"Assessment","t":"Tracheal breath sounds","s":"Very loud, harsh · over the trachea in the neck","u":"sounds.html#s-trach","k":"tracheal breath sounds","w":3},{"g":"Assessment","t":"Diminished / absent breath sounds","s":"Less air moving: COPD, effusion, pneumothorax, plug, mainstem intubation","u":"sounds.html#s-dim","k":"diminished decreased absent breath sounds silent chest","w":3},{"g":"Assessment","t":"Wheezes","s":"High, musical, expiratory · bronchospasm · old name sibilant rhonchi","u":"sounds.html#s-wheeze","k":"wheeze wheezing sibilant bronchospasm asthma","w":3},{"g":"Assessment","t":"Rhonchi","s":"Low, snoring · secretions in large airways · clear with cough","u":"sounds.html#s-rhonchi","k":"rhonchi sonorous secretions","w":3},{"g":"Assessment","t":"Stridor","s":"High, loud, inspiratory, over the neck · upper-airway emergency","u":"sounds.html#s-stridor","k":"stridor croup epiglottitis upper airway","w":3},{"g":"Assessment","t":"Fine crackles","s":"High, late-inspiratory pops · atelectasis, fibrosis, early CHF · rales","u":"sounds.html#s-fine","k":"fine crackles rales velcro atelectasis fibrosis","w":3},{"g":"Assessment","t":"Coarse crackles","s":"Low, bubbling, early inspiration · edema, pneumonia, secretions","u":"sounds.html#s-coarse","k":"coarse crackles rales bubbling edema","w":3},{"g":"Assessment","t":"Pleural friction rub","s":"Creaking, grating · end-in and start-out · pleurisy, PE","u":"sounds.html#s-rub","k":"pleural friction rub creaking grating pleurisy","w":3},{"g":"Assessment","t":"Name that breath sound","s":"Ear-training drill: hear a sound, pick it","u":"assess.html#drill-snd","k":"listening quiz drill ear training breath sound practice","w":3},{"g":"Assessment","t":"Breathing patterns","s":"Kussmaul, Cheyne-Stokes, Biot’s, apneustic, paradoxical","u":"assess.html#normals","k":"kussmaul cheyne stokes biot apneustic paradoxical pattern","w":3},{"g":"Assessment","t":"MAP","s":"MAP = (SBP + 2 × DBP) ÷ 3 · normal 70–105, keep ≥ 65","u":"assess.html#normals","k":"mean arterial pressure formula pulse pressure","w":3},{"g":"Assessment","t":"Vital signs practice","s":"Count a pulse and respirations, take a BP","u":"assess.html#vitals","k":"counting pulse respirations blood pressure korotkoff sphygmomanometer drill","w":3},{"g":"Gas cylinder","t":"Oxygen","s":"Green (international: white) · pin index 2–5","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Medical air","s":"Yellow · pin index 1–5","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Heliox","s":"Brown & green · ×1.8 (80/20), ×1.6 (70/30)","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Helium","s":"Brown · never given alone","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Carbon dioxide","s":"Gray · analyzer calibration","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Carbogen (CO₂/O₂)","s":"Gray & green","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Nitrous oxide","s":"Light blue · pin index 3–5","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Nitrogen","s":"Black · pin index 1–4","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Cyclopropane","s":"Orange · pin index 3–6","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Ethylene","s":"Red · pin index 1–3","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"PISS","s":"Pin Index Safety System · small cylinders (E and smaller)","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"ASSS","s":"American Standard Safety System · large cylinders","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"DISS","s":"Diameter Index Safety System · low-pressure connections","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Drug","t":"Albuterol","s":"Proventil HFA, Ventolin HFA, ProAir HFA / RespiClick, AccuNeb · SABA (short-acting β2 agonist)","u":"meds.html?q=Albuterol#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) Nebulizer pMDI DPI drug medication med Rapid, short-acting bronchodilation Rescue for acute bronchospasm: asthma, COPD, EIB (2 puffs 15–30 min before exercise) Also shifts K⁺ into cells (used for hyperkalemia) Tachycardia, palpitations Tremor, nervousness, headache Hypokalemia, hyperglycemia Transient ↓ PaO₂ (V/Q mismatch) Paradoxical bronchospasm The go-to rescue inhaler and the most tested drug on the TMC Assess breath sounds, HR, and peak flow before and after Racemic mixture: R-isomer is active, S-isomer is not","w":2},{"g":"Drug","t":"Levalbuterol","s":"Xopenex, Xopenex HFA · SABA (R-isomer of albuterol)","u":"meds.html?q=Levalbuterol#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) Nebulizer pMDI drug medication med Same as albuterol: rapid, short-acting bronchodilation Rescue for asthma / COPD bronchospasm Same class effects as albuterol, possibly less tachycardia and tremor Exam pick when a patient has tachycardia or palpitations on albuterol Only the active (R) isomer, so a lower dose gives similar effect","w":2},{"g":"Drug","t":"Racemic Epinephrine","s":"S2, AsthmaNefrin (racepinephrine) · Adrenergic (α + β agonist)","u":"meds.html?q=Racemic%20Epinephrine#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) Nebulizer drug medication med Decongests the upper airway by shrinking mucosal edema, with some bronchodilation Post-extubation stridor, croup (laryngotracheobronchitis), upper airway edema Tachycardia, HTN, arrhythmias Tremor, anxiety, headache Rebound mucosal edema Know the reason: the α effect decongests the upper airway Board answer for post-extubation stridor alongside cool mist and possibly steroids","w":2},{"g":"Drug","t":"Salmeterol","s":"Serevent Diskus · LABA (long-acting β2 agonist)","u":"meds.html?q=Salmeterol#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) DPI drug medication med Maintenance bronchodilation (12 hr) Asthma maintenance (with ICS) and COPD maintenance Prevention of EIB Headache, tremor, tachycardia, palpitations Throat irritation, cough Slow onset is why it is never a rescue drug Diskus: do not exhale into device; keep level and dry","w":2},{"g":"Drug","t":"Formoterol fumarate","s":"Perforomist (neb); Foradil Aerolizer (discontinued) · LABA","u":"meds.html?q=Formoterol%20fumarate#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) Nebulizer DPI drug medication med Fast-onset, long-acting bronchodilation COPD maintenance (Perforomist) Tremor, tachycardia, headache, nausea Hypokalemia, hyperglycemia Fast onset LABA: key difference from salmeterol Foradil capsules are punctured in the device, never swallowed","w":2},{"g":"Drug","t":"Arformoterol","s":"Brovana · LABA (R,R-isomer of formoterol)","u":"meds.html?q=Arformoterol#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) Nebulizer drug medication med Long-acting bronchodilation, 12 hr COPD maintenance (chronic bronchitis, emphysema) Pain, chest pain, back pain, diarrhea, leg cramps Tachycardia, tremor, nervousness Single-isomer version of formoterol, similar to levalbuterol vs albuterol A nebulized LABA option for COPD patients who can't use a DPI","w":2},{"g":"Drug","t":"Indacaterol","s":"Arcapta Neohaler · Ultra-LABA (24-hr β2 agonist)","u":"meds.html?q=Indacaterol#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) DPI drug medication med Once-daily bronchodilation COPD maintenance Cough right after inhalation (common) Nasopharyngitis, headache, nausea Tachycardia, tremor Know it as the once-daily ultra-LABA US brand has been discontinued but it still appears in texts and exam prep","w":2},{"g":"Drug","t":"Olodaterol","s":"Striverdi Respimat · Ultra-LABA (24-hr)","u":"meds.html?q=Olodaterol#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) SMI (Respimat) drug medication med 24-hr bronchodilation COPD maintenance Nasopharyngitis, URI, cough Back pain, dizziness Tachycardia, tremor Respimat is a soft mist inhaler: slow, long-lasting mist, no propellant Pairs with tiotropium in Stiolto Respimat","w":2},{"g":"Drug","t":"Ipratropium bromide","s":"Atrovent HFA · SAMA (short-acting muscarinic antagonist)","u":"meds.html?q=Ipratropium%20bromide#table","k":"Parasympatholytic (Anticholinergic) Nebulizer pMDI drug medication med Short-acting bronchodilation COPD maintenance Added to SABA in acute asthma in the ED Can ↓ secretions; nasal form for rhinorrhea Dry mouth, cough, headache Blurred vision / pupil dilation if mist reaches eyes Urinary retention, constipation Quaternary ammonium compound: poorly absorbed, so fewer systemic effects than atropine Slower onset than albuterol: not first-line rescue alone","w":2},{"g":"Drug","t":"Tiotropium bromide","s":"Spiriva HandiHaler, Spiriva Respimat · LAMA (long-acting muscarinic antagonist)","u":"meds.html?q=Tiotropium%20bromide#table","k":"Parasympatholytic (Anticholinergic) DPI SMI (Respimat) drug medication med 24-hr bronchodilation COPD maintenance; ↓ exacerbations Respimat 1.25 mcg: add-on maintenance for asthma (≥6 yrs) Dry mouth (most common), constipation URI, sinusitis, pharyngitis Urinary retention, tachycardia, blurred vision The classic once-daily COPD maintenance drug HandiHaler: inhale twice from each capsule to empty it","w":2},{"g":"Drug","t":"Glycopyrrolate","s":"Lonhala Magnair (neb), Seebri Neohaler (DPI), Robinul (IV) · LAMA","u":"meds.html?q=Glycopyrrolate#table","k":"Parasympatholytic (Anticholinergic) Nebulizer DPI Injection drug medication med Maintenance bronchodilation in COPD IV/IM: dries oral and airway secretions (pre-op, end of life, drooling) Dry mouth, UTI, cough, sinusitis Urinary retention, blurred vision, tachycardia Quaternary amine: doesn't cross the blood-brain barrier Appears in Bevespi and Breztri combos","w":2},{"g":"Drug","t":"Umeclidinium bromide","s":"Incruse Ellipta · LAMA","u":"meds.html?q=Umeclidinium%20bromide#table","k":"Parasympatholytic (Anticholinergic) DPI drug medication med 24-hr bronchodilation COPD maintenance Nasopharyngitis, URI, cough Arthralgia, tachycardia Dry mouth, urinary retention Ellipta: slide the cover open to load; don't shake; don't block the vent Component of Anoro and Trelegy Ellipta","w":2},{"g":"Drug","t":"Aclidinium bromide","s":"Tudorza Pressair (Eklira Genuair outside the US) · LAMA","u":"meds.html?q=Aclidinium%20bromide#table","k":"Parasympatholytic (Anticholinergic) DPI drug medication med Long-acting bronchodilation COPD maintenance (chronic bronchitis, emphysema) Headache, nasopharyngitis, cough Diarrhea Dry mouth, urinary retention, blurred vision (less common) The twice-daily LAMA (tiotropium and umeclidinium are once daily) Rapidly broken down in the blood, so few systemic anticholinergic effects Pressair: press and release the button; the window turns green when ready and red after a correct inhalation Combined with formoterol in Duaklir Pressair (COPD)","w":2},{"g":"Drug","t":"Ipratropium bromide + Albuterol","s":"DuoNeb (neb), Combivent Respimat · SAMA + SABA","u":"meds.html?q=Ipratropium%20bromide%20%2B%20Albuterol#table","k":"Combinations Nebulizer SMI (Respimat) drug medication med Additive bronchodilation from two mechanisms COPD with bronchospasm needing a second bronchodilator Combined: tachycardia, tremor, nervousness, dry mouth, headache, cough DuoNeb is the classic 'give ipratropium and albuterol together' answer Combines the fast onset of albuterol with the longer action of ipratropium","w":2},{"g":"Drug","t":"Umeclidinium + Vilanterol","s":"Anoro Ellipta · LAMA + LABA","u":"meds.html?q=Umeclidinium%20%2B%20Vilanterol#table","k":"Combinations DPI drug medication med 24-hr dual bronchodilation COPD maintenance Pharyngitis, sinusitis, URI Constipation, diarrhea, pain in extremities Tachycardia, urinary retention Dual bronchodilator, no steroid Adding fluticasone furoate makes Trelegy (triple therapy)","w":2},{"g":"Drug","t":"Mometasone + Formoterol","s":"Dulera · ICS + LABA","u":"meds.html?q=Mometasone%20%2B%20Formoterol#table","k":"Combinations pMDI drug medication med Anti-inflammatory control plus 12-hr bronchodilation Asthma maintenance (≥5 yrs) Oral thrush, dysphonia Nasopharyngitis, sinusitis, headache Asthma-labeled combo; not approved for COPD in the US Use with a spacer to ↓ oral deposition","w":2},{"g":"Drug","t":"Fluticasone propionate + Salmeterol","s":"Advair Diskus, Advair HFA, Wixela Inhub (generic) · ICS + LABA","u":"meds.html?q=Fluticasone%20propionate%20%2B%20Salmeterol#table","k":"Combinations DPI pMDI drug medication med Asthma maintenance COPD maintenance and ↓ exacerbations (250/50) Oral candidiasis (thrush), hoarseness URI, headache ↑ pneumonia risk in COPD The classic ICS/LABA board answer Salmeterol's slow onset means it never replaces albuterol for rescue","w":2},{"g":"Drug","t":"Budesonide + Formoterol","s":"Symbicort, Breyna (generic) · ICS + LABA","u":"meds.html?q=Budesonide%20%2B%20Formoterol#table","k":"Combinations pMDI drug medication med Asthma maintenance (≥6 yrs) COPD maintenance Oral thrush, dysphonia Nasopharyngitis, headache, URI ↑ pneumonia risk in COPD Formoterol's fast onset allows single maintenance-and-reliever therapy (SMART) in asthma Know it as the ICS/LABA combo that can double as reliever","w":2},{"g":"Drug","t":"Theophylline","s":"Theo-24, Elixophyllin, Uniphyl; Aminophylline (IV salt) · Methylxanthine (PDE inhibitor)","u":"meds.html?q=Theophylline#table","k":"Phosphodiesterase Inhibitors (Xanthines) Oral Injection drug medication med Mild bronchodilation ↑ diaphragm contractility, CNS respiratory stimulation, mild diuresis Add-on for COPD or asthma not controlled on other therapy Nausea, vomiting, GI upset Headache, insomnia, restlessness Tachycardia, arrhythmias Seizures (toxicity) Boards test the therapeutic range and signs of toxicity Largely replaced by inhaled drugs","w":2},{"g":"Drug","t":"Caffeine citrate","s":"Cafcit · Methylxanthine","u":"meds.html?q=Caffeine%20citrate#table","k":"Phosphodiesterase Inhibitors (Xanthines) Injection Oral drug medication med Central respiratory stimulant Apnea of prematurity; aids weaning neonates off the ventilator Tachycardia, jitteriness, irritability Feeding intolerance, vomiting Watch for necrotizing enterocolitis (NEC) Preferred over theophylline in neonates: wider therapeutic range, once-daily dosing, fewer side effects Dose on the citrate: 2 mg citrate = 1 mg base","w":2},{"g":"Drug","t":"Dupilumab","s":"Dupixent · Monoclonal antibody (anti-IL-4Rα; blocks IL-4 and IL-13)","u":"meds.html?q=Dupilumab#table","k":"Biologics Injection drug medication med Add-on maintenance for moderate–severe eosinophilic asthma or oral-steroid-dependent asthma (≥6 yrs) Also COPD with eosinophilia, atopic dermatitis, nasal polyps Injection site reactions Conjunctivitis, keratitis Transient blood eosinophilia Oropharyngeal pain, hypersensitivity Targets type 2 (eosinophilic) inflammation Can be self-injected at home after training","w":2},{"g":"Drug","t":"Omalizumab","s":"Xolair · Monoclonal antibody (anti-IgE)","u":"meds.html?q=Omalizumab#table","k":"Biologics Injection drug medication med Moderate–severe persistent allergic asthma (≥6 yrs) with positive skin test to a perennial allergen, poorly controlled on ICS Also chronic urticaria, nasal polyps, food allergy Injection site reactions URI, sinusitis, headache Arthralgia Binds free IgE so it can't trigger mast cells Dose table uses the pre-treatment IgE level and weight","w":2},{"g":"Drug","t":"Cromolyn sodium","s":"Intal (inhaler discontinued); generic neb; NasalCrom · Mast cell stabilizer (non-steroidal anti-inflammatory)","u":"meds.html?q=Cromolyn%20sodium#table","k":"Anti-asthmatic (Mast Cell Stabilizer) Nebulizer drug medication med Prevents mast cell degranulation and mediator release Prophylaxis of mild persistent asthma, EIB, allergen-triggered asthma Cough, throat irritation, wheezing Unpleasant taste, nasal congestion Very safe: few side effects Can be mixed with albuterol in the same neb","w":2},{"g":"Drug","t":"Zafirlukast","s":"Accolate · Leukotriene receptor antagonist (LTRA)","u":"meds.html?q=Zafirlukast#table","k":"Leukotriene Modifiers Oral drug medication med Blocks leukotriene receptors: ↓ bronchoconstriction, edema, mucus Long-term control of mild persistent asthma Headache, GI upset, infection Hepatotoxicity Food ↓ absorption, so take on an empty stomach Alternative to low-dose ICS","w":2},{"g":"Drug","t":"Montelukast","s":"Singulair · Leukotriene receptor antagonist (LTRA)","u":"meds.html?q=Montelukast#table","k":"Leukotriene Modifiers Oral drug medication med Long-term control of asthma Prevention of EIB Allergic rhinitis Headache, abdominal pain, URI Agitation, sleep disturbance, depression Most-prescribed leukotriene drug; once daily with no food restriction Chewables contain phenylalanine (PKU caution)","w":2},{"g":"Drug","t":"Zileuton","s":"Zyflo, Zyflo CR · 5-lipoxygenase inhibitor","u":"meds.html?q=Zileuton#table","k":"Leukotriene Modifiers Oral drug medication med Blocks leukotriene synthesis Long-term control of asthma Headache, dyspepsia, nausea Elevated liver enzymes (ALT) Different mechanism from the '-lukasts': stops leukotrienes from being made QID dosing hurts adherence","w":2},{"g":"Drug","t":"Tobramycin sulfate","s":"TOBI, Bethkis, Kitabis Pak, TOBI Podhaler · Aminoglycoside antibiotic","u":"meds.html?q=Tobramycin%20sulfate#table","k":"Anti-infectives Nebulizer DPI drug medication med Kills gram-negative bacteria CF patients colonized with Pseudomonas aeruginosa Voice alteration, cough, bronchospasm Tinnitus, hearing loss (ototoxic) Nephrotoxicity CF sequence: bronchodilator → hypertonic saline → dornase → airway clearance → inhaled antibiotic → ICS Delivered with a PARI LC Plus jet nebulizer","w":2},{"g":"Drug","t":"Pentamidine isethionate","s":"NebuPent (inhaled), Pentam (IV) · Antiprotozoal / antifungal","u":"meds.html?q=Pentamidine%20isethionate#table","k":"Anti-infectives Nebulizer drug medication med Prevention of Pneumocystis jirovecii pneumonia (PCP) in HIV and other immunocompromised patients Cough, bronchospasm, wheezing Metallic / bitter taste Conjunctivitis, fatigue, dizziness Pneumothorax (rare) Mix with sterile water only: saline makes it precipitate Delivered via Respirgard II nebulizer (one-way valves + expiratory filter)","w":2},{"g":"Drug","t":"Ribavirin","s":"Virazole · Antiviral","u":"meds.html?q=Ribavirin#table","k":"Anti-infectives Nebulizer (SPAG-2) drug medication med Severe RSV lower respiratory infection in high-risk infants Worsening respiratory function, bronchospasm Conjunctivitis, rash Anemia (systemic) SPAG = small particle aerosol generator Rarely used now; RSV prevention (palivizumab, nirsevimab) is more common","w":2},{"g":"Drug","t":"Aztreonam lysine","s":"Cayston · Monobactam antibiotic","u":"meds.html?q=Aztreonam%20lysine#table","k":"Anti-infectives Nebulizer (Altera) drug medication med Improves respiratory symptoms in CF patients (≥7 yrs) with Pseudomonas aeruginosa Cough, nasal congestion, wheezing Pharyngolaryngeal pain, fever Bronchospasm, chest discomfort Only given with the Altera vibrating-mesh nebulizer Often alternated month-to-month with tobramycin","w":2},{"g":"Drug","t":"Colistin (colistimethate sodium)","s":"Coly-Mycin M · Polymyxin antibiotic","u":"meds.html?q=Colistin%20%28colistimethate%20sodium%29#table","k":"Anti-infectives Nebulizer Injection drug medication med Multidrug-resistant gram-negative infections: Pseudomonas, Acinetobacter, Klebsiella CF Pseudomonas; ventilator-associated pneumonia Bronchospasm, chest tightness, cough Nephrotoxicity, neurotoxicity (systemic) Paresthesias, neuromuscular blockade A 'last-resort' antibiotic for resistant organisms Neuromuscular blockade risk: watch ventilation","w":2},{"g":"Drug","t":"Nafcillin","s":"Nallpen (generic nafcillin) · Penicillinase-resistant penicillin","u":"meds.html?q=Nafcillin#table","k":"Anti-infectives Injection drug medication med Infections from methicillin-sensitive Staphylococcus aureus (MSSA): staph pneumonia, endocarditis, osteomyelitis, bacteremia Hypersensitivity / anaphylaxis Phlebitis; tissue necrosis if extravasated Neutropenia, hypokalemia, interstitial nephritis Systemic only; not inhaled Know it as the anti-staph penicillin","w":2},{"g":"Drug","t":"Gentamicin","s":"Garamycin (generic gentamicin) · Aminoglycoside antibiotic","u":"meds.html?q=Gentamicin#table","k":"Anti-infectives Injection drug medication med Serious gram-negative infections (Pseudomonas, E. coli, Klebsiella) Synergy with β-lactams for gram-positive infections Ototoxicity (hearing loss, vertigo) Nephrotoxicity Neuromuscular blockade Same class and toxicities as tobramycin 'Mycin' spelling is used for Streptomyces-derived drugs; gentamicin comes from Micromonospora","w":2},{"g":"Drug","t":"Acetylcysteine","s":"Mucomyst; Acetadote (IV) · Mucolytic","u":"meds.html?q=Acetylcysteine#table","k":"Mucolytics Nebulizer Direct instillation drug medication med Breaks disulfide bonds in mucoproteins → thinner mucus Thick, tenacious secretions (bronchitis, pneumonia, atelectasis from mucus plugs) Antidote for acetaminophen overdose (oral/IV) Bronchospasm (most important) Rotten-egg (sulfur) odor, nausea, vomiting Stomatitis, rhinorrhea, hemoptysis Light purple color change in the vial is harmless Reacts with rubber and some metals","w":2},{"g":"Drug","t":"Dornase alfa","s":"Pulmozyme · Mucolytic enzyme (recombinant DNase)","u":"meds.html?q=Dornase%20alfa#table","k":"Mucolytics Nebulizer drug medication med Cleaves extracellular DNA from dead neutrophils in purulent sputum Cystic fibrosis: improves lung function and ↓ infections Voice alteration, pharyngitis, laryngitis Chest pain, rash, conjunctivitis CF-specific; not shown to help non-CF bronchiectasis Given before airway clearance so it has time to work","w":2},{"g":"Drug","t":"Flunisolide","s":"AeroBid, Aerospan (discontinued); nasal spray · Inhaled corticosteroid (ICS)","u":"meds.html?q=Flunisolide#table","k":"Corticosteroids pMDI drug medication med Long-term control of persistent asthma (anti-inflammatory) Oral thrush, dysphonia, cough Unpleasant taste, headache Aerospan had a built-in spacer Oral inhalers discontinued in US; still appears in study guides","w":2},{"g":"Drug","t":"Triamcinolone acetonide","s":"Azmacort (discontinued); Kenalog (inj.), Nasacort (nasal) · Corticosteroid (ICS / systemic)","u":"meds.html?q=Triamcinolone%20acetonide#table","k":"Corticosteroids pMDI Injection drug medication med Long-term control of persistent asthma Injectable: anti-inflammatory for many conditions Oral thrush, dysphonia, cough Systemic: hyperglycemia, fluid retention Azmacort had a built-in spacer tube Inhaled form discontinued in US (2010)","w":2},{"g":"Drug","t":"Budesonide","s":"Pulmicort Respules, Pulmicort Flexhaler · Inhaled corticosteroid (ICS)","u":"meds.html?q=Budesonide#table","k":"Corticosteroids Nebulizer DPI drug medication med Long-term control of persistent asthma Respules are used for young children who can't use inhalers Oral thrush, dysphonia, cough Respiratory infection, otitis media (peds) The only nebulized ICS in the US Mask treatments leave steroid on the face; wipe it off","w":2},{"g":"Drug","t":"Beclomethasone dipropionate","s":"QVAR RediHaler · Inhaled corticosteroid (ICS)","u":"meds.html?q=Beclomethasone%20dipropionate#table","k":"Corticosteroids pMDI (breath-actuated) drug medication med Long-term control of persistent asthma (≥4 yrs) Oral thrush, dysphonia Headache, URI, pharyngitis RediHaler is breath-actuated: do NOT shake and do NOT use with a spacer HFA propellant gives fine particles with good lung deposition","w":2},{"g":"Drug","t":"Fluticasone","s":"Flovent HFA / Diskus (propionate); Arnuity Ellipta (furoate); ArmonAir Digihaler · Inhaled corticosteroid (ICS)","u":"meds.html?q=Fluticasone#table","k":"Corticosteroids pMDI DPI drug medication med Long-term control of persistent asthma Anti-inflammatory; ↓ airway hyperresponsiveness Oral thrush, dysphonia, cough Headache, URI Pneumonia risk in COPD One of the most potent ICSs Flovent HFA brand ended in 2024; authorized generics remain","w":2},{"g":"Drug","t":"Methylprednisolone","s":"Solu-Medrol (IV), Medrol (oral), Depo-Medrol (IM) · Systemic corticosteroid","u":"meds.html?q=Methylprednisolone#table","k":"Corticosteroids Injection Oral drug medication med Powerful anti-inflammatory Acute asthma and COPD exacerbations, status asthmaticus, airway edema Hyperglycemia, fluid retention, HTN Insomnia, mood changes, ↑ appetite Immunosuppression Onset takes 4–6 hr, so give early in the exacerbation IV and oral routes work equally well if the patient can swallow","w":2},{"g":"Drug","t":"Prednisone","s":"Deltasone (discontinued), Rayos; generic · Systemic corticosteroid","u":"meds.html?q=Prednisone#table","k":"Corticosteroids Oral drug medication med Oral anti-inflammatory Asthma and COPD exacerbations; steroid-dependent severe asthma Same as methylprednisolone: hyperglycemia, fluid retention, mood changes, insomnia, immunosuppression Short bursts (≤ ~10 days) usually don't need a taper Prodrug converted to prednisolone in the liver","w":2},{"g":"Drug","t":"Normal saline solution","s":"0.9% NaCl (isotonic) · Diluent / bland aerosol","u":"meds.html?q=Normal%20saline%20solution#table","k":"Diluents / Bland Aerosol Nebulizer Direct instillation drug medication med Dilutes medications for nebulization Humidifies and thins secretions Sputum induction (with hypertonic preferred) Minimal; rare bronchospasm Contamination risk with multi-dose containers Isotonic: matches body fluid, so the least irritating diluent Routine instillation before suctioning is no longer recommended","w":2},{"g":"Drug","t":"Hypertonic saline solution","s":"3%, 3.5%, 7% NaCl (Hyper-Sal, PulmoSal) · Bland aerosol / airway hydration","u":"meds.html?q=Hypertonic%20saline%20solution#table","k":"Diluents / Bland Aerosol Nebulizer drug medication med Draws water into the airway surface liquid → better mucociliary clearance Sputum induction (TB, PCP, cytology) Airway clearance in CF Bronchospasm (asthma, COPD) Cough, throat irritation, salty taste Hypertonic = more than 0.9% salt Given before dornase and airway clearance in CF","w":2},{"g":"Drug","t":"Sterile water","s":"USP sterile water for inhalation · Bland aerosol / humidifier fluid","u":"meds.html?q=Sterile%20water#table","k":"Diluents / Bland Aerosol Nebulizer Humidifier drug medication med Humidification for artificial airways, oxygen therapy, and bypassed upper airways Helps thin secretions Airway irritation and bronchospasm (hypotonic) Overhydration (especially infants) The required diluent when saline would precipitate a drug (pentamidine) Sterile = free of microorganisms","w":2},{"g":"Drug","t":"Distilled water","s":"(Not a drug product) · Humidifier fluid","u":"meds.html?q=Distilled%20water#table","k":"Diluents / Bland Aerosol Humidifier drug medication med Mineral-free water that won't leave scale in equipment Home humidification Airway irritation if aerosolized Exam distinction: distilled = minerals removed; sterile = microorganisms removed Hospital equipment uses sterile water","w":2},{"g":"Mnemonic","t":"Sympathetic = fight or flight. Parasympathetic = rest and digest.","s":"The big picture","u":"meds.html#mem","k":"In a fight you need open airways and a fast heart, so sympathetic stimulation dilates the bronchi. At rest, the vagus nerve (parasympathetic) keeps the airways slightly constricted. memory aid","w":0},{"g":"Mnemonic","t":"Mimetic mimics. Lytic lyses (breaks).","s":"The big picture","u":"meds.html#mem","k":"Sympathomimetics copy fight-or-flight. Parasympatholytics block rest-and-digest. Two different roads to the same open airway. memory aid","w":0},{"g":"Mnemonic","t":"1 heart, 2 lungs","s":"The big picture","u":"meds.html#mem","k":"β1 receptors are mainly in the heart, β2 receptors mainly in the lungs. When a β2 agonist spills onto β1, the heart speeds up. memory aid","w":0},{"g":"Mnemonic","t":"cAMP = Airways open. cGMP = Gets tight.","s":"The big picture","u":"meds.html#mem","k":"β2 agonists raise cAMP and relax airway muscle; theophylline keeps cAMP from breaking down. Acetylcholine raises cGMP and tightens the airway, so anticholinergics block it. memory aid","w":0},{"g":"Mnemonic","t":"Slow or long-acting is never the rescue answer","s":"The big picture","u":"meds.html#mem","k":"Rescue (relievers): albuterol, levalbuterol, ipratropium, racemic epinephrine. Everything long-acting or preventive (LABAs, LAMAs, ICS, leukotriene drugs, cromolyn, biologics, theophylline) is a controller. memory aid","w":0},{"g":"Mnemonic","t":"-terol = β2 agonist","s":"Sympathomimetic","u":"meds.html#mem","k":"If the name ends in -terol, it opens the airway through β2 receptors: albuterol, levalbuterol, salmeterol, formoterol, arformoterol, indacaterol, olodaterol, vilanterol. memory aid Name clue","w":0},{"g":"Mnemonic","t":"Shaky, racy, low K","s":"Sympathomimetic","u":"meds.html#mem","k":"β-agonist side effects: tremor (shaky), tachycardia and palpitations (racy), hypokalemia (low K⁺). Blood sugar goes up too. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"20 beats? Stop the treat.","s":"Sympathomimetic","u":"meds.html#mem","k":"If heart rate rises more than 20 beats/min during a β-agonist treatment, stop and notify the physician. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Lev = Less","s":"Sympathomimetic","u":"meds.html#mem","k":"Levalbuterol is the pure R-isomer: a smaller dose and less tachycardia. It's the exam answer when albuterol makes the heart race. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"S is Slow, F is Fast","s":"Sympathomimetic","u":"meds.html#mem","k":"Salmeterol takes about 20 minutes to start working; formoterol starts in 1–3 minutes. Both last 12 hours. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"The 12-hour shift and the 24-hour shift","s":"Sympathomimetic","u":"meds.html#mem","k":"Twice daily (12 hr): salmeterol, formoterol, arformoterol. Once daily (24 hr): indacaterol, olodaterol, vilanterol. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"No LABA flies solo in asthma","s":"Sympathomimetic","u":"meds.html#mem","k":"A LABA without an inhaled steroid raises the risk of asthma death. In asthma, a LABA always comes with an ICS. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Racemic epi Reduces swelling","s":"Sympathomimetic","u":"meds.html#mem","k":"Its α1 effect shrinks swollen mucosa, which is why it's used for post-extubation stridor and croup. It wears off in 0.5–2 hours, so watch for rebound stridor. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"-tropium and -clidinium = anticholinergic","s":"Parasympatholytic","u":"meds.html#mem","k":"Ipratropium, tiotropium, aclidinium, umeclidinium. Glycopyrrolate is the one that breaks the pattern. memory aid Name clue","w":0},{"g":"Mnemonic","t":"Can't see, can't pee, can't spit, can't poop","s":"Parasympatholytic","u":"meds.html#mem","k":"Anticholinergic side effects: blurred vision and glaucoma risk, urinary retention, dry mouth, constipation. Narrow-angle glaucoma and BPH are the cautions. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Dry as a bone, red as a beet, blind as a bat, mad as a hatter, hot as a hare, full as a flask","s":"Parasympatholytic","u":"meds.html#mem","k":"Full anticholinergic toxicity (systemic atropine). Inhaled quaternary drugs like ipratropium rarely cause it because so little is absorbed. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Ipra = In and out. Tio = Twenty-four hours.","s":"Parasympatholytic","u":"meds.html#mem","k":"Ipratropium is short-acting (4–6 hr, given QID). Tiotropium lasts 24 hours and is given once daily. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Tio and Umec: once a day. Aclid and Glyco: twice a day.","s":"Parasympatholytic","u":"meds.html#mem","k":"Tiotropium and umeclidinium are the once-daily LAMAs. Aclidinium and inhaled glycopyrrolate are given BID. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Mist in the eyes = big pupils","s":"Parasympatholytic","u":"meds.html#mem","k":"Anticholinergic aerosol that reaches the eyes dilates the pupils and blurs vision. Use a mouthpiece, or shield the eyes when using a mask. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Read the two halves","s":"Combinations","u":"meds.html#mem","k":"Every combo is two classes. Use the name endings: fluticasone (-sone, ICS) + salmeterol (-terol, LABA); umeclidinium (-clidinium, LAMA) + vilanterol (-terol, LABA). memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Anoro = A-NO-roid","s":"Combinations","u":"meds.html#mem","k":"Anoro Ellipta has no steroid (LAMA + LABA), so it's for COPD only, never asthma. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Steroid + LABA = asthma OK. LAMA + LABA = COPD only.","s":"Combinations","u":"meds.html#mem","k":"Advair, Symbicort and Dulera contain an ICS, so they can be used in asthma. Combos without a steroid can't. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Symbicort can Save you","s":"Combinations","u":"meds.html#mem","k":"Its formoterol is fast, so budesonide/formoterol can be both the maintenance and the reliever inhaler (SMART). memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"DuoNeb = a duo of short-actings","s":"Combinations","u":"meds.html#mem","k":"0.5 mg ipratropium + 2.5 mg albuterol in 3 mL: a SAMA and a SABA in one nebulizer treatment. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Trelegy: Tre = three","s":"Combinations","u":"meds.html#mem","k":"Triple therapy: ICS + LAMA + LABA in one inhaler (fluticasone furoate, umeclidinium, vilanterol). memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Theophylline is a teen: 10 to 20","s":"Phosphodiesterase Inhibitors","u":"meds.html#mem","k":"The classic therapeutic range is 10–20 mcg/mL. Above 20 is toxic. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Toxicity climbs: gut, heart, brain","s":"Phosphodiesterase Inhibitors","u":"meds.html#mem","k":"Nausea and vomiting come first, then tachycardia and arrhythmias, then seizures. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Smoke burns it off","s":"Phosphodiesterase Inhibitors","u":"meds.html#mem","k":"Smoking lowers theophylline levels. A sick heart (CHF), a sick liver, ciprofloxacin, erythromycin and cimetidine push levels up. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Coffee for preemies","s":"Phosphodiesterase Inhibitors","u":"meds.html#mem","k":"Caffeine citrate treats apnea of prematurity: once-daily dosing and a wider safety range than theophylline. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"-mab = monoclonal antibody","s":"Biologics","u":"meds.html#mem","k":"Omalizumab and dupilumab are injected biologics for severe asthma. They are never rescue drugs. memory aid Name clue","w":0},{"g":"Mnemonic","t":"Omalizumab = Oh My, Allergies","s":"Biologics","u":"meds.html#mem","k":"Anti-IgE for allergic asthma. Its boxed warning is anaphylaxis, so watch the patient after each injection and make sure they carry epinephrine. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Dupilumab dupes two","s":"Biologics","u":"meds.html#mem","k":"It blocks the shared IL-4 receptor, shutting down both IL-4 and IL-13. Watch for conjunctivitis. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Cromolyn = Calm before the storm","s":"Anti-asthmatic","u":"meds.html#mem","k":"It stabilizes mast cells before exposure, so it only prevents symptoms. It does nothing in an acute attack and takes 2–4 weeks for full effect. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Crazy safe","s":"Anti-asthmatic","u":"meds.html#mem","k":"Cromolyn has very few side effects (mainly cough and throat irritation), which is why it was once a go-to for children. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"-lukast blocks the Leukotriene receptor","s":"Leukotriene Modifiers","u":"meds.html#mem","k":"Montelukast and zafirlukast block the receptor. Zileuton works one step earlier and stops leukotrienes from being made. memory aid Name clue","w":0},{"g":"Mnemonic","t":"Zileuton Zaps lipoxygenase and Zings the liver","s":"Leukotriene Modifiers","u":"meds.html#mem","k":"It inhibits 5-lipoxygenase and can raise liver enzymes, so check LFTs. It also raises theophylline levels. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"ZAFIR: Zero food, Avoid in liver disease, Fix the warfarin","s":"Leukotriene Modifiers","u":"meds.html#mem","k":"Take zafirlukast on an empty stomach. It's contraindicated in hepatic impairment and raises warfarin's effect. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Montelukast's 3 M's: Moon, Mood, Mild","s":"Leukotriene Modifiers","u":"meds.html#mem","k":"Dosed in the evening (moon), boxed warning for mood and behavior changes, used for mild persistent asthma and EIB. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Matching letters: P & P, R & R, A & A","s":"Anti-infectives","u":"meds.html#mem","k":"Pentamidine for PCP. Ribavirin for RSV. Aztreonam through the Altera nebulizer. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Mean GNATS caNNOT kill anaerobes","s":"Anti-infectives","u":"meds.html#mem","k":"Aminoglycosides: Gentamicin, Neomycin, Amikacin, Tobramycin, Streptomycin. Toxicities: Nephrotoxic, Neuromuscular blockade, Ototoxic, Teratogenic. They don't cover anaerobes. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"TOBI: 28 on, 28 off","s":"Anti-infectives","u":"meds.html#mem","k":"Inhaled tobramycin for CF Pseudomonas: 300 mg BID for 28 days, then 28 days off to limit resistance. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Pentamidine likes Pure water","s":"Anti-infectives","u":"meds.html#mem","k":"Mix it with sterile water only. Saline makes it precipitate. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Protect the caregiver","s":"Anti-infectives","u":"meds.html#mem","k":"Pentamidine and ribavirin need negative-pressure rooms or booths and PPE. Ribavirin is teratogenic, so pregnant staff and visitors stay out. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Naf for staph","s":"Anti-infectives","u":"meds.html#mem","k":"Nafcillin kills methicillin-sensitive Staph aureus (MSSA). It does not work on MRSA. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Mucomyst: Must have a bronchodilator. Smells like eggs.","s":"Mucolytics","u":"meds.html#mem","k":"Acetylcysteine can cause bronchospasm, so give a bronchodilator with it. The sulfur gives the rotten-egg smell. Have suction ready. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Dornase = DNA-ase","s":"Mucolytics","u":"meds.html#mem","k":"It chops up DNA from dead neutrophils in purulent CF sputum. Never mix it with other drugs in the nebulizer. memory aid Name clue","w":0},{"g":"Mnemonic","t":"Big Happy Dogs Chase After Squirrels","s":"Mucolytics","u":"meds.html#mem","k":"CF treatment order: memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"-sone, -nide, -olone = steroid","s":"Corticosteroids","u":"meds.html#mem","k":"Fluticasone, mometasone, beclomethasone, prednisone, budesonide, flunisolide, triamcinolone, methylprednisolone. memory aid Name clue","w":0},{"g":"Mnemonic","t":"The 3 S's of inhaled steroids: Slow, Spacer, Swish & Spit","s":"Corticosteroids","u":"meds.html#mem","k":"Days to weeks for full effect, so never rescue. A spacer and rinsing the mouth prevent thrush and a hoarse voice. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"STEROIDS: long-term systemic side effects","s":"Corticosteroids","u":"meds.html#mem","k":"Why long courses need a taper and close monitoring: memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"QVAR: no shake, no spacer","s":"Corticosteroids","u":"meds.html#mem","k":"The RediHaler is breath-actuated, so a spacer won't work and it doesn't need shaking. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Respules for really young","s":"Corticosteroids","u":"meds.html#mem","k":"Budesonide Respules are the only nebulized steroid in the US, used for children about 1–8 years old. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Hypo irritates, iso soothes, hyper induces","s":"Diluents / Bland Aerosol","u":"meds.html#mem","k":"Sterile water is hypotonic and can trigger bronchospasm. Normal saline is isotonic and gentle. Hypertonic saline draws water in and induces sputum. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Sterile = no bugs. Distilled = no minerals.","s":"Diluents / Bland Aerosol","u":"meds.html#mem","k":"Only sterile water goes into hospital nebulizers and humidifiers. Distilled water is for home humidifier tanks. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"0.9 is the magic number","s":"Diluents / Bland Aerosol","u":"meds.html#mem","k":"0.9% NaCl is isotonic. Anything above it is hypertonic (3%, 7%); plain water is hypotonic. memory aid Rule of thumb","w":0},{"g":"Name clue","t":"-terol","s":"β2 agonist (bronchodilator): albuterol, salmeterol, formoterol, olodaterol, vilanterol","u":"meds.html#mem","k":"suffix ending name clue","w":1},{"g":"Name clue","t":"-tropium / -clidinium","s":"Anticholinergic (SAMA / LAMA): ipratropium, tiotropium, aclidinium, umeclidinium","u":"meds.html#mem","k":"suffix ending name clue","w":1},{"g":"Name clue","t":"-sone / -nide / -olone","s":"Corticosteroid: fluticasone, mometasone, budesonide, flunisolide, methylprednisolone","u":"meds.html#mem","k":"suffix ending name clue","w":1},{"g":"Name clue","t":"-lukast","s":"Leukotriene receptor blocker: montelukast, zafirlukast","u":"meds.html#mem","k":"suffix ending name clue","w":1},{"g":"Name clue","t":"-phylline","s":"Xanthine (PDE inhibitor): theophylline, aminophylline","u":"meds.html#mem","k":"suffix ending name clue","w":1},{"g":"Name clue","t":"-mab","s":"Monoclonal antibody (biologic): omalizumab, dupilumab","u":"meds.html#mem","k":"suffix ending name clue","w":1},{"g":"Name clue","t":"-mycin / -micin","s":"Aminoglycoside antibiotic: tobramycin, gentamicin","u":"meds.html#mem","k":"suffix ending name clue","w":1},{"g":"Name clue","t":"-cillin","s":"Penicillin antibiotic: nafcillin","u":"meds.html#mem","k":"suffix ending name clue","w":1}];</script>
+<script>
+/* Shared site nav: menus that close each other / on outside click / on Esc,
+   and the site-wide search (nav panel + any other .srch box on the page).
+   The search index (window.RTQ_INDEX) is generated by the build from the site's own data. */
+(function () {
+  "use strict";
+  var menus = [].slice.call(document.querySelectorAll(".site-nav details.menu"));
+  menus.forEach(function (m) {
+    m.addEventListener("toggle", function () {
+      if (!m.open) return;
+      menus.forEach(function (o) { if (o !== m) o.open = false; });
+      var inp = m.querySelector("input");
+      if (inp) setTimeout(function () { inp.focus(); }, 0);
+    });
+  });
+  document.addEventListener("click", function (e) {
+    menus.forEach(function (m) { if (m.open && !m.contains(e.target)) m.open = false; });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    menus.forEach(function (m) { if (m.open) { m.open = false; m.querySelector("summary").focus(); } });
+  });
+  /* "/" opens search from anywhere (except while typing) */
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target;
+    if (t.closest && t.closest("input,textarea,select,[contenteditable]")) return;
+    var sm = document.querySelector(".site-nav .search-menu");
+    if (sm) { e.preventDefault(); sm.open = true; }
+  });
+  /* close a menu when one of its links points at this same page */
+  menus.forEach(function (m) {
+    m.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("a");
+      if (a && a.pathname === location.pathname) m.open = false;
+    });
+  });
+
+  /* ---------- search ---------- */
+  var IDX = (window.RTQ_INDEX || []).map(function (x) {
+    x._t = norm(x.t); x._h = norm([x.t, x.s, x.k || "", x.g].join(" ")); return x;
+  });
+  function norm(s) {
+    return String(s).replace(/[’']/g, "").replace(/β/g, "beta ").replace(/α/g, "alpha ").replace(/<[^>]+>/g, " ")
+      .normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase()
+      .replace(/[^a-z0-9%.\s-]/g, " ").replace(/\s+/g, " ").trim();
+  }
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function find(q) {
+    var nq = norm(q); if (!nq) return [];
+    var toks = nq.split(" ");
+    var out = [];
+    IDX.forEach(function (x) {
+      for (var i = 0; i < toks.length; i++) if (x._h.indexOf(toks[i]) < 0) return;
+      var sc = x._t === nq ? 120 : x._t.indexOf(nq) === 0 ? 100 : x._t.indexOf(nq) >= 0 ? 70 :
+               toks.every(function (t) { return x._t.indexOf(t) >= 0; }) ? 50 : 10;
+      sc += (x.w || 0) - x._t.length / 100;
+      out.push([sc, x]);
+    });
+    out.sort(function (a, b) { return b[0] - a[0]; });
+    return out.slice(0, 8).map(function (r) { return r[1]; });
+  }
+  var NONE = '<li class="snote">No matches. Try a drug, a device, a gas, or a formula — or browse <a href="index.html">the home page</a>.</li>';
+  document.querySelectorAll(".srch").forEach(function (box) {
+    var inp = box.querySelector("input"), list = box.querySelector(".sres"), act = -1, res = [];
+    function render() {
+      var q = inp.value.trim();
+      res = find(q); act = res.length ? 0 : -1;
+      if (!q) { list.innerHTML = ""; return; }
+      list.innerHTML = res.length ? res.map(function (x, i) {
+        return '<li><a class="sr' + (i === 0 ? " act" : "") + '" href="' + esc(x.u) + '"><span class="sg">' + esc(x.g) + "</span><b>" + esc(x.t) + '</b><span class="ss">' + esc(x.s) + "</span></a></li>";
+      }).join("") : NONE;
+    }
+    function mark() { list.querySelectorAll(".sr").forEach(function (a, i) { a.classList.toggle("act", i === act); if (i === act) a.scrollIntoView({ block: "nearest" }); }); }
+    inp.addEventListener("input", render);
+    inp.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown" && res.length) { e.preventDefault(); act = (act + 1) % res.length; mark(); }
+      else if (e.key === "ArrowUp" && res.length) { e.preventDefault(); act = (act - 1 + res.length) % res.length; mark(); }
+      else if (e.key === "Enter" && act >= 0) { e.preventDefault(); var a = list.querySelectorAll(".sr")[act]; if (a) a.click(); }
+    });
+    box.addEventListener("submit", function (e) { e.preventDefault(); });
+    /* let other scripts fill the box (landing page "Try:" chips) */
+    box.rtqSet = function (v) { inp.value = v; render(); inp.focus(); };
+  });
+})();
+</script>
+<script>if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });</script>
+</body>
+</html>

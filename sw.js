@@ -3,10 +3,10 @@
      offline, or if the network takes longer than a few seconds, the saved copy is used.
    - Fonts and icons: served from the saved copy, refreshed in the background.
    The version below changes every time the site is rebuilt, which clears out old saved copies. */
-var VERSION = "a7b2144c87a9";
+var VERSION = "b9b913c7a11c";
 var CACHE = "pocket-pulmo-" + VERSION;
 var FONTS = "pocket-pulmo-fonts";
-var PAGES = ["./", "index.html", "abg-o2.html", "abg-practice.html", "formulas.html", "gas.html", "o2-cases.html", "med-cases.html", "math-quiz.html", "meds.html", "review.html", "vent.html", "assess.html", "manifest.webmanifest", "apple-touch-icon.png", "icon-192.png", "icon-512.png"];
+var PAGES = ["./", "index.html", "abg-o2.html", "abg-practice.html", "formulas.html", "gas.html", "sounds.html", "o2-cases.html", "med-cases.html", "math-quiz.html", "meds.html", "review.html", "vent.html", "assess.html", "manifest.webmanifest", "apple-touch-icon.png", "icon-192.png", "icon-512.png"];
 var TIMEOUT_MS = 4000;
 
 self.addEventListener("install", function (e) {

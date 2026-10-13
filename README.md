@@ -171,6 +171,15 @@ Every formula on the site in one place, each with a worked example:
 
 Old links to `gas.html#total-flow` and `gas.html#cylinder` forward here automatically.
 
+### 4c. Breath Sounds — `sounds.html`
+Every breath sound sorted the way textbooks do it, each with a play button:
+- **Normal:** tracheal, bronchial, bronchovesicular, vesicular.
+- **Loudness changes:** diminished, absent.
+- **Adventitious, continuous** (musical): wheezes, rhonchi, stridor.
+- **Adventitious, discontinuous** (pops and creaks): fine crackles, coarse crackles, pleural friction rub.
+
+Each card has an in/out diagram (up = breathing in, line thickness = loudness, red marks = the extra sound and when it happens), plus what it sounds like, where you hear it and what it means. Two "tell them apart" tables compare wheezes, rhonchi and stridor, and fine crackles, coarse crackles and a rub. A link opens the Name that breath sound drill. The sounds are the same generated ones the Assessment lab uses.
+
 ### 4b. Gas Cylinders — `gas.html`
 - **Medical gas cylinders:** the US color code, what each gas is used for, and its pin index (PISS). Covers oxygen, medical air, heliox, helium, carbon dioxide, CO₂/O₂, nitrous oxide, nitrogen, cyclopropane and ethylene.
 - **Also:** PISS vs. ASSS vs. DISS, and cylinder safety.
@@ -222,6 +231,7 @@ The **Memory aids** tab of the medication chart:
 | `review.html` | Review my mistakes: every missed question from every quiz |
 | `formulas.html` | Every formula: total flow, cylinder duration, O₂ content, quick estimates, drug math (with calculators) |
 | `gas.html` | Medical gas cylinders: colors, uses, pin index |
+| `sounds.html` | Breath sounds: sorted by type, with a sound to play for each |
 | `o2-cases.html` | O₂ Device Cases: case-study quiz on choosing and troubleshooting O₂ devices |
 | `med-cases.html` | Med Cases: clinical-scenario quiz on respiratory medications |
 | `math-quiz.html` | O₂ Math Quiz: graded total flow and cylinder duration problems |
