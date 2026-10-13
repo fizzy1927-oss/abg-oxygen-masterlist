@@ -154,6 +154,17 @@ svg.chest text{font-family:var(--f-display);font-size:11px;font-weight:700;fill:
 svg.chest .side{font-size:13px;fill:var(--muted)}
 .chesthint{font-size:13px;color:var(--muted);margin:0}
 .lastfind{font-size:14px;background:var(--band);border-radius:10px;padding:8px 12px;min-height:40px}
+.snd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.snd .note{margin:0;font-size:12.5px;color:var(--muted)}
+.sndb{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.sndb .eq{display:none;align-items:flex-end;gap:2px;height:12px}
+.sndb.playing .eq{display:inline-flex}
+.sndb .eq i{width:3px;height:4px;border-radius:2px;background:currentColor}
+.sndb.playing .eq i{animation:eq .8s ease-in-out infinite}
+.sndb.playing .eq i:nth-child(2){animation-delay:.2s}.sndb.playing .eq i:nth-child(3){animation-delay:.4s}
+@keyframes eq{0%,100%{height:3px}50%{height:12px}}
+@media (prefers-reduced-motion:reduce){.sndb.playing .eq i{animation:none;height:9px}}
+.t td .sndb{padding:5px 10px;font-size:13px}
 
 /* findings chart */
 .chart{position:sticky;top:12px}
@@ -174,31 +185,50 @@ svg.chest .side{font-size:13px;fill:var(--muted)}
 .empty{color:var(--muted);font-size:14px;margin:0}
 
 /* games */
-.game{border:1px solid var(--accent);border-radius:16px;padding:16px;display:grid;gap:12px;background:var(--surface)}
-.game h3{display:flex;justify-content:space-between;gap:10px;align-items:center}
-.gamearea{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:center}
-@media (max-width:560px){.gamearea{grid-template-columns:1fr;justify-items:center}}
-.timer{font-family:var(--f-display);font-size:32px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--accent)}
-.ans{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.ans input{width:110px;font-size:20px;font-weight:700;padding:8px 12px;border-radius:12px;border:1px solid var(--line-strong);background:var(--bg)}
-.res{margin:0;padding:10px 12px;border-radius:10px;background:var(--band);font-size:14.5px}
+.game{border:1px solid var(--accent);border-radius:16px;padding:18px;display:grid;gap:14px;background:var(--surface);min-width:0;container-type:inline-size}
+.game h3{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin:0}
+.game .muted{line-height:1.55}
+.gamearea{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center}
+.ctrl{display:grid;gap:12px;justify-items:start;min-width:0}
+@container (max-width:620px){.gamearea{grid-template-columns:1fr}.ctrl{justify-items:stretch}.ctrl .timer,.ctrl .korot{justify-self:center}}
+.stage{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:12px 18px;padding:14px;border-radius:14px;background:var(--band);min-width:0}
+.stage figure{margin:0;display:grid;justify-items:center;gap:6px;min-width:0}
+.stage figcaption{font-size:12.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);text-align:center}
+.timer{font-family:var(--f-display);font-size:34px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--accent);line-height:1}
+.timer small{display:block;font-family:var(--f-body,inherit);font-size:12.5px;font-weight:600;color:var(--muted);letter-spacing:.02em;margin-top:4px}
+.ans{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.ans label{display:grid;gap:4px;font-size:13.5px;font-weight:700;color:var(--ink)}
+.ans input{width:120px;max-width:100%;font-size:20px;font-weight:700;padding:8px 12px;border-radius:12px;border:1px solid var(--line-strong);background:var(--bg);color:var(--ink)}
+.ans .slash{font-family:var(--f-display);font-size:28px;font-weight:800;color:var(--muted);padding-bottom:6px}
+.ans .unit{font-size:14px;color:var(--muted);padding-bottom:12px}
+@container (max-width:620px){svg.torso{width:96px}svg.side{width:270px}.stage{gap:8px 14px;padding:12px}.ans input{width:100%}.ans label{flex:1 1 90px}.ans .btn{flex:1 1 100%}.bpin{flex:1 1 100%}}
+.bpin{display:flex;align-items:flex-end;gap:8px;min-width:0}.bpin label{flex:1 1 0;min-width:0}.bpin input{width:100%;min-width:70px}.bpin label:not(:last-of-type){}
+@container (min-width:621px){.bpin label{flex:0 1 110px}}
+.res{margin:0;padding:10px 12px;border-radius:10px;background:var(--band);font-size:14.5px;line-height:1.5}
 .res.ok{background:var(--good-bg)}
 .res.no{background:var(--warn-bg)}
-svg.torso{width:160px;height:auto}
-svg.torso .skin{fill:var(--band);stroke:var(--line-strong);stroke-width:1.5}
+svg.torso{width:130px;max-width:100%;height:auto;display:block}
+svg.torso .skin,svg.side .skin{fill:var(--surface);stroke:var(--line-strong);stroke-width:1.5}
 svg.torso .lungs{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.5}
-.pulsedot{width:120px;height:120px;border-radius:50%;background:var(--accent-soft);display:grid;place-items:center;position:relative}
-.pulsedot i{width:40px;height:40px;border-radius:50%;background:var(--warn);transition:transform .08s ease-out,opacity .2s}
+svg.side{width:230px;max-width:100%;height:auto;display:block}
+svg.side .bed{fill:var(--line);stroke:none}
+svg.side .pillow{fill:var(--surface);stroke:var(--line-strong);stroke-width:1.2}
+svg.side .ghost{fill:none;stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3;opacity:.7}
+svg.side .sheet{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.2}
+svg.side .arm{fill:none;stroke:var(--line-strong);stroke-width:1.4;stroke-linecap:round}
+svg.side .feat{fill:none;stroke:var(--muted);stroke-width:1.2;stroke-linecap:round}
+svg.side .lbl{font-size:9.5px;font-weight:700;fill:var(--muted);font-family:var(--f-display)}
+.pulsedot{width:110px;height:110px;border-radius:50%;background:var(--surface);display:grid;place-items:center}
+.pulsedot i{width:38px;height:38px;border-radius:50%;background:var(--warn);transition:transform .08s ease-out,opacity .2s}
 .pulsedot.beat i{transform:scale(1.6)}
-.pulsedot span{position:absolute;bottom:-24px;font-size:12px;color:var(--muted);white-space:nowrap}
-svg.gauge{width:220px;height:auto}
+svg.gauge{width:210px;max-width:100%;height:auto;display:block}
 svg.gauge .face{fill:var(--surface);stroke:var(--line-strong);stroke-width:2}
 svg.gauge .tick{stroke:var(--ink);stroke-width:1.2}
 svg.gauge .tick.maj{stroke-width:2.2}
 svg.gauge text{font-family:var(--f-display);font-size:11px;font-weight:700;fill:var(--ink)}
 svg.gauge .needle{stroke:var(--warn);stroke-width:3;stroke-linecap:round}
 .korot{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--muted)}
-.korot i{width:14px;height:14px;border-radius:50%;background:var(--line-strong);transition:background .05s}
+.korot i{width:14px;height:14px;border-radius:50%;background:var(--line-strong);transition:background .05s;flex:none}
 .korot.on i{background:var(--warn)}
 canvas.pattern{width:100%;height:150px;display:block;background:var(--band);border-radius:12px}
 
@@ -309,6 +339,7 @@ window.PPGame = (function () {
     ["a_bp", "Steady hands", "Take 5 accurate blood pressures", "assess"],
     ["a_count", "Counting sheep", "Count 10 respiratory rates or pulses accurately", "assess"],
     ["a_streak", "On a roll", "Get 10 vital-sign drills right in a row", "assess"],
+    ["a_ears", "Good ears", "Name 10 breath sounds correctly", "assess"],
     ["v_first", "First fix", "Fix your first ventilator problem", "vent"],
     ["v_fast", "Quick hands", "Fix a problem in under 45 seconds without a clue", "vent"],
     ["v_tension", "Needle ready", "Fix a tension pneumothorax with SpO₂ never below 85%", "vent"],
@@ -808,6 +839,161 @@ var ACASE_GROUPS = [["adult","Lungs & airways"],["peds","Children"],["other","Wh
 
 </script>
 <script>
+/* Pocket Pulmo breath sounds. Every sound is generated in the browser (filtered noise, tones and clicks),
+   so it works offline and there are no recordings to license. They're teaching approximations: real
+   chests sound richer, so use them to learn the differences (timing, pitch, continuous vs popping). */
+window.PPLung = (function () {
+  "use strict";
+  var SR = 22050, ctx = null, src = null, endCb = null, cache = {};
+
+  function rng(seed) { seed = seed >>> 0 || 1; return function () { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }; }
+  function biquad(type, f, q) {
+    var w = 2 * Math.PI * f / SR, cs = Math.cos(w), sn = Math.sin(w), a = sn / (2 * q), b0, b1, b2;
+    if (type === "lp") { b0 = (1 - cs) / 2; b1 = 1 - cs; b2 = b0; }
+    else if (type === "hp") { b0 = (1 + cs) / 2; b1 = -(1 + cs); b2 = b0; }
+    else { b0 = a; b1 = 0; b2 = -a; }
+    var a0 = 1 + a, a1 = -2 * cs / a0, a2 = (1 - a) / a0; b0 /= a0; b1 /= a0; b2 /= a0;
+    var x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+    return function (x) { var y = b0 * x + b1 * x1 + b2 * x2 - a1 * y1 - a2 * y2; x2 = x1; x1 = x; y2 = y1; y1 = y; return y; };
+  }
+  var smooth = function (x) { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
+
+  /* ---------- text finding → sound recipe ---------- */
+  function parse(text, zone) {
+    var t = String(text || "").toLowerCase(), s = { base: "ves", g: 1 };
+    if (zone === "tr") s.base = "bronch";
+    if (/bronchial/.test(t)) s.base = "bronch";
+    if (/diminish|decreased air|shallow/.test(t)) { if (s.base === "bronch") s.g = .55; else s.base = "dim"; }
+    if (/absent/.test(t)) s.base = "absent";
+    if (/crackle/.test(t)) { if (/fine|velcro/.test(t)) s.fine = 1; if (/coarse/.test(t) || !s.fine) s.coarse = 1; }
+    if (/wheez/.test(t)) { s.wheeze = /scattered/.test(t) ? .55 : 1; s.poly = /diffuse/.test(t) ? 3 : 2; }
+    if (/rhonch/.test(t)) s.rhonchi = 1;
+    if (/stridor/.test(t)) s.stridor = /soft/.test(t) ? .5 : 1;
+    if (/transmitted upper/.test(t)) s.stridor = .22;
+    if (/gurgl/.test(t)) s.gurgle = 1;
+    if (/friction|pleural rub/.test(t)) s.rub = 1;
+    if (/prolonged exp/.test(t) || (s.wheeze && !/scattered/.test(t))) s.prolonged = 1;
+    return s;
+  }
+
+  /* ---------- the generator ---------- */
+  function render(spec) {
+    var key = JSON.stringify(spec); if (cache[key]) return cache[key];
+    var r = rng(spec.seed || 12345), cycles = 3;
+    var ti = spec.prolonged ? 1.0 : 1.25, te = spec.prolonged ? 2.7 : 1.9, gap = spec.base === "bronch" ? .22 : .04, cyc = ti + gap + te + .45;
+    var N = Math.round((cyc * cycles + .4) * SR), out = new Float32Array(N), i, k, c;
+    var bronch = spec.base === "bronch";
+
+    /* 1. airflow noise */
+    var lp1 = biquad("lp", bronch ? 1500 : 520, .7), lp2 = biquad("lp", bronch ? 1500 : 520, .7), hp = biquad("hp", bronch ? 220 : 100, .7), res = biquad("bp", 750, 2.2);
+    var gBase = ({ ves: 1, dim: .28, bronch: 1, absent: 0 }[spec.base]) * (spec.g || 1);
+    for (i = 0; i < N; i++) {
+      var tt = i / SR, ph = tt % cyc, e = 0;
+      if (ph < ti) e = Math.pow(ph / ti, .8) * smooth((ti - ph) / .12) * smooth(ph / .08);
+      else if (ph > ti + gap && ph < ti + gap + te) {
+        var x = (ph - ti - gap) / te;
+        e = bronch ? .95 * Math.pow(Math.sin(Math.PI * x), .5) : .38 * Math.exp(-x / .28) * smooth(x / .04);
+      }
+      var w = r() * 2 - 1, v = hp(lp2(lp1(w)));
+      if (bronch) v = .55 * v + .9 * res(w);
+      out[i] = v * e * gBase * (bronch ? 1.25 : 2.6);
+    }
+
+    /* 2. heart sounds, quiet in the background (you'd hear them through any stethoscope) */
+    var hr = 76 / 60, hb = function (t0, f, len, a) {
+      var s0 = Math.round(t0 * SR), L = Math.round(len * SR);
+      for (k = 0; k < L && s0 + k < N; k++) { var q = k / SR; out[s0 + k] += a * Math.sin(2 * Math.PI * f * q) * Math.sin(Math.PI * k / L); }
+    };
+    for (var tb = .2; tb < N / SR - .4; tb += 1 / hr) { hb(tb, 48, .09, spec.base === "absent" ? .22 : .1); hb(tb + .32, 64, .07, spec.base === "absent" ? .16 : .07); }
+
+    /* 3. adventitious sounds */
+    var crackle = function (t0, f, decay, a) {
+      var s0 = Math.round(t0 * SR), L = Math.round(decay * 6 * SR), p = r() * Math.PI;
+      for (k = 0; k < L && s0 + k < N; k++) { var q = k / SR; out[s0 + k] += a * Math.exp(-q / decay) * Math.sin(2 * Math.PI * f * q + p); }
+    };
+    var tone = function (t0, len, f0, glide, harm, a, wob) {
+      var s0 = Math.round(t0 * SR), L = Math.round(len * SR), phs = 0;
+      for (k = 0; k < L && s0 + k < N; k++) {
+        var x = k / L, f = f0 * (1 - glide * x) * (1 + (wob || 0) * Math.sin(2 * Math.PI * 5.5 * k / SR)), env = smooth(x / .12) * smooth((1 - x) / .15);
+        phs += 2 * Math.PI * f / SR; var v = 0;
+        for (var h = 0; h < harm.length; h++) v += harm[h] * Math.sin((h + 1) * phs);
+        out[s0 + k] += a * env * v;
+      }
+    };
+    for (c = 0; c < cycles; c++) {
+      var t0 = c * cyc, te0 = t0 + ti + gap;
+      if (spec.fine) { var nf = 9 + Math.floor(r() * 7); for (k = 0; k < nf; k++) crackle(t0 + ti * (.5 + .46 * r()), 700 + r() * 450, .0014 + r() * .0008, 1.1 + r() * .5); }
+      if (spec.coarse) {
+        var nc = 5 + Math.floor(r() * 4); for (k = 0; k < nc; k++) crackle(t0 + ti * (.05 + .6 * r()), 190 + r() * 170, .0045 + r() * .003, 1.0 + r() * .4);
+        for (k = 0; k < 3; k++) crackle(te0 + te * .35 * r(), 170 + r() * 150, .005, .7 + r() * .3);
+      }
+      if (spec.wheeze && (spec.wheeze >= 1 || c !== 1)) {
+        for (k = 0; k < (spec.poly || 2); k++) tone(te0 + .05 + k * .07, te * (.82 - k * .1), 420 + k * 170 + r() * 80, .12, [1, .25, .08], .16 * spec.wheeze, .01);
+      }
+      if (spec.rhonchi) {
+        tone(te0 + .02, te * .75, 125 + r() * 30, .1, [1, .6, .45, .3, .2, .12], .09, .04);
+        tone(t0 + ti * .25, ti * .65, 140 + r() * 20, -.05, [1, .5, .35, .2], .05, .04);
+      }
+      if (spec.stridor) {
+        tone(t0 + .05, ti * .95, 920 + r() * 60, .03, [1, .5, .3, .15], .2 * spec.stridor, .015);
+        if (spec.stridor >= 1) tone(t0 + .1, ti * .85, 1380, .02, [1, .3], .06, .01);
+      }
+      if (spec.gurgle) {
+        for (k = 0; k < 14; k++) crackle(t0 + (ti + gap + te) * r(), 110 + r() * 120, .007, .35 + r() * .25);
+        tone(te0, te * .6, 105, .1, [1, .5, .3], .05, .06);
+      }
+      if (spec.rub) {
+        var bp = biquad("bp", 260, 1.4), rubAt = [t0 + ti * .7, te0 + .05];
+        rubAt.forEach(function (ra) {
+          var s0 = Math.round(ra * SR), L = Math.round(.38 * SR);
+          for (k = 0; k < L && s0 + k < N; k++) { var gate = Math.pow(Math.max(0, Math.sin(2 * Math.PI * 27 * k / SR + 3 * Math.sin(2 * Math.PI * 4 * k / SR))), 2) * Math.sin(Math.PI * k / L); out[s0 + k] += 3 * bp(r() * 2 - 1) * gate; }
+        });
+      }
+    }
+
+    /* 4. gentle limiter + fades */
+    var fade = Math.round(.05 * SR);
+    for (i = 0; i < N; i++) { var y = Math.tanh(out[i] * 1.1) * .85; if (i < fade) y *= i / fade; if (N - i < fade) y *= (N - i) / fade; out[i] = y; }
+    cache[key] = out; return out;
+  }
+
+  /* ---------- playback ---------- */
+  function stop() {
+    if (src) { try { src.onended = null; src.stop(); } catch (e) {} src = null; }
+    var cb = endCb; endCb = null; if (cb) cb();
+  }
+  function play(spec, onEnd) {
+    stop();
+    if (!ctx) { try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return false; } }
+    if (ctx.state === "suspended") ctx.resume();
+    var data = render(spec), buf = ctx.createBuffer(1, data.length, SR);
+    buf.getChannelData(0).set(data);
+    src = ctx.createBufferSource(); src.buffer = buf; src.connect(ctx.destination);
+    endCb = onEnd || null;
+    var me = src; src.onended = function () { if (src === me) { src = null; var cb = endCb; endCb = null; if (cb) cb(); } };
+    src.start();
+    return true;
+  }
+
+  /* the sounds students should know, for the reference table and the listening drill */
+  var SOUNDS = [
+    ["ves", "Vesicular (normal)", { base: "ves" }, "Soft and low-pitched. You hear it all through inspiration and only briefly at the start of expiration."],
+    ["bronch", "Bronchial", { base: "bronch" }, "Loud, harsh and hollow, with a pause between breaths and expiration as long as inspiration. Normal over the trachea; over the lung it means consolidation."],
+    ["dim", "Diminished", { base: "dim" }, "The same soft sound, just much quieter. Think hyperinflation (COPD), shallow breathing, effusion, pneumothorax or obesity."],
+    ["wheeze", "Wheezes", { base: "ves", wheeze: 1, poly: 3, prolonged: 1 }, "Musical, high-pitched tones on a long expiration. Narrowed airways: asthma, COPD, CHF."],
+    ["rhonchi", "Rhonchi", { base: "ves", rhonchi: 1 }, "Low-pitched snoring or gurgling, mostly on expiration. Secretions in the large airways; often changes after a cough."],
+    ["fine", "Fine crackles", { base: "ves", fine: 1 }, "Short, high-pitched pops late in inspiration, like rubbing hair by your ear or pulling Velcro. Atelectasis, fibrosis, early CHF."],
+    ["coarse", "Coarse crackles", { base: "ves", coarse: 1 }, "Louder, lower, bubbling pops early in inspiration (and sometimes expiration). Secretions or fluid: pneumonia, pulmonary edema, bronchiectasis."],
+    ["stridor", "Stridor", { base: "bronch", stridor: 1 }, "Loud, high-pitched and inspiratory, loudest over the neck. Upper-airway narrowing: croup, epiglottitis, post-extubation swelling."],
+    ["rub", "Pleural friction rub", { base: "ves", rub: 1 }, "Creaking or grating, like walking on fresh snow, at the end of inspiration and start of expiration. Inflamed pleura."]
+  ];
+  function byKey(k) { for (var i = 0; i < SOUNDS.length; i++) if (SOUNDS[i][0] === k) return SOUNDS[i]; return null; }
+
+  return { parse: parse, play: play, stop: stop, render: render, SOUNDS: SOUNDS, byKey: byKey, playing: function () { return !!src; } };
+})();
+
+</script>
+<script>
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
@@ -926,35 +1112,65 @@ var ACASE_GROUPS = [["adult","Lungs & airways"],["peds","Children"],["other","Wh
 
   /* ---------- reusable games: count respirations, count a pulse, take a BP ---------- */
   var running = [];
-  function stopAll() { running.forEach(function (f) { f(); }); running = []; }
+  function stopAll() { running.forEach(function (f) { f(); }); running = []; if (window.PPLung) window.PPLung.stop(); }
+
+  /* ---------- breath sound player button ---------- */
+  var LUNG = window.PPLung;
+  function sndBtn(id, label, primary) { return '<button class="btn small sndb' + (primary ? " primary" : "") + '" type="button" id="' + id + '" data-label="' + (label || "Play") + '"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span>▶ ' + (label || "Play") + "</span></button>"; }
+  function wirePlayer(btn, spec, autoplay) {
+    if (!btn || !LUNG) return;
+    var lab = btn.dataset.label, txt = btn.lastChild;
+    var idle = function () { btn.classList.remove("playing"); txt.textContent = "▶ " + (lab === "Play" ? "Play again" : lab); };
+    var start = function () { if (LUNG.play(spec, idle)) { btn.classList.add("playing"); txt.textContent = "■ Stop"; } };
+    btn.onclick = function () { if (btn.classList.contains("playing")) LUNG.stop(); else start(); };
+    if (autoplay) start();
+  }
 
   /* count respirations for `win` seconds; done(counted per minute, true per minute) */
+  var SIDE_REST = sidePath(0);
+  /* side view of a patient lying in bed: the front of the chest and belly move up with each breath */
+  function sidePath(v) {
+    var c = -12 * v, ab = -8 * v;
+    return "M38 96 L40 86 C44 81 48 78 54 76 C62 71 72 " + (62 + c) + " 92 " + (58 + c) + " C110 " + (56 + c) + " 124 " + (59 + c) + " 134 " + (63 + c * .8) +
+      " C144 " + (64 + ab) + " 160 " + (62 + ab) + " 172 " + (67 + ab * .5) + " C182 72 192 76 204 78 L234 80 L234 96 Z";
+  }
   function rrGame(el, rate, pat, done) {
-    var win = 30, list = breaths(pat, rate, win + 2), truth = list.filter(function (b) { return b.s < win; }).length * (60 / win);
+    var win = 15, mult = 60 / win, list = breaths(pat, rate, win + 2), n15 = list.filter(function (b) { return b.s < win; }).length, truth = n15 * mult;
     el.innerHTML =
       '<div class="game"><h3>Count the respirations<span class="row">' + soundBtn() + "</span></h3>" +
-      '<p class="muted" style="margin:0">Watch the chest rise. Count every breath for 30 seconds, then multiply by 2. Tip: patients change their breathing when they know you’re counting, so real RTs count while “still checking the pulse.”</p>' +
-      '<div class="gamearea"><svg class="torso" viewBox="0 0 160 170" aria-hidden="true"><path class="skin" d="M30 160 C30 110 28 70 50 50 C60 42 70 40 80 40 C90 40 100 42 110 50 C132 70 130 110 130 160 Z"/>' +
-        '<circle class="skin" cx="80" cy="22" r="18"/><g id="lungG" style="transform-origin:80px 95px"><path class="lungs" d="M76 60 C60 60 46 78 44 110 C43 128 52 138 64 136 C72 134 76 128 76 118 Z"/><path class="lungs" d="M84 60 C100 60 114 78 116 110 C117 128 108 138 96 136 C88 134 84 128 84 118 Z"/></g></svg>' +
-        '<div style="display:grid;gap:10px;justify-items:start"><div class="timer" id="rrT">30</div><div class="ans" id="rrA" hidden><label>Breaths per minute <input id="rrIn" inputmode="numeric" autocomplete="off"></label><button class="btn primary" type="button" id="rrGo">Check</button></div><button class="btn primary" type="button" id="rrStart">Start counting</button><p class="res" id="rrR" hidden></p></div></div></div>';
+      '<p class="muted" style="margin:0">Watch the chest and belly rise. Count every breath for <b>15 seconds</b>, then <b>multiply by 4</b>. Tip: patients change their breathing when they know you’re counting, so real RTs count while “still checking the pulse.”</p>' +
+      '<div class="gamearea"><div class="stage">' +
+        '<figure><svg class="torso" viewBox="0 0 160 170" aria-hidden="true"><path class="skin" d="M30 160 C30 110 28 70 50 50 C60 42 70 40 80 40 C90 40 100 42 110 50 C132 70 130 110 130 160 Z"/>' +
+        '<circle class="skin" cx="80" cy="22" r="18"/><g id="lungG" style="transform-origin:80px 95px"><path class="lungs" d="M76 60 C60 60 46 78 44 110 C43 128 52 138 64 136 C72 134 76 128 76 118 Z"/><path class="lungs" d="M84 60 C100 60 114 78 116 110 C117 128 108 138 96 136 C88 134 84 128 84 118 Z"/></g></svg><figcaption>Front</figcaption></figure>' +
+        '<figure><svg class="side" viewBox="0 0 240 110" aria-hidden="true"><rect class="bed" x="4" y="96" width="232" height="10" rx="4"/>' +
+          '<ellipse class="pillow" cx="30" cy="92" rx="28" ry="6"/>' +
+          '<path class="skin" id="sideP" d="' + SIDE_REST + '"/><path class="ghost" d="' + SIDE_REST + '"/>' +
+          '<circle class="skin" cx="28" cy="78" r="14"/><path class="skin" d="M34 65.5 C37 61 41 62 40.5 67"/><path class="feat" d="M25 72.5 q3 1.6 6 0"/>' +
+          '<path class="arm" d="M62 84 C84 88 112 89 146 87"/><circle class="skin" cx="150" cy="87" r="4.5"/>' +
+          '<path class="sheet" d="M180 70 C190 74 198 77 206 78 L236 80 L236 98 L176 98 C177 88 178 79 180 70 Z"/>' +
+          '<text class="lbl" x="94" y="30" text-anchor="middle">chest</text><text class="lbl" x="156" y="36" text-anchor="middle">belly</text></svg><figcaption>Side (lying in bed)</figcaption></figure>' +
+      '</div>' +
+        '<div class="ctrl"><div class="timer" id="rrT">15<small>seconds left</small></div><div class="ans" id="rrA" hidden><label>Breaths in 15 s × 4 =<input id="rrIn" inputmode="numeric" autocomplete="off" aria-label="Breaths per minute"></label><span class="unit">/min</span><button class="btn primary" type="button" id="rrGo">Check</button></div><button class="btn primary" type="button" id="rrStart">Start counting</button><p class="res" id="rrR" hidden></p></div></div></div>';
     wireSound(el);
-    var lungs = el.querySelector("#lungG"), raf = 0, t0 = 0, lastB = -1;
+    var lungs = el.querySelector("#lungG"), side = el.querySelector("#sideP"), tEl = el.querySelector("#rrT"), raf = 0, t0 = 0, lastB = -1;
     function frame(now) {
       var t = (now - t0) / 1000, v = volAt(list, t);
       lungs.style.transform = "scale(" + (1 + v * .09) + "," + (1 + v * .16) + ")";
+      side.setAttribute("d", sidePath(v));
       var idx = -1; for (var i = 0; i < list.length; i++) if (list[i].s <= t) idx = i;
       if (idx !== lastB && idx >= 0) { lastB = idx; if (t < win) tick(260, .25, .08); }
-      el.querySelector("#rrT").textContent = Math.max(0, Math.ceil(win - t));
-      if (t >= win) { lungs.style.transform = ""; el.querySelector("#rrA").hidden = false; el.querySelector("#rrIn").focus(); return; }
+      tEl.firstChild.nodeValue = Math.max(0, Math.ceil(win - t));
+      if (t >= win) { lungs.style.transform = ""; side.setAttribute("d", SIDE_REST); tEl.lastChild.textContent = "time’s up"; el.querySelector("#rrA").hidden = false; el.querySelector("#rrIn").focus(); return; }
       raf = requestAnimationFrame(frame);
     }
     el.querySelector("#rrStart").onclick = function () { this.hidden = true; t0 = performance.now(); raf = requestAnimationFrame(frame); };
     running.push(function () { cancelAnimationFrame(raf); });
     el.querySelector("#rrGo").onclick = function () {
       var n = parseFloat(el.querySelector("#rrIn").value); if (!isFinite(n)) return;
-      var ok = Math.abs(n - truth) <= 2, r = el.querySelector("#rrR");
+      var ok = Math.abs(n - truth) <= mult, r = el.querySelector("#rrR");
       r.hidden = false; r.className = "res " + (ok ? "ok" : "no");
-      r.innerHTML = (ok ? "<b>Nice count.</b> " : "<b>Not quite.</b> ") + "There were " + (truth / 2) + " breaths in 30 seconds, so the rate is <b>" + truth + "/min</b>" + (pat === "cheyne" || pat === "biot" ? ". With an irregular pattern like this, count for a full minute." : ".");
+      r.innerHTML = (ok ? "<b>Nice count.</b> " : "<b>Not quite.</b> ") + "There " + (n15 === 1 ? "was 1 breath" : "were " + n15 + " breaths") + " in 15 seconds. " + n15 + " × 4 = <b>" + truth + "/min</b>" +
+        (ok && n !== truth ? " (you were within one breath)." : ".") + (pat === "cheyne" || pat === "biot" || pat === "apnea" ? " With an irregular pattern like this, count for a full minute." : "");
       this.disabled = true;
       skillResult("rr", ok);
       if (done) done(n, truth, ok);
@@ -969,15 +1185,15 @@ var ACASE_GROUPS = [["adult","Lungs & airways"],["peds","Children"],["other","Wh
     el.innerHTML =
       '<div class="game"><h3>Count the pulse<span class="row">' + soundBtn() + "</span></h3>" +
       '<p class="muted" style="margin:0">Feel the radial pulse: count the beats for 15 seconds, then multiply by 4. Note whether it’s regular.</p>' +
-      '<div class="gamearea"><div class="pulsedot" id="pd"><i></i><span>radial pulse</span></div>' +
-        '<div style="display:grid;gap:10px;justify-items:start"><div class="timer" id="hrT">15</div><div class="ans" id="hrA" hidden><label>Beats per minute <input id="hrIn" inputmode="numeric" autocomplete="off"></label><button class="btn primary" type="button" id="hrGo">Check</button></div><button class="btn primary" type="button" id="hrStart">Start counting</button><p class="res" id="hrR" hidden></p></div></div></div>';
+      '<div class="gamearea"><div class="stage"><figure><div class="pulsedot" id="pd"><i></i></div><figcaption>Radial pulse</figcaption></figure></div>' +
+        '<div class="ctrl"><div class="timer" id="hrT">15<small>seconds left</small></div><div class="ans" id="hrA" hidden><label>Beats in 15 s × 4 =<input id="hrIn" inputmode="numeric" autocomplete="off" aria-label="Beats per minute"></label><span class="unit">/min</span><button class="btn primary" type="button" id="hrGo">Check</button></div><button class="btn primary" type="button" id="hrStart">Start counting</button><p class="res" id="hrR" hidden></p></div></div></div>';
     wireSound(el);
     var pd = el.querySelector("#pd"), raf = 0, t0 = 0, next = 0;
     function frame(now) {
       var tt = (now - t0) / 1000;
       if (next < beats.length && tt >= beats[next] && beats[next] < win) { next++; pd.classList.add("beat"); tick(90, .12, .35); setTimeout(function () { pd.classList.remove("beat"); }, 110); }
-      el.querySelector("#hrT").textContent = Math.max(0, Math.ceil(win - tt));
-      if (tt >= win) { el.querySelector("#hrA").hidden = false; el.querySelector("#hrIn").focus(); return; }
+      var hT = el.querySelector("#hrT"); hT.firstChild.nodeValue = Math.max(0, Math.ceil(win - tt));
+      if (tt >= win) { hT.lastChild.textContent = "time’s up"; el.querySelector("#hrA").hidden = false; el.querySelector("#hrIn").focus(); return; }
       raf = requestAnimationFrame(frame);
     }
     el.querySelector("#hrStart").onclick = function () { this.hidden = true; t0 = performance.now(); raf = requestAnimationFrame(frame); };
@@ -986,22 +1202,23 @@ var ACASE_GROUPS = [["adult","Lungs & airways"],["peds","Children"],["other","Wh
       var n = parseFloat(el.querySelector("#hrIn").value); if (!isFinite(n)) return;
       var ok = Math.abs(n - truth) <= 4, r = el.querySelector("#hrR");
       r.hidden = false; r.className = "res " + (ok ? "ok" : "no");
-      r.innerHTML = (ok ? "<b>Nice count.</b> " : "<b>Not quite.</b> ") + "There were " + (truth / 4) + " beats in 15 seconds, so the rate is <b>" + truth + "/min</b>" + (irregular ? ". This rhythm is <b>irregular</b>: count a full 60 seconds for an irregular pulse." : ", regular.");
+      r.innerHTML = (ok ? "<b>Nice count.</b> " : "<b>Not quite.</b> ") + "There were " + (truth / 4) + " beats in 15 seconds. " + (truth / 4) + " × 4 = <b>" + truth + "/min</b>" + (irregular ? ". This rhythm is <b>irregular</b>: count a full 60 seconds for an irregular pulse." : ", regular.");
       this.disabled = true;
       skillResult("hr", ok);
       if (done) done(n, truth, ok);
     };
   }
 
-  /* blood pressure: watch the gauge fall and mark the first and last Korotkoff sounds */
+  /* blood pressure: watch the gauge fall, listen for the Korotkoff sounds, then write down the reading */
   function bpGame(el, sbp, dbp, hr, done) {
     var start = Math.ceil((sbp + 30) / 10) * 10, rate = 3, beatT = 60 / hr;
     el.innerHTML =
       '<div class="game"><h3>Take the blood pressure<span class="row">' + soundBtn() + "</span></h3>" +
-      '<p class="muted" style="margin:0">The cuff is pumped to ' + start + ' mmHg. Open the valve: it falls about 3 mmHg per second. Tap <b>First sound</b> when the Korotkoff sounds start (systolic) and <b>Last sound</b> when they disappear (diastolic). Turn on sound to hear them, or watch the beat light.</p>' +
-      '<div class="gamearea"><svg class="gauge" viewBox="0 0 220 220" id="gz"></svg>' +
-        '<div style="display:grid;gap:10px;justify-items:start"><div class="timer" id="bpP">' + start + '</div><span class="korot" id="ko"><i></i>Korotkoff sound</span>' +
-        '<div class="row"><button class="btn primary" type="button" id="bpStart">Open the valve</button><button class="btn" type="button" id="bpS" disabled>First sound</button><button class="btn" type="button" id="bpD" disabled>Last sound</button></div>' +
+      '<p class="muted" style="margin:0">The cuff is pumped to ' + start + ' mmHg. Open the valve and it falls about 3 mmHg per second. Watch the needle and listen (or watch the beat light). Remember the pressure at the <b>first</b> Korotkoff sound (systolic) and the <b>last</b> one (diastolic), then write them down.</p>' +
+      '<div class="gamearea"><div class="stage"><figure><svg class="gauge" viewBox="0 0 220 220" id="gz"></svg><figcaption>Aneroid gauge</figcaption></figure></div>' +
+        '<div class="ctrl"><span class="korot" id="ko"><i></i>Korotkoff sound</span>' +
+        '<div class="row"><button class="btn primary" type="button" id="bpStart">Open the valve</button><button class="btn" type="button" id="bpDump" hidden>Deflate the rest</button></div>' +
+        '<div class="ans" id="bpA" hidden><div class="bpin"><label>Systolic<input id="bpS" inputmode="numeric" autocomplete="off"></label><span class="slash" aria-hidden="true">/</span><label>Diastolic<input id="bpD" inputmode="numeric" autocomplete="off"></label><span class="unit">mmHg</span></div><button class="btn primary" type="button" id="bpGo">Check</button></div>' +
         '<p class="res" id="bpR" hidden></p></div></div></div>';
     wireSound(el);
     var g = el.querySelector("#gz"), s = '<circle class="face" cx="110" cy="110" r="100"/>', i;
@@ -1013,40 +1230,50 @@ var ACASE_GROUPS = [["adult","Lungs & airways"],["peds","Children"],["other","Wh
     }
     s += '<text x="110" y="160" text-anchor="middle" style="font-size:10px;fill:var(--muted)">mmHg</text><line class="needle" id="nd" x1="110" y1="110" x2="110" y2="30"/><circle cx="110" cy="110" r="6" fill="var(--warn)"/>';
     g.innerHTML = s;
-    var nd = g.querySelector("#nd"), ko = el.querySelector("#ko"), out = el.querySelector("#bpP");
+    var nd = g.querySelector("#nd"), ko = el.querySelector("#ko"), dump = el.querySelector("#bpDump");
     function setNeedle(p, bounce) { var a = ang(p + (bounce || 0)); nd.setAttribute("x2", 110 + 78 * Math.cos(a)); nd.setAttribute("y2", 110 + 78 * Math.sin(a)); }
     setNeedle(start);
-    var raf = 0, t0 = 0, P = start, nextBeat = 0, gotS = null, gotD = null, bounce = 0;
+    var raf = 0, t0 = 0, P = start, nextBeat = 0, bounce = 0, dumping = false, dumpFrom = 0, dumpT = 0;
     function frame(now) {
-      var t = (now - t0) / 1000; P = start - rate * t;
-      if (t >= nextBeat) {
-        nextBeat += beatT;
-        bounce = P < sbp + 15 ? 2.2 : .8;
-        if (P <= sbp && P >= dbp) { ko.classList.add("on"); tick(70, .1, .5); setTimeout(function () { ko.classList.remove("on"); }, 120); }
+      var t = (now - t0) / 1000;
+      if (dumping) { P = Math.max(0, dumpFrom - 90 * (t - dumpT)); }
+      else {
+        P = start - rate * t;
+        if (t >= nextBeat) {
+          nextBeat += beatT;
+          bounce = P < sbp + 15 ? 2.2 : .8;
+          if (P <= sbp && P >= dbp) { ko.classList.add("on"); tick(70, .1, .5); setTimeout(function () { ko.classList.remove("on"); }, 120); }
+        }
+        if (P <= Math.max(0, dbp - 25)) { dumping = true; dumpFrom = P; dumpT = t; }
       }
       bounce *= .85;
-      setNeedle(P, bounce); out.textContent = Math.max(0, Math.round(P));
-      if (P <= Math.max(0, dbp - 25) || P <= 0) { finish(); return; }
+      setNeedle(P, dumping ? 0 : bounce);
+      if (P <= 0) { deflated(); return; }
       raf = requestAnimationFrame(frame);
     }
-    function finish() {
-      cancelAnimationFrame(raf);
-      el.querySelector("#bpS").disabled = el.querySelector("#bpD").disabled = true;
-      var r = el.querySelector("#bpR"), okS = gotS !== null && Math.abs(gotS - sbp) <= 4, okD = gotD !== null && Math.abs(gotD - dbp) <= 6;
-      r.hidden = false; r.className = "res " + (okS && okD ? "ok" : "no");
-      r.innerHTML = (okS && okD ? "<b>Nice reading.</b> " : "<b>Not quite.</b> ") + "You read " + (gotS === null ? "—" : gotS) + "/" + (gotD === null ? "—" : gotD) +
-        ". The actual BP is <b>" + sbp + "/" + dbp + " mmHg</b>. Read to the nearest even number, and deflate at 2–3 mmHg per second so you don’t miss the first sound.";
-      skillResult("bp", okS && okD);
-      if (done) done(gotS, gotD, okS && okD);
+    function deflated() {
+      cancelAnimationFrame(raf); setNeedle(0); dump.hidden = true;
+      el.querySelector("#bpA").hidden = false; el.querySelector("#bpS").focus();
     }
     el.querySelector("#bpStart").onclick = function () {
-      this.hidden = true; t0 = performance.now(); nextBeat = 0;
-      el.querySelector("#bpS").disabled = el.querySelector("#bpD").disabled = false;
+      this.hidden = true; dump.hidden = false; t0 = performance.now(); nextBeat = 0;
       raf = requestAnimationFrame(frame);
     };
-    var even = function (p) { return Math.round(p / 2) * 2; };
-    el.querySelector("#bpS").onclick = function () { gotS = even(P); this.textContent = "First: " + gotS; this.disabled = true; };
-    el.querySelector("#bpD").onclick = function () { gotD = even(P); this.textContent = "Last: " + gotD; this.disabled = true; finish(); };
+    dump.onclick = function () { if (!dumping) { dumping = true; dumpFrom = P; dumpT = (performance.now() - t0) / 1000; } this.hidden = true; };
+    el.querySelector("#bpGo").onclick = function () {
+      var gotS = parseFloat(el.querySelector("#bpS").value), gotD = parseFloat(el.querySelector("#bpD").value);
+      if (!isFinite(gotS) || !isFinite(gotD)) { el.querySelector(isFinite(gotS) ? "#bpD" : "#bpS").focus(); return; }
+      var okS = Math.abs(gotS - sbp) <= 4, okD = Math.abs(gotD - dbp) <= 6, ok = okS && okD, r = el.querySelector("#bpR");
+      el.querySelector("#bpS").disabled = el.querySelector("#bpD").disabled = this.disabled = true;
+      r.hidden = false; r.className = "res " + (ok ? "ok" : "no");
+      r.innerHTML = (ok ? "<b>Nice reading.</b> " : "<b>Not quite.</b> ") + "You wrote " + gotS + "/" + gotD + ". The actual BP is <b>" + sbp + "/" + dbp + " mmHg</b>." +
+        (!okS ? " Systolic is the pressure at the <b>first</b> sound you hear." : "") + (!okD ? " Diastolic is where the sounds <b>disappear</b>." : "") +
+        (gotD > gotS ? " (Systolic is always the higher number.)" : "") + " Read to the nearest even number, and deflate at 2–3 mmHg per second so you don’t miss the first sound.";
+      skillResult("bp", ok);
+      if (done) done(gotS, gotD, ok);
+    };
+    el.querySelector("#bpD").addEventListener("keydown", function (e) { if (e.key === "Enter") el.querySelector("#bpGo").click(); });
+    el.querySelector("#bpS").addEventListener("keydown", function (e) { if (e.key === "Enter") el.querySelector("#bpD").focus(); });
     running.push(function () { cancelAnimationFrame(raf); });
   }
 
@@ -1130,7 +1357,7 @@ var ACASE_GROUPS = [["adult","Lungs & airways"],["peds","Children"],["other","Wh
           '<div id="gameOut"></div></div>' +
         '<div class="box"><div class="sect"><p class="label">Chest exam</p>' +
           '<div class="tools" role="group" aria-label="Exam tool">' + Object.keys(TOOLS).map(function (k) { return '<button type="button" data-tool="' + k + '" aria-pressed="' + (S.tool === k) + '">' + TOOLS[k] + "</button>"; }).join("") + "</div>" +
-          '<div class="chestwrap"><div id="chestSvg">' + chestSVG() + '</div><div style="display:grid;gap:8px"><p class="chesthint">Pick a tool, then tap each area of the chest. The patient’s right side is on your left. Compare side to side.</p><div class="lastfind" id="lastFind">Tap a zone to ' + TOOLS[S.tool].toLowerCase() + ".</div>" +
+          '<div class="chestwrap"><div id="chestSvg">' + chestSVG() + '</div><div style="display:grid;gap:8px"><p class="chesthint">Pick a tool, then tap each area of the chest. The patient’s right side is on your left. Compare side to side.</p><div class="lastfind" id="lastFind">' + tapHint() + "</div>" +
           '<button class="btn small" type="button" id="allZones">' + TOOLS[S.tool] + ' everywhere</button></div></div></div></div>' +
         EX_ITEMS.map(function (g) {
           return '<div class="box"><div class="sect"><p class="label">' + g[0] + '</p><div class="acts">' + g[1].map(function (b) { return '<button class="act' + (S.got[b[0]] ? " done" : "") + '" type="button" data-ex="' + b[0] + '">' + b[1] + "</button>"; }).join("") + "</div></div></div>";
@@ -1146,10 +1373,11 @@ var ACASE_GROUPS = [["adult","Lungs & airways"],["peds","Children"],["other","Wh
     $("toPick").onclick = renderPick;
     renderChart();
   }
+  function tapHint() { return "Tap a zone to " + TOOLS[S.tool].toLowerCase() + "." + (S.tool === "ausc" && LUNG ? ' <span style="color:var(--muted)">You’ll hear the breath sound for that spot. 🎧 Headphones help.</span>' : ""); }
   function renderToolArea() {
     app.querySelectorAll("[data-tool]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.tool === S.tool)); });
     $("chestSvg").innerHTML = chestSVG(); $("allZones").textContent = TOOLS[S.tool] + " everywhere";
-    $("lastFind").textContent = "Tap a zone to " + TOOLS[S.tool].toLowerCase() + ".";
+    $("lastFind").innerHTML = tapHint(); stopAll();
     wireChest();
   }
   function wireChest() {
@@ -1164,7 +1392,8 @@ var ACASE_GROUPS = [["adult","Lungs & airways"],["peds","Children"],["other","Wh
     var f = zoneFind(S.c, S.tool, z);
     S.got[S.tool + ":" + z] = f;
     if (!quiet) {
-      $("lastFind").innerHTML = "<b>" + ZONE_N[z] + " · " + TOOLS[S.tool] + ":</b> " + esc(f);
+      $("lastFind").innerHTML = "<b>" + ZONE_N[z] + " · " + TOOLS[S.tool] + ":</b> " + esc(f) + (S.tool === "ausc" && LUNG ? '<div class="snd">' + sndBtn("zPlay") + "</div>" : "");
+      if (S.tool === "ausc" && LUNG) wirePlayer($("zPlay"), LUNG.parse(f, z), true);
       app.querySelectorAll('[data-z="' + z + '"]').forEach(function (p) { p.classList.add("got"); });
       renderChart();
     }
@@ -1292,9 +1521,10 @@ var ACASE_GROUPS = [["adult","Lungs & airways"],["peds","Children"],["other","Wh
 
   /* ================== VITAL SIGNS SKILLS ================== */
   var DRILLS = [
-    ["rr", "Count respirations", "Watch the chest for 30 seconds"],
+    ["rr", "Count respirations", "15 seconds × 4, front and side view"],
     ["hr", "Count a pulse", "15 seconds, regular or irregular"],
-    ["bp", "Take a blood pressure", "Catch the first and last sounds"],
+    ["bp", "Take a blood pressure", "Listen, then write down the reading"],
+    ["snd", "Name that breath sound", "Wheezes, crackles, stridor… by ear"],
     ["pat", "Name that breathing pattern", "Kussmaul, Cheyne-Stokes, Biot’s…"],
     ["norm", "Normal or not?", "Vital signs by age"],
     ["math", "MAP & temperature math", "MAP, pulse pressure, °F ↔ °C"]
@@ -1328,11 +1558,32 @@ var ACASE_GROUPS = [["adult","Lungs & airways"],["peds","Children"],["other","Wh
     } else if (d === "bp") {
       var s = rint(46, 85) * 2, dd = Math.min(s - 30, rint(25, 50) * 2);
       out.innerHTML = drillShell('<div id="g"></div>'); bpGame($("g"), s, dd, rint(60, 100), function (a, b, ok) { drillResult(ok); });
-    } else if (d === "pat") patternDrill(out);
+    } else if (d === "snd") soundDrill(out);
+    else if (d === "pat") patternDrill(out);
     else if (d === "norm") normDrill(out);
     else mathDrill(out);
     var n = $("dNext"); if (n) n.onclick = runDrill;
     out.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  function soundDrill(out) {
+    if (!LUNG) { out.innerHTML = '<div class="box"><p>Sound isn’t available in this browser.</p></div>'; return; }
+    var all = LUNG.SOUNDS, k = pick(all), opts = shuffle([k].concat(shuffle(all.filter(function (x) { return x !== k; })).slice(0, 3)));
+    var seed = rint(1, 1e9), spec = Object.assign({ seed: seed }, k[2]);
+    out.innerHTML = drillShell('<h3>Name that breath sound</h3><p class="note">Listen to a few breaths, then pick the sound. Notice <b>when</b> it happens (breathing in or out), its <b>pitch</b>, and whether it’s musical, popping or harsh. 🎧 Headphones help.</p>' +
+      '<div class="row">' + sndBtn("sdPlay", "Play", true) + "</div>" +
+      '<div class="opts">' + opts.map(function (o, j) { return '<button class="opt" type="button" data-j="' + j + '"><b>' + LET[j] + "</b><span>" + o[1] + "</span></button>"; }).join("") + '</div><div id="sa"></div>');
+    wirePlayer($("sdPlay"), spec, true);
+    out.querySelectorAll(".opt").forEach(function (b) {
+      b.onclick = function () {
+        var j = +b.dataset.j, ch = opts[j], ok = ch === k;
+        out.querySelectorAll(".opt").forEach(function (x) { x.disabled = true; if (opts[+x.dataset.j] === k) x.classList.add("right"); else if (+x.dataset.j === j) x.classList.add("wrong"); });
+        drillResult(ok);
+        if (ok && G && G.count("ears") >= 10) G.award("a_ears");
+        $("sa").innerHTML = '<p class="explain"><b class="' + (ok ? "ok" : "no") + '">' + (ok ? "Correct." : "Not quite.") + "</b> " + k[1] + ": " + k[3] + "</p>" +
+          (ok ? "" : '<div class="snd"><span class="note">Compare with what you picked:</span>' + sndBtn("sdMine", ch[1]) + "</div>");
+        if (!ok) wirePlayer($("sdMine"), Object.assign({ seed: seed + 1 }, ch[2]), false);
+      };
+    });
   }
   function patternDrill(out) {
     var keys = ["eupnea", "tachypnea", "bradypnea", "hyperpnea", "kussmaul", "cheyne", "biot", "apneustic", "apnea"];
@@ -1422,22 +1673,24 @@ var ACASE_GROUPS = [["adult","Lungs & airways"],["peds","Children"],["other","Wh
       "<tr><td>Pulmonary edema</td><td>Crackles at the bases</td><td>Normal or dull at bases</td><td>Normal</td><td>Midline</td></tr>" +
       "<tr><td>Pulmonary fibrosis</td><td>Fine late-inspiratory crackles</td><td>Normal or dull</td><td>Normal / increased</td><td>Midline</td></tr>" +
       "</tbody></table></div></div>";
-    var sounds = '<div><h2 style="margin-bottom:10px">Breath sounds</h2><div class="tbox"><table class="t"><thead><tr><th>Sound</th><th>What it’s like</th><th>Think of</th></tr></thead><tbody>' +
-      "<tr><td>Vesicular</td><td>Soft, low-pitched, mostly inspiration</td><td>Normal over most of the lungs</td></tr>" +
-      "<tr><td>Bronchial</td><td>Loud, harsh, expiration as long as inspiration</td><td>Normal over the trachea; consolidation elsewhere</td></tr>" +
-      "<tr><td>Diminished</td><td>Quiet or hard to hear</td><td>Hyperinflation, shallow breathing, effusion, pneumothorax, obesity</td></tr>" +
-      "<tr><td>Wheezes</td><td>Musical, high-pitched, usually expiratory</td><td>Bronchospasm (asthma, COPD), CHF (“cardiac asthma”)</td></tr>" +
-      "<tr><td>Rhonchi</td><td>Low-pitched, snoring; often clear with coughing</td><td>Secretions in large airways</td></tr>" +
-      "<tr><td>Fine crackles</td><td>Short, high-pitched pops late in inspiration</td><td>Atelectasis, fibrosis, early CHF</td></tr>" +
-      "<tr><td>Coarse crackles</td><td>Louder, lower, bubbling; early inspiration</td><td>Secretions, pulmonary edema, pneumonia, bronchiectasis</td></tr>" +
-      "<tr><td>Stridor</td><td>Loud, high-pitched, inspiratory, over the neck</td><td>Upper-airway obstruction: croup, epiglottitis, post-extubation swelling</td></tr>" +
-      "<tr><td>Pleural friction rub</td><td>Creaking, grating, with breathing</td><td>Inflamed pleura (pleurisy, PE, pneumonia)</td></tr>" +
-      "</tbody></table></div></div>";
+    var SROWS = [["ves", "Vesicular", "Soft, low-pitched, mostly inspiration", "Normal over most of the lungs"],
+      ["bronch", "Bronchial", "Loud, harsh, expiration as long as inspiration", "Normal over the trachea; consolidation elsewhere"],
+      ["dim", "Diminished", "Quiet or hard to hear", "Hyperinflation, shallow breathing, effusion, pneumothorax, obesity"],
+      ["wheeze", "Wheezes", "Musical, high-pitched, usually expiratory", "Bronchospasm (asthma, COPD), CHF (“cardiac asthma”)"],
+      ["rhonchi", "Rhonchi", "Low-pitched, snoring; often clear with coughing", "Secretions in large airways"],
+      ["fine", "Fine crackles", "Short, high-pitched pops late in inspiration", "Atelectasis, fibrosis, early CHF"],
+      ["coarse", "Coarse crackles", "Louder, lower, bubbling; early inspiration", "Secretions, pulmonary edema, pneumonia, bronchiectasis"],
+      ["stridor", "Stridor", "Loud, high-pitched, inspiratory, over the neck", "Upper-airway obstruction: croup, epiglottitis, post-extubation swelling"],
+      ["rub", "Pleural friction rub", "Creaking, grating, with breathing", "Inflamed pleura (pleurisy, PE, pneumonia)"]];
+    var sounds = '<div><h2 style="margin-bottom:10px">Breath sounds</h2><div class="tbox"><table class="t"><thead><tr><th>Sound</th><th>What it’s like</th><th>Think of</th>' + (LUNG ? "<th>Listen</th>" : "") + "</tr></thead><tbody>" +
+      SROWS.map(function (r) { return "<tr><td>" + r[1] + "</td><td>" + r[2] + "</td><td>" + r[3] + "</td>" + (LUNG ? "<td>" + sndBtn("ref-" + r[0]) + "</td>" : "") + "</tr>"; }).join("") +
+      "</tbody></table></div>" + (LUNG ? '<p class="note" style="margin-top:8px">These sounds are generated by the site to show the differences in timing and pitch, so real chests sound richer. Headphones help; on an iPhone, turn off silent mode. Practice them in <a href="#vitals">Vital signs skills</a> → Name that breath sound.</p>' : "") + "</div>";
     var pats = '<div><h2 style="margin-bottom:10px">Breathing patterns</h2><div class="tbox"><table class="t"><thead><tr><th>Pattern</th><th>What it looks like and what causes it</th></tr></thead><tbody>' +
       Object.keys(PATTERNS).map(function (k) { return "<tr><td>" + PATTERNS[k].n + "</td><td>" + PATTERNS[k].d + "</td></tr>"; }).join("") +
       "<tr><td>Paradoxical</td><td>Chest and belly move in opposite directions. Diaphragm fatigue or paralysis, flail chest.</td></tr>" +
       '</tbody></table></div><p class="note" style="margin-top:8px">Practice spotting them in <a href="#vitals">Vital signs skills</a> → Name that breathing pattern.</p></div>';
     $("refOut").innerHTML = adult + peds + exam + sounds + pats;
+    if (LUNG) SROWS.forEach(function (r) { wirePlayer($("ref-" + r[0]), LUNG.byKey(r[0])[2], false); });
   }
 
   /* ---------- tabs ---------- */

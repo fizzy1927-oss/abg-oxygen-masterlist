@@ -61,13 +61,16 @@ Unlimited random blood gases to interpret.
 ### 1e. Assessment Sim Lab — `assess.html`
 Three tabs:
 - **Patient assessment (21 patients):** normal post-op, asthma, emphysema, chronic bronchitis with cor pulmonale, RLL pneumonia, pleural effusion, pneumothorax, atelectasis, CHF, pulmonary fibrosis, croup, epiglottitis, bronchiolitis, DKA (Kussmaul), opioid overdose, PE, anxiety hyperventilation, sepsis, stroke with Cheyne-Stokes breathing, CF and Guillain-Barré.
-  - **Vital signs:** take them yourself (count respirations and the pulse, take a BP on an animated gauge) or just reveal them.
-  - **Exam:** inspect, palpate, then listen, percuss and check fremitus on a tappable chest map. A findings chart fills in and flags abnormal values for the patient's age.
+  - **Vital signs:** take them yourself or just reveal them. Respirations are counted for 15 s × 4 while watching a front view and a side view of the patient in bed. The pulse is counted for 15 s × 4. For the BP you watch an aneroid gauge fall, listen (or watch the beat light) for the Korotkoff sounds, then type the systolic and diastolic.
+  - **Exam:** inspect, palpate, then listen, percuss and check fremitus on a tappable chest map. Listening plays that patient's breath sound for the spot you tapped. A findings chart fills in and flags abnormal values for the patient's age.
   - **Decide:** pick which vitals are abnormal, what's going on and what to do first. Then see the key findings and which ones you didn't check. "Surprise me" hides the patient's name.
-- **Vital signs skills:** drills to count respirations and a pulse (regular or irregular), take a blood pressure, name the breathing pattern from a 40-second trace, judge normal or not by age, and do MAP / pulse pressure / temperature math.
-- **Normal values:** adult and pediatric vital signs, chest exam findings by condition (breath sounds, percussion, fremitus, trachea), breath sounds and breathing patterns.
+- **Vital signs skills:** drills to count respirations and a pulse (regular or irregular, both 15 s × 4), take a blood pressure and write it down, name the breathing pattern from a 40-second trace, judge normal or not by age, and do MAP / pulse pressure / temperature math.
+- **Name that breath sound:** an ear-training drill. Hear a sound, pick it from four choices, and compare it with the one you picked if you're wrong.
+- **Normal values:** adult and pediatric vital signs, chest exam findings by condition (breath sounds, percussion, fremitus, trachea), breath sounds (each with a play button) and breathing patterns.
 
 Missed decision questions go into Review my mistakes.
+
+**Breath sounds:** the site generates every sound in the browser (filtered noise, tones and clicks), so they work offline and there are no recordings to license. The sounds are vesicular, bronchial, diminished, absent (heart sounds only), wheezes, rhonchi, fine and coarse crackles, stridor, gurgling and pleural friction rub. In a patient case, the sound is picked from the written finding (for example "Fine late-inspiratory crackles" plays fine crackles late in each breath in), so new patients get sounds automatically. They're teaching approximations of timing and pitch. The sound code is in `assess.html`: search for `Pocket Pulmo breath sounds`.
 
 **Game layer:** each patient is scored out of 3 stars (100 points per question right, 20 per key finding found, 30 per vital measured yourself accurately). Patient tiles show your best stars or "New". The vital-sign drills keep a streak and your best streak. Points turn into XP; see "Stars, XP and badges" below.
 
@@ -96,7 +99,7 @@ A bedside ventilator simulator, restyled in the Pocket Pulmo look (light and dar
 
 ### Stars, XP and badges (both sim labs)
 - XP ranks: RT student → Clinical student (300) → New grad RT (1,000) → Staff RT (2,500) → Senior RT (5,000) → Charge RT (9,000) → RT legend (15,000).
-- 8 badges per lab, shown under the 🏅 button at the top of each lab.
+- 9 badges in the Assessment lab and 8 in the Vent lab, shown under the 🏅 button at the top of each lab.
 - Everything is saved on the device only (browser storage), so nothing is shared and there are no accounts. "Reset my progress" in the badge panel clears it.
 
 ### 1c. Review My Mistakes — `review.html`
