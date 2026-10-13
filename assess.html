@@ -230,6 +230,18 @@ svg.gauge .needle{stroke:var(--warn);stroke-width:3;stroke-linecap:round}
 .korot{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--muted)}
 .korot i{width:14px;height:14px;border-radius:50%;background:var(--line-strong);transition:background .05s;flex:none}
 .korot.on i{background:var(--warn)}
+svg.gauge .tick.mn{stroke-width:.8;opacity:.7}
+.valve{justify-content:center;min-height:52px;font-size:15.5px;padding:12px 20px;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.valve .vi{width:12px;height:12px;border-radius:50%;border:2px solid currentColor;flex:none}
+.valve.on{filter:brightness(.88)}
+.valve.on .vi{background:currentColor;animation:vpulse .6s ease-in-out infinite alternate}
+@keyframes vpulse{from{transform:scale(.7)}to{transform:scale(1.1)}}
+.valve:disabled{opacity:.55}
+.marks{display:flex;flex-wrap:wrap;gap:8px}
+.reading{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--muted)}
+.reading b{font-family:var(--f-display);font-size:22px;color:var(--ink);font-variant-numeric:tabular-nums;margin-left:4px}
+@container (max-width:620px){.valve{width:100%}.marks .btn{flex:1 1 0;justify-content:center}.reading{justify-content:center}}
+@media (prefers-reduced-motion:reduce){.valve.on .vi{animation:none}}
 canvas.pattern{width:100%;height:150px;display:block;background:var(--band);border-radius:12px}
 
 /* decision */
@@ -1216,16 +1228,18 @@ window.PPLung = (function () {
     };
   }
 
-  /* blood pressure: watch the gauge fall, listen for the Korotkoff sounds, then write down the reading */
+  /* blood pressure: hold the valve to let air out, let go to pause, and mark the first and last Korotkoff sounds */
   function bpGame(el, sbp, dbp, hr, done) {
     var start = Math.ceil((sbp + 30) / 10) * 10, rate = 3, beatT = 60 / hr;
     el.innerHTML =
       '<div class="game"><h3>Take the blood pressure<span class="row">' + soundBtn() + "</span></h3>" +
-      '<p class="muted" style="margin:0">The cuff is pumped to ' + start + ' mmHg. Open the valve and it falls about 3 mmHg per second. Watch the needle and listen (or watch the beat light). Remember the pressure at the <b>first</b> Korotkoff sound (systolic) and the <b>last</b> one (diastolic), then write them down.</p>' +
+      '<p class="muted" style="margin:0">Cuff pumped to ' + start + ' mmHg. <b>Hold</b> the valve button (or space bar) to let air out; <b>let go</b> to pause. Mark the <b>first</b> Korotkoff sound (systolic) and the <b>last</b> one (diastolic). Turn on sound, or watch the beat light.</p>' +
       '<div class="gamearea"><div class="stage"><figure><svg class="gauge" viewBox="0 0 220 220" id="gz"></svg><figcaption>Aneroid gauge</figcaption></figure></div>' +
         '<div class="ctrl"><span class="korot" id="ko"><i></i>Korotkoff sound</span>' +
-        '<div class="row"><button class="btn primary" type="button" id="bpStart">Open the valve</button><button class="btn" type="button" id="bpDump" hidden>Deflate the rest</button></div>' +
-        '<div class="ans" id="bpA" hidden><div class="bpin"><label>Systolic<input id="bpS" inputmode="numeric" autocomplete="off"></label><span class="slash" aria-hidden="true">/</span><label>Diastolic<input id="bpD" inputmode="numeric" autocomplete="off"></label><span class="unit">mmHg</span></div><button class="btn primary" type="button" id="bpGo">Check</button></div>' +
+        '<button class="btn primary valve" type="button" id="bpHold"><span class="vi" aria-hidden="true"></span><span id="bpHoldT">Hold to let air out</span></button>' +
+        '<div class="marks"><button class="btn" type="button" id="bpMS">Mark systolic</button><button class="btn" type="button" id="bpMD">Mark diastolic</button></div>' +
+        '<div class="reading" aria-live="polite"><span>Systolic <b id="bpVS">—</b></span><span>Diastolic <b id="bpVD">—</b></span></div>' +
+        '<div class="row"><button class="btn primary" type="button" id="bpGo" disabled>Check</button><button class="btn" type="button" id="bpRe">Start over</button></div>' +
         '<p class="res" id="bpR" hidden></p></div></div></div>';
     wireSound(el);
     var g = el.querySelector("#gz"), s = '<circle class="face" cx="110" cy="110" r="100"/>', i;
@@ -1235,53 +1249,66 @@ window.PPLung = (function () {
       s += '<line class="tick' + (maj ? " maj" : "") + '" x1="' + (110 + r1 * Math.cos(a)) + '" y1="' + (110 + r1 * Math.sin(a)) + '" x2="' + (110 + 96 * Math.cos(a)) + '" y2="' + (110 + 96 * Math.sin(a)) + '"/>';
       if (i % 40 === 0) s += '<text x="' + (110 + 68 * Math.cos(a)) + '" y="' + (114 + 68 * Math.sin(a)) + '" text-anchor="middle">' + i + "</text>";
     }
+    /* 2-mmHg minor ticks make the paused needle readable to the nearest even number */
+    for (i = 0; i <= 300; i += 2) if (i % 10) { var b = ang(i); s += '<line class="tick mn" x1="' + (110 + 92 * Math.cos(b)) + '" y1="' + (110 + 92 * Math.sin(b)) + '" x2="' + (110 + 96 * Math.cos(b)) + '" y2="' + (110 + 96 * Math.sin(b)) + '"/>'; }
     s += '<text x="110" y="160" text-anchor="middle" style="font-size:10px;fill:var(--muted)">mmHg</text><line class="needle" id="nd" x1="110" y1="110" x2="110" y2="30"/><circle cx="110" cy="110" r="6" fill="var(--warn)"/>';
     g.innerHTML = s;
-    var nd = g.querySelector("#nd"), ko = el.querySelector("#ko"), dump = el.querySelector("#bpDump");
+    var $$ = function (id) { return el.querySelector("#" + id); };
+    var nd = $$("nd"), ko = $$("ko"), hold = $$("bpHold"), holdT = $$("bpHoldT");
     function setNeedle(p, bounce) { var a = ang(p + (bounce || 0)); nd.setAttribute("x2", 110 + 78 * Math.cos(a)); nd.setAttribute("y2", 110 + 78 * Math.sin(a)); }
-    setNeedle(start);
-    var raf = 0, t0 = 0, P = start, nextBeat = 0, bounce = 0, dumping = false, dumpFrom = 0, dumpT = 0;
+    var raf = 0, last = 0, P, beatClock, bounce, holding, gotS, gotD, cuffT, finished;
+    function reset() {
+      P = start; beatClock = 0; bounce = 0; holding = false; gotS = null; gotD = null; cuffT = 0; finished = false;
+      $$("bpVS").textContent = $$("bpVD").textContent = "—"; $$("bpGo").disabled = true; $$("bpR").hidden = true;
+      $$("bpMS").disabled = $$("bpMD").disabled = hold.disabled = false; holdT.textContent = "Hold to let air out"; hold.classList.remove("on");
+      setNeedle(P);
+    }
     function frame(now) {
-      var t = (now - t0) / 1000;
-      if (dumping) { P = Math.max(0, dumpFrom - 90 * (t - dumpT)); }
-      else {
-        P = start - rate * t;
-        if (t >= nextBeat) {
-          nextBeat += beatT;
-          bounce = P < sbp + 15 ? 2.2 : .8;
-          if (P <= sbp && P >= dbp) { ko.classList.add("on"); tick(70, .1, .5); setTimeout(function () { ko.classList.remove("on"); }, 120); }
+      var dt = last ? Math.min(.1, (now - last) / 1000) : 0; last = now;
+      if (!finished) {
+        if (P > 0) cuffT += dt;
+        if (holding && P > 0) { P = Math.max(0, P - rate * dt); if (P === 0) { setHold(false); hold.disabled = true; holdT.textContent = "Cuff is empty"; } }
+        beatClock += dt;
+        if (beatClock >= beatT) {
+          beatClock -= beatT;
+          bounce = P > 0 ? (P < sbp + 15 ? 2.2 : .8) : 0;
+          if (P <= sbp && P >= dbp && P > 0) { ko.classList.add("on"); tick(70, .1, .5); setTimeout(function () { ko.classList.remove("on"); }, 120); }
         }
-        if (P <= Math.max(0, dbp - 25)) { dumping = true; dumpFrom = P; dumpT = t; }
       }
-      bounce *= .85;
-      setNeedle(P, dumping ? 0 : bounce);
-      if (P <= 0) { deflated(); return; }
+      bounce *= .85; setNeedle(P, bounce);
       raf = requestAnimationFrame(frame);
     }
-    function deflated() {
-      cancelAnimationFrame(raf); setNeedle(0); dump.hidden = true;
-      el.querySelector("#bpA").hidden = false; el.querySelector("#bpS").focus();
+    function setHold(on) {
+      if (finished || (on && P <= 0)) return;
+      holding = on; hold.classList.toggle("on", on); holdT.textContent = on ? "Letting air out…" : "Hold to let air out";
     }
-    el.querySelector("#bpStart").onclick = function () {
-      this.hidden = true; dump.hidden = false; t0 = performance.now(); nextBeat = 0;
-      raf = requestAnimationFrame(frame);
-    };
-    dump.onclick = function () { if (!dumping) { dumping = true; dumpFrom = P; dumpT = (performance.now() - t0) / 1000; } this.hidden = true; };
-    el.querySelector("#bpGo").onclick = function () {
-      var gotS = parseFloat(el.querySelector("#bpS").value), gotD = parseFloat(el.querySelector("#bpD").value);
-      if (!isFinite(gotS) || !isFinite(gotD)) { el.querySelector(isFinite(gotS) ? "#bpD" : "#bpS").focus(); return; }
-      var okS = Math.abs(gotS - sbp) <= 4, okD = Math.abs(gotD - dbp) <= 6, ok = okS && okD, r = el.querySelector("#bpR");
-      el.querySelector("#bpS").disabled = el.querySelector("#bpD").disabled = this.disabled = true;
+    /* press and hold with a finger, mouse or the space bar */
+    hold.addEventListener("pointerdown", function (e) { e.preventDefault(); try { hold.setPointerCapture(e.pointerId); } catch (x) {} setHold(true); });
+    ["pointerup", "pointercancel", "lostpointercapture"].forEach(function (t) { hold.addEventListener(t, function () { setHold(false); }); });
+    hold.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+    hold.addEventListener("keydown", function (e) { if (e.key === " " || e.key === "Enter") { e.preventDefault(); if (!e.repeat) setHold(true); } });
+    hold.addEventListener("keyup", function (e) { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setHold(false); } });
+    window.addEventListener("blur", function () { setHold(false); });
+    var even = function (p) { return Math.round(p / 2) * 2; };
+    var ready = function () { $$("bpGo").disabled = gotS === null || gotD === null; };
+    $$("bpMS").onclick = function () { gotS = even(P); $$("bpVS").textContent = gotS; ready(); hold.focus(); };
+    $$("bpMD").onclick = function () { gotD = even(P); $$("bpVD").textContent = gotD; ready(); hold.focus(); };
+    $$("bpRe").onclick = function () { reset(); hold.focus(); };
+    $$("bpGo").onclick = function () {
+      finished = true; setHold(false); P = 0; setNeedle(0);
+      $$("bpMS").disabled = $$("bpMD").disabled = hold.disabled = this.disabled = true;
+      var okS = Math.abs(gotS - sbp) <= 4, okD = Math.abs(gotD - dbp) <= 6, ok = okS && okD, r = $$("bpR");
       r.hidden = false; r.className = "res " + (ok ? "ok" : "no");
-      r.innerHTML = (ok ? "<b>Nice reading.</b> " : "<b>Not quite.</b> ") + "You wrote " + gotS + "/" + gotD + ". The actual BP is <b>" + sbp + "/" + dbp + " mmHg</b>." +
+      r.innerHTML = (ok ? "<b>Nice reading.</b> " : "<b>Not quite.</b> ") + "You marked " + gotS + "/" + gotD + ". The actual BP is <b>" + sbp + "/" + dbp + " mmHg</b>." +
         (!okS ? " Systolic is the pressure at the <b>first</b> sound you hear." : "") + (!okD ? " Diastolic is where the sounds <b>disappear</b>." : "") +
-        (gotD > gotS ? " (Systolic is always the higher number.)" : "") + " Read to the nearest even number, and deflate at 2–3 mmHg per second so you don’t miss the first sound.";
+        (gotD > gotS ? " (Systolic is always the higher number.)" : "") +
+        (cuffT > 75 ? " The cuff was inflated for " + Math.round(cuffT) + " seconds. Aim for about a minute: a cuff left on too long backs up venous blood and can throw off the reading." : "");
       skillResult("bp", ok);
       if (done) done(gotS, gotD, ok);
     };
-    el.querySelector("#bpD").addEventListener("keydown", function (e) { if (e.key === "Enter") el.querySelector("#bpGo").click(); });
-    el.querySelector("#bpS").addEventListener("keydown", function (e) { if (e.key === "Enter") el.querySelector("#bpD").focus(); });
-    running.push(function () { cancelAnimationFrame(raf); });
+    reset();
+    raf = requestAnimationFrame(frame);
+    running.push(function () { cancelAnimationFrame(raf); holding = false; });
   }
 
   /* ================== PATIENT ASSESSMENT ================== */
@@ -1530,7 +1557,7 @@ window.PPLung = (function () {
   var DRILLS = [
     ["rr", "Count respirations", "15 seconds × 4, front and side view"],
     ["hr", "Count a pulse", "15 seconds, regular or irregular"],
-    ["bp", "Take a blood pressure", "Listen, then write down the reading"],
+    ["bp", "Take a blood pressure", "Hold the valve, mark the first and last sounds"],
     ["snd", "Name that breath sound", "Wheezes, crackles, stridor… by ear"],
     ["pat", "Name that breathing pattern", "Kussmaul, Cheyne-Stokes, Biot’s…"],
     ["norm", "Normal or not?", "Vital signs by age"],
