@@ -37,6 +37,8 @@ Normal adult arterial blood gas values (room air, sea level), each with what a h
 
 Plus the **ROME** rule (Respiratory Opposite, Metabolic Equal), and a link to ABG practice.
 
+**Compensation** (`abg-o2.html#comp`): a short, plain-language version. One sentence on what compensation is, 3 steps (check the pH, find the cause, check the other value), then one respiratory acidosis gas at each stage (uncompensated 7.25/60/23, partially 7.32/60/30, fully 7.37/60/34) with abnormal values in red. Two tips: which side of 7.40 the pH sits on, and "both high or both low = compensation, one high and one low = mixed."
+
 **Oxyhemoglobin dissociation curve** (`abg-o2.html#curve`):
 - **The curve itself:** a real S-shaped curve drawn from the Severinghaus equation.
 - **Shifts:** dashed left- and right-shift curves that you can show or hide.
