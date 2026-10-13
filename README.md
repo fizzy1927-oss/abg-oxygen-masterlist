@@ -7,7 +7,7 @@ A sage-green study site for respiratory therapy students preparing for the NBRC 
 It opens on a **landing page** that explains what's here and helps you pick where to start. After that, every page shares the same simple navigation bar:
 
 - **Look up** menu: ABG values · Medications · O₂ devices · Formulas · Gas cylinders · Mnemonics
-- **Practice** menu: O₂ device cases · Med cases · O₂ math quiz · ABG practice · Vent practice lab · Medication quiz · Med flashcards · Review my mistakes
+- **Practice** menu: O₂ device cases · Med cases · O₂ math quiz · ABG practice · Assessment sim lab · Vent practice lab · Medication quiz · Med flashcards · Review my mistakes
 - **Search:** search the whole site from any page. Press `/` on a keyboard, or tap the magnifying glass.
 
 ---
@@ -26,14 +26,14 @@ The landing page, made so the site isn't overwhelming the first time:
 ### 1. ABG Values — `abg-o2.html#abg`
 Normal adult arterial blood gas values (room air, sea level), each with what a high or low value means:
 
-| Value | Normal range |
-| --- | --- |
-| pH | 7.35 – 7.45 |
-| PaCO₂ | 35 – 45 mmHg |
-| HCO₃⁻ | 22 – 26 mEq/L |
-| PaO₂ | 80 – 100 mmHg |
-| SaO₂ | 95 – 100% |
-| Base excess | −2 to +2 mEq/L |
+| Value | Normal | Tells you about |
+| --- | --- | --- |
+| pH | 7.35 – 7.45 | Acid–base balance overall |
+| PaCO₂ | 35 – 45 mmHg (40) | Ventilation (the lungs' side) |
+| PaO₂ | 80 – 100 mmHg | Oxygenation |
+| HCO₃⁻ | 22 – 24 mEq/L | The kidneys' (metabolic) side |
+| Base excess (BE) | ±2 | The kidneys' (metabolic) side |
+| SaO₂ | 98 – 100% | O₂ saturation in arterial blood (SpO₂ by pulse ox: 95 – 100%) |
 
 Plus the **ROME** rule (Respiratory Opposite, Metabolic Equal), and a link to ABG practice.
 
@@ -58,6 +58,19 @@ Unlimited random blood gases to interpret.
   - common causes.
 - **Also on the page:** a "How to read an ABG" refresher and a "Retry the missed" button.
 
+### 1e. Assessment Sim Lab — `assess.html`
+Three tabs:
+- **Patient assessment (21 patients):** normal post-op, asthma, emphysema, chronic bronchitis with cor pulmonale, RLL pneumonia, pleural effusion, pneumothorax, atelectasis, CHF, pulmonary fibrosis, croup, epiglottitis, bronchiolitis, DKA (Kussmaul), opioid overdose, PE, anxiety hyperventilation, sepsis, stroke with Cheyne-Stokes breathing, CF and Guillain-Barré.
+  - **Vital signs:** take them yourself (count respirations and the pulse, take a BP on an animated gauge) or just reveal them.
+  - **Exam:** inspect, palpate, then listen, percuss and check fremitus on a tappable chest map. A findings chart fills in and flags abnormal values for the patient's age.
+  - **Decide:** pick which vitals are abnormal, what's going on and what to do first. Then see the key findings and which ones you didn't check. "Surprise me" hides the patient's name.
+- **Vital signs skills:** drills to count respirations and a pulse (regular or irregular), take a blood pressure, name the breathing pattern from a 40-second trace, judge normal or not by age, and do MAP / pulse pressure / temperature math.
+- **Normal values:** adult and pediatric vital signs, chest exam findings by condition (breath sounds, percussion, fremitus, trachea), breath sounds and breathing patterns.
+
+Missed decision questions go into Review my mistakes.
+
+**Game layer:** each patient is scored out of 3 stars (100 points per question right, 20 per key finding found, 30 per vital measured yourself accurately). Patient tiles show your best stars or "New". The vital-sign drills keep a streak and your best streak. Points turn into XP; see "Stars, XP and badges" below.
+
 ### 1d. Vent Practice Lab — `vent.html`
 A bedside ventilator simulator, restyled in the Pocket Pulmo look (light and dark).
 - **30 patients in 7 groups**, each with a history, goals and IBW-based tidal volume range:
@@ -78,6 +91,13 @@ A bedside ventilator simulator, restyled in the Pocket Pulmo look (light and dar
   - inspiratory and expiratory holds.
 - **Troubleshoot (DOPE):** pick a problem or get a hidden one. Problems include disconnect, secretions, a bitten or kinked tube, bronchospasm, right mainstem intubation, tension pneumothorax, cuff leak, circuit water, unplanned extubation, flow starvation, O₂ supply failure and NIV mask problems. Assess, intervene, and get a teaching point at the end.
 - **Also:** a circuit change (put the steps in order while the patient is bagged), ABG draws with interpretation, and an event log.
+- **Mission tab:** every patient has goals to hit (for example SpO₂ 88–95%, pH 7.25–7.45, Vt 4–6.5 mL/kg and Pplat ≤ 30 in ARDS). A checklist updates live. pH and PaCO₂ only count from an ABG drawn at least 30 s after your last change, and Pplat needs an inspiratory hold. Submit for 1–3 stars; your best shows next to the patient's name in the picker. Goals are in `vent.html`: search for `Mission goals`.
+- **Night shift:** 5 hidden problems in a row. Each fix is scored on time, lowest SpO₂, whether you used the clue and any risky actions you didn't need (like calling for reintubation). Your best shift total is saved.
+
+### Stars, XP and badges (both sim labs)
+- XP ranks: RT student → Clinical student (300) → New grad RT (1,000) → Staff RT (2,500) → Senior RT (5,000) → Charge RT (9,000) → RT legend (15,000).
+- 8 badges per lab, shown under the 🏅 button at the top of each lab.
+- Everything is saved on the device only (browser storage), so nothing is shared and there are no accounts. "Reset my progress" in the badge panel clears it.
 
 ### 1c. Review My Mistakes — `review.html`
 Every question you miss anywhere on the site goes into one personal deck. That includes O₂ device cases, med cases, the medication quiz, the O₂ math quiz, ABG practice and the case of the day.
@@ -194,6 +214,7 @@ The **Memory aids** tab of the medication chart:
 | `index.html` | Landing page: site search, Look up / Practice paths, quick numbers, case of the day |
 | `abg-o2.html` | ABG values and O₂ devices |
 | `abg-practice.html` | ABG practice: unlimited random gases to interpret |
+| `assess.html` | Assessment sim lab: patient assessment and vital signs |
 | `vent.html` | Vent practice lab: ventilator simulator |
 | `review.html` | Review my mistakes: every missed question from every quiz |
 | `formulas.html` | Every formula: total flow, cylinder duration, O₂ content, quick estimates, drug math (with calculators) |
