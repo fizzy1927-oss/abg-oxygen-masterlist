@@ -208,6 +208,17 @@ A separate quiz for the calculations. You type your answer (or pick one for yes/
 - **Flexible answers:** cylinder answers accept minutes or hours and minutes (“2 hr 48 min”, “2:48”). FiO₂ accepts a percent or a decimal. Small rounding differences are counted as correct.
 - **Results:** a score at the end, a review of everything you missed with the worked solutions, and a “Retry the missed” button.
 
+### 5b. Dosage Calc Practice — `dose-quiz.html`
+Built like the O₂ Math Quiz: pick a topic, a 15-question practice set or unlimited random problems, and how many. Type the answer (each question says what to round to), check it, and see the worked steps. Misses go to Review my mistakes.
+- **Conversions:** mg ↔ mcg, g → mg, lb → kg, g → kg for infants.
+- **% & ratio solutions:** % × 10 = mg/mL, mg in a given volume (albuterol, ipratropium, racemic epi, acetylcysteine, lidocaine, cromolyn), and 1 : 1,000 / 1 : 10,000 epinephrine.
+- **Dose → volume:** D/H × Q for neb and IV drugs, how much saline to add for a set total volume, and tablets.
+- **Weight-based:** caffeine citrate, surfactants (Survanta 4 mL/kg, Curosurf 2.5 mL/kg, Infasurf 3 mL/kg), albuterol 0.15 mg/kg with its 2.5 mg minimum and 5 mg maximum, dexamethasone for croup (weight in lb), magnesium (2 g max), and IM epinephrine (0.3 mg max).
+- **Nebs & continuous nebs:** mL of 0.5% albuterol for a continuous neb, saline to fill the reservoir, mL per hour, unit-dose vial counts.
+- **IV drips:** mL/hr from a volume and time (magnesium 2 g in 50 mL over 20 min), dopamine mcg/kg/min → mL/hr, aminophylline mg/kg/hr, and mg/hr drips.
+
+To edit: in `dose-quiz.html`, `FIXED` is the practice set and `GEN` has the random-problem generators, one list per topic.
+
 ### 6. Medications — `meds.html#table`
 The NBRC respiratory pharmacology chart: **46 drugs in 11 classes.** Each drug has brand names, category, strength, dosage, onset / peak / duration, mode of action, clinical effects and indications, adverse effects, contraindications, hazards, delivery device, and exam notes.
 
@@ -241,6 +252,7 @@ The **Memory aids** tab of the medication chart:
 | `o2-cases.html` | O₂ Device Cases: case-study quiz on choosing and troubleshooting O₂ devices |
 | `med-cases.html` | Med Cases: clinical-scenario quiz on respiratory medications |
 | `math-quiz.html` | O₂ Math Quiz: graded total flow and cylinder duration problems |
+| `dose-quiz.html` | Dosage calc practice: unlimited dose problems with worked answers |
 | `meds.html` | Medication chart: table, cards, flashcards, quiz, memory aids |
 | `apple-touch-icon.png` | The lung icon people see when they add the site to their phone's home screen |
 | `sw.js` | The offline helper (service worker): saves the pages so the site works without internet |
