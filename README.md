@@ -127,6 +127,8 @@ Six oxygen delivery devices, each with liter flow, FiO₂ range, low vs. high fl
 
 Values follow the program's Oxygen Delivery Devices worksheet (RSP-119); HFNC was added. Includes a short explanation of which devices are low vs. high flow and why FiO₂ changes with breathing on some of them, and a link to the O₂ Device Cases quiz. On a phone the table becomes one card per device.
 
+**Large-volume nebulizer (aerosol) devices** (`abg-o2.html#aerosol`): flowmeter 10–15 L/min, FiO₂ 28–100% on the dial, and the four interfaces with when to use each: aerosol mask, face tent, trach collar and T-piece (Briggs adapter). Plus the total-flow rule for all four (≥ 3 × minute ventilation, usually ≥ 40 L/min) with a trach collar example, and the "mist should not disappear on inspiration" check. These are standard textbook values; the RSP-119 worksheet didn't list them.
+
 ### 3. O₂ Device Cases — `o2-cases.html`
 A case-study quiz on oxygen devices. Each case gives you a patient (history, SpO₂, vitals, sometimes an ABG) and asks what you'd do. Every answer explains why it's right and why the other choices aren't.
 
@@ -167,7 +169,9 @@ Every formula on the site in one place, each with a worked example:
 - **Oxygen content:**
   - **CaO₂ = (Hb × 1.34 × SaO₂) + (PaO₂ × 0.003)**, normal 16–20 mL/dL;
   - the **arterial–venous O₂ difference**, C(a–v)O₂ = CaO₂ − CvO₂, normal ≈ 5 mL/dL;
-  - a **calculator** (Hb, SaO₂, PaO₂, plus optional SvO₂ / PvO₂).
+  - **Hb ≈ Hct ÷ 3** (rule of three) for when a question gives the hematocrit instead of Hb, with a worked CaO₂ example;
+  - a **calculator** (Hb or Hct, SaO₂, PaO₂, plus optional SvO₂ / PvO₂).
+- **Blood pressure:** **MAP = (SBP + 2 × DBP) ÷ 3** (normal 70–105, keep ≥ 65) and pulse pressure (SBP − DBP, ≈ 40), with a **calculator**.
 - **Quick estimates:** nasal cannula FiO₂ (21% + 4% per L), the 60 / 90 rule, heliox flow correction (×1.8 / ×1.6).
 - **Drug math:** percent solution → mg/mL (% × 10, 1:1000 = 1 mg/mL), dose → volume, weight-based dosing.
 
