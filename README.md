@@ -221,7 +221,7 @@ Built like the O₂ Math Quiz: pick a topic, a 15-question practice set or unlim
 To edit: in `dose-quiz.html`, `FIXED` is the practice set and `GEN` has the random-problem generators, one list per topic.
 
 ### 6. Medications — `meds.html#table`
-The NBRC respiratory pharmacology chart: **47 drugs in 11 classes.** Each drug has brand names, category, strength, dosage, onset / peak / duration, mode of action, clinical effects and indications, adverse effects, contraindications, hazards, delivery device, and exam notes.
+The NBRC respiratory pharmacology chart: **55 drugs in 11 classes**, including the LAMA/LABA and triple inhalers (Anoro, Stiolto, Bevespi, Trelegy, Breztri), roflumilast, and the biologics omalizumab, dupilumab and mepolizumab. Each drug has brand names, category, strength, dosage, onset / peak / duration, mode of action, clinical effects and indications, adverse effects, contraindications, hazards, delivery device, and exam notes.
 
 - **Classes:** sympathomimetics (β agonists), parasympatholytics (anticholinergics), combinations, xanthines, biologics, mast cell stabilizer, leukotriene modifiers, anti-infectives, mucolytics, corticosteroids, and diluents / bland aerosols.
 - **Table view:** the full chart, with search, class filters, and "Hide answers" (tap a cell to reveal) for self-testing.
