@@ -5,7 +5,7 @@
    TO TURN IT ON: make a free account at https://www.goatcounter.com, pick a code (e.g. pocketpulmo),
    and put that code between the quotes below. Leave it empty ("") to turn counting off.
    Your stats will be at https://YOUR-CODE.goatcounter.com */
-var PP_STATS_CODE = "";
+var PP_STATS_CODE = "digitalis";
 
 (function () {
   var code = String(PP_STATS_CODE || "").trim();
