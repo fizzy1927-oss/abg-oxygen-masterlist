@@ -3,7 +3,7 @@
      offline, or if the network takes longer than a few seconds, the saved copy is used.
    - Fonts and icons: served from the saved copy, refreshed in the background.
    The version below changes every time the site is rebuilt, which clears out old saved copies. */
-var VERSION = "2107da196529";
+var VERSION = "78f6bf44d5d2";
 var CACHE = "pocket-pulmo-" + VERSION;
 var FONTS = "pocket-pulmo-fonts";
 var PAGES = ["./", "index.html", "abg-o2.html", "abg-practice.html", "formulas.html", "gas.html", "sounds.html", "o2-cases.html", "med-cases.html", "math-quiz.html", "dose-quiz.html", "meds.html", "review.html", "vent.html", "assess.html", "manifest.webmanifest", "apple-touch-icon.png", "icon-192.png", "icon-512.png"];
@@ -73,6 +73,8 @@ self.addEventListener("fetch", function (e) {
   var url = new URL(req.url);
   if (url.hostname === "fonts.googleapis.com" || url.hostname === "fonts.gstatic.com") {
     e.respondWith(cacheFirst(req, FONTS));
+  } else if (url.origin === self.location.origin && /\/stats\.js$/.test(url.pathname)) {
+    return; // visit counter settings: always fetched fresh, never cached
   } else if (url.origin === self.location.origin) {
     if (req.mode === "navigate" || /\.html$|\/$/.test(url.pathname)) e.respondWith(networkFirst(req));
     else e.respondWith(cacheFirst(req, CACHE));

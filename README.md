@@ -221,7 +221,7 @@ Built like the O₂ Math Quiz: pick a topic, a 15-question practice set or unlim
 To edit: in `dose-quiz.html`, `FIXED` is the practice set and `GEN` has the random-problem generators, one list per topic.
 
 ### 6. Medications — `meds.html#table`
-The NBRC respiratory pharmacology chart: **46 drugs in 11 classes.** Each drug has brand names, category, strength, dosage, onset / peak / duration, mode of action, clinical effects and indications, adverse effects, contraindications, hazards, delivery device, and exam notes.
+The NBRC respiratory pharmacology chart: **47 drugs in 11 classes.** Each drug has brand names, category, strength, dosage, onset / peak / duration, mode of action, clinical effects and indications, adverse effects, contraindications, hazards, delivery device, and exam notes.
 
 - **Classes:** sympathomimetics (β agonists), parasympatholytics (anticholinergics), combinations, xanthines, biologics, mast cell stabilizer, leukotriene modifiers, anti-infectives, mucolytics, corticosteroids, and diluents / bland aerosols.
 - **Table view:** the full chart, with search, class filters, and "Hide answers" (tap a cell to reveal) for self-testing.
@@ -257,6 +257,7 @@ The **Memory aids** tab of the medication chart:
 | `meds.html` | Medication chart: table, cards, flashcards, quiz, memory aids |
 | `apple-touch-icon.png` | The lung icon people see when they add the site to their phone's home screen |
 | `sw.js` | The offline helper (service worker): saves the pages so the site works without internet |
+| `stats.js` | Optional anonymous visit counter (off until you add a GoatCounter code) |
 | `manifest.webmanifest` | App info for phones: the name, icon and colors used by "Add to Home Screen" |
 | `icon-192.png`, `icon-512.png` | App icons used by the manifest (Android and desktop) |
 | `README.md` | This file |
@@ -274,6 +275,14 @@ Old links and bookmarks to `index.html#abg` or `index.html#o2` still work: they 
 5. After a minute or two the site is live at `https://<your-username>.github.io/<repo-name>/`.
 
 Tip: on your phone, open the site and use **Add to Home Screen**. It saves as **Pocket Pulmo** with the lung icon and opens like an app.
+
+## Visit counts (optional)
+`stats.js` counts anonymous page visits with [GoatCounter](https://www.goatcounter.com): no cookies, no accounts and no personal info. It's **off until you add a code**:
+1. Make a free account at goatcounter.com and pick a code (for example `pocketpulmo`).
+2. Open `stats.js` and put the code between the quotes: `var PP_STATS_CODE = "pocketpulmo";`
+3. Upload `stats.js`. Your numbers (visits per page, browsers, screen sizes, countries) are at `https://YOUR-CODE.goatcounter.com`.
+
+It doesn't count visitors whose browser asks not to be tracked, or visits while offline. The home page footer has a one-line privacy note saying the site counts anonymous visits.
 
 ## Offline use
 
