@@ -6,8 +6,8 @@ A sage-green study site for respiratory therapy students preparing for the NBRC 
 
 It opens on a **landing page** that explains what's here and helps you pick where to start. After that, every page shares the same simple navigation bar:
 
-- **Look up** menu: ABG values · Medications · O₂ devices · Formulas · Gas cylinders · Mnemonics
-- **Practice** menu: O₂ device cases · Med cases · O₂ math quiz · ABG practice · Assessment sim lab · Vent practice lab · Medication quiz · Med flashcards · Review my mistakes
+- **Look up** menu: ABG values · Medications · O₂ devices · Formulas · Gas cylinders · Breath sounds · Lung volumes & PFTs · Disease one-pagers · Airway clearance · Mnemonics
+- **Practice** menu: O₂ device cases · Med cases · O₂ math quiz · Dosage calc practice · ABG practice · Assessment sim lab · Vent practice lab · Medication quiz · Med flashcards · Mock exam · Review my mistakes
 - **Search:** search the whole site from any page. Press `/` on a keyboard, or tap the magnifying glass.
 
 ---
@@ -19,7 +19,7 @@ The landing page, made so the site isn't overwhelming the first time:
 - **Badges under the tagline:** **Works offline** (it changes to "saved on this device ✓" once your phone has saved the site) and **Add to Home Screen** (tap it for iPhone and Android steps, plus a one-tap Install button on Android/Chrome).
 - **A big search box.** Type a drug, device, gas, formula, lab value, symptom or mnemonic (e.g. "albuterol", "Venturi", "E cylinder", "thrush", "can't see"), and it jumps you to the right spot. Drug results open the med chart already filtered to that drug. "Try:" buttons show example searches.
 - **Two paths:** **Look something up** (the reference pages) and **Practice** (the quizzes, sim labs, flashcards and your mistakes deck), each with a one-line description. The **Review my mistakes** card shows a red count when you have questions waiting.
-- **Quick numbers:** a tabbed card (ABG · O₂ devices · Formulas · Meds) with the most-looked-up values: ABG normals, ROME and the 60/90 rule, every device's flow and FiO₂, every formula on the site (grouped into O₂ delivery, O₂ content & oxygenation, Ventilator, Gas laws, Blood pressure and Drug math, with a filter box and group buttons; each row links to its spot on the Formulas page), and key med doses (albuterol, ipratropium, DuoNeb, the 20-beat rule, theophylline level, caffeine loading, racemic epi, PFT reversibility). It remembers the last tab you opened, and each tab links to its full chart.
+- **Quick numbers:** a tabbed card (ABG · O₂ devices · Formulas · Meds) with the most-looked-up values: ABG normals, ROME and the 60/90 rule, every device's flow and FiO₂, every formula on the site (grouped into O₂ delivery, O₂ content & oxygenation, Ventilator, Gas laws, PFTs, Blood pressure and Drug math, with a filter box and group buttons; each row links to its spot on the Formulas page), and key med doses (albuterol, ipratropium, DuoNeb, the 20-beat rule, theophylline level, caffeine loading, racemic epi, PFT reversibility). It remembers the last tab you opened, and each tab links to its full chart.
 - **What's new:** a small pill at the top of the home page with the latest headline. Tap it to see the list of updates. A red dot shows until a visitor has opened it, and the footer has a "What's new" link too.
 - **Case of the day:** one patient case from the O₂ and med case sets, the same for everyone on a given day. It works through all of them in a shuffled order before any case repeats. Answer it right on the home page to see the explanation. It remembers today's answer, keeps a streak for days in a row, and links to more cases like it.
 
@@ -104,8 +104,17 @@ A bedside ventilator simulator, restyled in the Pocket Pulmo look (light and dar
 - 9 badges in the Assessment lab and 8 in the Vent lab, shown under the 🏅 button at the top of each lab.
 - Everything is saved on the device only (browser storage), so nothing is shared and there are no accounts. "Reset my progress" in the badge panel clears it.
 
+### 1f. Mock Exam — `mock-exam.html`
+A timed, board-style test. Nothing is graded until you submit, like the real exam.
+
+- **Length:** 25, 50, 80 or 160 questions, timed at TMC pace (about 67 seconds each, so 160 questions = 3 hours). The timer can be turned off.
+- **Areas:** O₂ therapy & devices, medications, calculations (O₂ math and dosage), ABGs (random gases), airway clearance & lung expansion, and diseases. Turn areas on or off. Questions are mixed in rough proportion to each area's weight.
+- **Question bank:** every single-question O₂ and med case, the hand-written medication quiz, the O₂ math and dosage practice sets (turned into multiple choice), and the airway and disease quick-check questions, plus unlimited ABGs (over 570 questions in all).
+- **During the exam:** change answers, flag questions, jump to any question from "All questions", pause (the question is hidden while paused), and use the keyboard (A–D or 1–4, arrow keys, F to flag). Your progress is saved, so you can close the page and resume later. When time runs out it submits itself.
+- **Results:** your score with markers at the old TMC cut scores (about 61% and 66%), a breakdown by area, and a review of every question (filter by missed or flagged). Answered questions you missed go to Review my mistakes, and your last 30 scores are saved.
+
 ### 1c. Review My Mistakes — `review.html`
-Every question you miss anywhere on the site goes into one personal deck. That includes O₂ device cases, med cases, the medication quiz, the O₂ math quiz, ABG practice and the case of the day.
+Every question you miss anywhere on the site goes into one personal deck. That includes O₂ device cases, med cases, the medication quiz, the O₂ math and dosage quizzes, ABG practice, the airway clearance and disease quick checks, the mock exam and the case of the day.
 
 - **Leaving the deck:** answer a question right (here or in its original quiz) and it leaves the deck. Miss it again and it stays, marked "missed 2×" and so on. The most-missed questions come up first.
 - **Filters:** review everything or one source at a time, and choose 5, 10, 20 or all.
@@ -132,11 +141,11 @@ Values follow the program's Oxygen Delivery Devices worksheet (RSP-119); HFNC wa
 ### 3. O₂ Device Cases — `o2-cases.html`
 A case-study quiz on oxygen devices. Each case gives you a patient (history, SpO₂, vitals, sometimes an ABG) and asks what you'd do. Every answer explains why it's right and why the other choices aren't.
 
-- **51 cases in 5 types:**
-  - **Pick the device (12):** e.g., the COPD CO₂ retainer already at target, cluster headache, carbon monoxide poisoning, pneumonia failing a non-rebreather, an infant with bronchiolitis, nasal packing, a claustrophobic patient.
-  - **Troubleshoot (15):** e.g., a cannula hooked to the air flowmeter, a whistling humidifier, a Venturi set below its flow, HFNC prong size, a bad pulse-ox signal, a low cylinder before transport, a collapsing reservoir bag, a simple mask below 5 L/min, a dry nose on a cannula, raising a Venturi's FiO₂, blocked entrainment ports, the aerosol mist disappearing, HFNC humidity, mouth breathing, the non-rebreather's safety port.
-  - **Next step (8):** HFNC failure, weaning FiO₂ in a preemie, stepping up a Venturi, opioid hypoventilation, hypercapnic failure needing BiPAP, CHF pulmonary edema needing CPAP/BiPAP, weaning off a non-rebreather, O₂-induced hypercapnia.
-  - **Concepts (5):** why a cannula above 6 L/min barely helps, estimating cannula FiO₂, how breathing pattern changes low-flow FiO₂, partial rebreather vs. non-rebreather, which devices are high flow.
+- **81 cases in 5 types:**
+  - **Pick the device (20):** e.g., the COPD CO₂ retainer already at target, cluster headache, carbon monoxide poisoning, pneumonia failing a non-rebreather, an infant with bronchiolitis, nasal packing, a claustrophobic patient, a new trach, facial burns, a T-piece breathing trial, heliox for stridor, flying with home O₂, an infant oxyhood, MI with a normal SpO₂, bleomycin.
+  - **Troubleshoot (24):** rainout in aerosol tubing, a T-piece without reservoir tubing, 100% aerosol with too little flow, cold gas in an oxyhood, smoking on O₂, a leaking yoke washer, a Bourdon gauge with a kinked line, a concentrator purity alarm, methemoglobinemia; plus a cannula hooked to the air flowmeter, a whistling humidifier, a Venturi set below its flow, HFNC prong size, a bad pulse-ox signal, a low cylinder before transport, a collapsing reservoir bag, a simple mask below 5 L/min, a dry nose on a cannula, raising a Venturi's FiO₂, blocked entrainment ports, the aerosol mist disappearing, HFNC humidity, mouth breathing, the non-rebreather's safety port.
+  - **Next step (15):** SpO₂ targets in pregnancy, absorption atelectasis, home O₂ qualifying criteria, CO poisoning and hyperbaric O₂, titrating to an ordered range, a ductal-dependent newborn, pulse-dose devices at night, HFNC failure, weaning FiO₂ in a preemie, stepping up a Venturi, opioid hypoventilation, hypercapnic failure needing BiPAP, CHF pulmonary edema needing CPAP/BiPAP, weaning off a non-rebreather, O₂-induced hypercapnia.
+  - **Concepts (11):** the real reason O₂ raises CO₂ in COPD, O₂ content with anemia, O₂ toxicity, DISS, liquid O₂ expansion, heliox flowmeter math, why a cannula above 6 L/min barely helps, estimating cannula FiO₂, how breathing pattern changes low-flow FiO₂, partial rebreather vs. non-rebreather, which devices are high flow.
 - **Multi-part cases (11):** each one unfolds in 2–3 steps. Answer part 1, then an update tells you what happened ("the bag still collapses", "the tank is at 400 psig"), and you decide what to do next. They cover troubleshooting, escalation (Venturi → NRB → HFNC, BiPAP) and O₂ math at the bedside.
 - **Calculator:** a pop-up calculator for the math cases.
 - **Quiz options:** filter by case type, choose 5, 10, 20 or all, and open the built-in device cheat sheet.
@@ -145,11 +154,11 @@ A case-study quiz on oxygen devices. Each case gives you a patient (history, SpO
 ### 3b. Med Cases — `med-cases.html`
 A clinical-scenario quiz on respiratory medications, in the same format as the O₂ Device Cases. Every answer explains why, and links straight to that drug in the med chart.
 
-- **178 application-based cases in 5 types:**
-  - **Pick the drug (32):** add-on tiotropium for asthma, acute asthma, croup and post-extubation stridor, COPD maintenance, choosing a biologic, CF, apnea of prematurity, PCP prophylaxis, cromolyn before an allergen, end-of-life secretions, and more.
-  - **Side effects & safety (47):** tobramycin ototoxicity, steroid-induced hyperglycemia, extra montelukast before exercise, tachycardia and tremor during treatment, thrush, theophylline toxicity and interactions, anticholinergic effects (glaucoma, urinary retention), anaphylaxis with biologics, duplicate-drug orders, LABA without an ICS, beta blockers in asthma, MAO inhibitors and epinephrine, colistin and gentamicin hazards, and more.
-  - **Dosing & delivery (55):** dose calculations (caffeine loading dose, racemic epi and acetylcysteine mg, continuous albuterol volume), catching wrong orders (doses, units, frequency), inhaler technique (MDI, spacer, Diskus, Ellipta, HandiHaler, Respimat, QVAR), priming, ventilator delivery, the CF treatment order, mixing rules, diluents and storage.
-  - **Next step (33):** ICS and pneumonia risk in COPD, single-inhaler triple therapy, judging response (peak flow, FEV₁, the silent chest), rescue-inhaler overuse, steroid tapers, when a treatment is needed early, and more.
+- **209 application-based cases in 5 types:**
+  - **Pick the drug (41):** Trelegy, Breztri, Bevespi, Stiolto, roflumilast, mepolizumab, ciclesonide, Breo and Asmanex cases, plus add-on tiotropium for asthma, acute asthma, croup and post-extubation stridor, COPD maintenance, choosing a biologic, CF, apnea of prematurity, PCP prophylaxis, cromolyn before an allergen, end-of-life secretions, and more.
+  - **Side effects & safety (58):** Breo overuse, omalizumab anaphylaxis, ciprofloxacin and theophylline, roflumilast and mood, ribavirin and pregnant staff, aminoglycosides with paralytics, SMART limits, plus tobramycin ototoxicity, steroid-induced hyperglycemia, extra montelukast before exercise, tachycardia and tremor during treatment, thrush, theophylline toxicity and interactions, anticholinergic effects (glaucoma, urinary retention), anaphylaxis with biologics, duplicate-drug orders, LABA without an ICS, beta blockers in asthma, MAO inhibitors and epinephrine, colistin and gentamicin hazards, and more.
+  - **Dosing & delivery (62):** Ellipta cover loading, Respimat priming, blow-by with a mask, device-specific nebulizers, Twisthaler and Alvesco technique, not mixing Pulmozyme, plus dose calculations (caffeine loading dose, racemic epi and acetylcysteine mg, continuous albuterol volume), catching wrong orders (doses, units, frequency), inhaler technique (MDI, spacer, Diskus, Ellipta, HandiHaler, Respimat, QVAR), priming, ventilator delivery, the CF treatment order, mixing rules, diluents and storage.
+  - **Next step (37):** biologics as add-on therapy, a high theophylline level, Anoro + Trelegy duplication, choosing omalizumab vs. mepolizumab, plus ICS and pneumonia risk in COPD, single-inhaler triple therapy, judging response (peak flow, FEV₁, the silent chest), rescue-inhaler overuse, steroid tapers, when a treatment is needed early, and more.
 - **Where they came from:** application-based questions from the course's respiratory pharmacology study set (de-duplicated, with a few corrected), the textbook's review questions, and cases written to fill in the drugs those didn't cover.
 - **Multi-part cases (11):** clinical scenarios that unfold in 2–3 steps. Examples: tachycardia halfway through an albuterol treatment, then the drug swap; bronchospasm from acetylcysteine; rebound stridor after racemic epi; theophylline toxicity and the drug interaction behind it; caffeine citrate dose math.
 - **Roman-numeral questions** (I, II, III…) show the statements in a list, with the choices kept in their original order.
@@ -188,6 +197,33 @@ Every breath sound sorted the way textbooks do it, each with a play button:
 
 Each card has an in/out diagram (up = breathing in, line thickness = loudness, red marks = the extra sound and when it happens), plus what it sounds like, where you hear it and what it means. Two "tell them apart" tables compare wheezes, rhonchi and stridor, and fine crackles, coarse crackles and a rub. A link opens the Name that breath sound drill. The sounds are the same generated ones the Assessment lab uses.
 
+### 4d. Lung Volumes & PFTs — `pft.html`
+- **Interactive spirogram:** a tracing of quiet breaths, a maximal breath in and a maximal breath out, with the 4 volumes stacked beside it (IRV, VT, ERV, RV) and brackets for the 4 capacities (IC, FRC, VC, TLC). Tap any of them, on the chart or the buttons, to highlight it and see its normal value, the formula with the numbers filled in, what it means, and whether simple spirometry can measure it.
+- **Normal / Obstructive / Restrictive switch:** redraws the volumes, showing air trapping (↑ RV, FRC, TLC; ↓ IC, VC) or small lungs (everything ↓, TLC < 80%).
+- **Volumes & capacities table** with normal adult values.
+- **Forced spirogram:** FEV₁ and FVC curves for normal, obstructive and restrictive lungs, each with its own line style and label. Move across the chart to read the volumes at any second. Plus a FEV₁ / FVC / ratio / TLC table.
+- **Obstructive vs restrictive** side by side, plus bronchodilator reversibility (FEV₁ ↑ ≥ 12% and 200 mL).
+
+Values are typical textbook adult numbers for teaching. The lung-volume formulas are also in Quick numbers → Formulas → PFTs.
+
+### 4e. Disease One-Pagers — `diseases.html`
+19 respiratory diseases, each laid out the same way: what it is, signs and symptoms, ABG, chest X-ray, breath sounds and exam, PFTs and tests, RT priorities, treatment, and a "remember" line, with links to the matching sounds, meds and calculators.
+
+- **Diseases:** COPD, asthma, bronchiectasis, cystic fibrosis, pulmonary fibrosis, neuromuscular weakness (Guillain-Barré, myasthenia gravis), pneumonia, tuberculosis, ARDS, cardiogenic pulmonary edema, atelectasis, pulmonary embolism, pneumothorax, pleural effusion, obstructive sleep apnea, croup, epiglottitis, bronchiolitis (RSV) and neonatal RDS.
+- **Find one:** search by name, sign or finding (e.g. "stridor", "Kerley"), or filter by type (obstructive, restrictive, infection, and so on). Each disease has its own link (e.g. `diseases.html#copd`).
+- **Commonly confused:** croup vs epiglottitis, ARDS vs cardiogenic edema, and the chest exam by problem.
+- **Quick checks:** 2–3 questions on each disease page, plus a 10-question mix (45 questions in all). A **Print** button prints just that one page.
+
+### 4f. Airway Clearance & Lung Expansion — `airway.html`
+- **Lung expansion:** who gets atelectasis and how to spot it; incentive spirometry (start at 2 × VT, slow 5–15 s breath with a 2–3 s pause, indications, hazards, monitoring), IPPB, CPAP/EPAP and the basics (deep breathing, splinting, walking).
+- **Airway clearance:** signs it's needed, what normal clearance needs, the 4 cough phases and what impairs each, what happens when secretions stay put; huff cough, assisted/quad cough, ACBT, autogenic drainage, PEP, oscillating PEP (flutter vs Acapella), the vest, IPV, cough assist (MI-E) and suctioning. Each card covers who, how, settings and what to watch for.
+- **Postural drainage:** goals and indications of CPT, timing, percussion (5–10 min, never on bare skin) and vibration. Tap a lobe to see each segment's position as on the class chart, bed tilt (flat, foot raised 12 in or 18 in, or head up) with a drawing, and where to percuss.
+- **During & after therapy:** what to monitor, signs it worked, and what to do for each complication (hypoxemia, hypotension, hemorrhage, pain, dysrhythmias, vomiting, bronchospasm).
+- **Pick a therapy:** match the problem to the tool, how to modify therapy (aspiration risk, confused patients), and what decides the strategy. **Contraindications & hazards** table (absolute ones in red).
+- **Quick check:** 10 random questions from a 52-question set.
+
+Follows the program's Airway Clearance & Incentive Spirometry lecture (with Egan's postural drainage chart); anything not covered there comes from Egan's and the AARC clinical practice guidelines.
+
 ### 4b. Gas Cylinders — `gas.html`
 - **Medical gas cylinders:** the US color code, what each gas is used for, and its pin index (PISS). Covers oxygen, medical air, heliox, helium, carbon dioxide, CO₂/O₂, nitrous oxide, nitrogen, cyclopropane and ethylene.
 - **Also:** PISS vs. ASSS vs. DISS, and cylinder safety.
@@ -196,7 +232,7 @@ Each card has an in/out diagram (up = breathing in, line thickness = loudness, r
 A separate quiz for the calculations. You type your answer (or pick one for yes/no-style questions), check it, and see the worked solution.
 
 - **Topics:** total flow, cylinder duration, or both.
-- **Practice set:** the 15 worked problems (8 total flow, 7 cylinder duration), in a random order.
+- **Practice set:** 48 worked problems (26 total flow, 22 cylinder duration), in a random order. Choose 5, 10, 20 or all.
 - **Random problems:** new numbers every time, for unlimited practice. Problem types:
   - total flow from the ratio table
   - working out an entrainment ratio
@@ -211,7 +247,7 @@ A separate quiz for the calculations. You type your answer (or pick one for yes/
 - **Results:** a score at the end, a review of everything you missed with the worked solutions, and a “Retry the missed” button.
 
 ### 5b. Dosage Calc Practice — `dose-quiz.html`
-Built like the O₂ Math Quiz: pick a topic, a 15-question practice set or unlimited random problems, and how many. Type the answer (each question says what to round to), check it, and see the worked steps. Misses go to Review my mistakes.
+Built like the O₂ Math Quiz: pick a topic, a 57-question practice set or unlimited random problems, and how many. Type the answer (each question says what to round to), check it, and see the worked steps. Misses go to Review my mistakes.
 - **Conversions:** mg ↔ mcg, g → mg, lb → kg, g → kg for infants.
 - **% & ratio solutions:** % × 10 = mg/mL, mg in a given volume (albuterol, ipratropium, racemic epi, acetylcysteine, lidocaine, cromolyn), and 1 : 1,000 / 1 : 10,000 epinephrine.
 - **Dose → volume:** D/H × Q for neb and IV drugs, how much saline to add for a set total volume, and tablets.
@@ -228,7 +264,7 @@ The NBRC respiratory pharmacology chart: **55 drugs in 11 classes**, including t
 - **Table view:** the full chart, with search, class filters, and "Hide answers" (tap a cell to reveal) for self-testing.
 - **Cards view:** one expandable card per drug.
 - **Flashcards:** study one field or everything, shuffle, mark cards known, and skip known cards (progress is saved on your device).
-- **Quiz:** 83 hand-written NBRC-style questions (including textbook review questions on SABAs vs. LABAs, DPIs, DuoNeb/Combivent and ipratropium vs. atropine) plus auto-generated drug class and brand-name questions; choose 10, 20, 30 or all, then review your misses.
+- **Quiz:** 125 hand-written NBRC-style questions (including textbook review questions on SABAs vs. LABAs, DPIs, DuoNeb/Combivent and ipratropium vs. atropine) plus auto-generated drug class and brand-name questions; choose 10, 20, 30 or all, then review your misses.
 
 ### 7. Mnemonics — `meds.html#mem`
 The **Memory aids** tab of the medication chart:
@@ -248,9 +284,13 @@ The **Memory aids** tab of the medication chart:
 | `assess.html` | Assessment sim lab: patient assessment and vital signs |
 | `vent.html` | Vent practice lab: ventilator simulator |
 | `review.html` | Review my mistakes: every missed question from every quiz |
+| `mock-exam.html` | Mock exam: timed, TMC-style test pulling from every quiz |
+| `diseases.html` | Disease one-pagers: 19 diseases, same layout for each |
+| `airway.html` | Airway clearance & lung expansion, postural drainage positions |
 | `formulas.html` | Every formula: total flow, cylinder duration, O₂ content, quick estimates, drug math (with calculators) |
 | `gas.html` | Medical gas cylinders: colors, uses, pin index |
 | `sounds.html` | Breath sounds: sorted by type, with a sound to play for each |
+| `pft.html` | Lung volumes & PFTs: interactive spirogram, FEV₁/FVC, obstructive vs restrictive |
 | `o2-cases.html` | O₂ Device Cases: case-study quiz on choosing and troubleshooting O₂ devices |
 | `med-cases.html` | Med Cases: clinical-scenario quiz on respiratory medications |
 | `math-quiz.html` | O₂ Math Quiz: graded total flow and cylinder duration problems |
@@ -311,6 +351,9 @@ Pocket Pulmo works without internet after it's been opened once online.
   - Copy the `<section class="upd" ...>` block, put it at the top of the list, and edit the date, the bullets and `data-head` (the one-line headline shown on the pill).
   - Give the new block a new `data-id` (e.g. `2026-10-15`) so the red "new" dot shows again for returning visitors.
   - Labels: `<span class="k new">New</span>`, `<span class="k fix">Updated</span>`, or plain `<span class="k">Moved</span>`.
+- **Diseases:** in `diseases.html`, the `DZ = [ ... ]` array (fields explained in the comment above it) and the quick-check questions in `DZ_Q`.
+- **Airway clearance quick check:** in `airway.html`, the `AIRWAY_Q = [ ... ]` array. Postural drainage positions are in `LOBES`.
+- **Mock exam:** `mock-exam.html` holds a copy of every quiz's questions (`MOCK_BANK`), so edits to other quizzes only show up in the mock exam after a rebuild.
 - **Site search:** each page has its own copy of the search list (`window.RTQ_INDEX`). If you add a drug, case or mnemonic by hand, it shows up on its page right away, but it won't appear in search until that list is rebuilt.
 
 Flashcard progress, your mistakes deck, filters, quiz settings and your last-used tab are saved in your browser, per device.

@@ -1,0 +1,925 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Disease One-Pagers · Pocket Pulmo</title>
+<meta name="description" content="One page per respiratory disease: what it is, signs, ABG, chest X-ray, breath sounds, PFTs, treatment and RT priorities, with quick questions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F3F5F0; --surface:#FFFFFF; --ink:#1E2A22; --muted:#65725F; --line:#E0E6DA; --line-strong:#CBD5C4;
+  --accent:#4E6E52; --accent-ink:#FFFFFF; --accent-soft:#E4ECE1; --band:#EEF2EA; --shadow:0 1px 2px rgba(30,42,34,.05),0 4px 16px rgba(30,42,34,.05);
+  --c-beta:#4E729A; --c-anti:#7A62A0; --c-combo:#3F7D69; --c-xan:#9A6534; --c-bio:#9A5572; --c-masto:#5F7F3A; --c-ltm:#8A7432; --c-abx:#A4524A; --c-muco:#3F7F8A; --c-ster:#7E5E44; --c-dil:#66736C;
+  --good:#3C7A4E; --good-bg:#E4F1E6; --warn:#A4524A; --warn-bg:#F6E9E6;
+  --f-display:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:12px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141A16; --surface:#1B231D; --ink:#E2E9DF; --muted:#9BA897; --line:#29342B; --line-strong:#374438;
+  --accent:#A3C2A2; --accent-ink:#141A16; --accent-soft:#243126; --band:#1F2821; --shadow:0 1px 2px rgba(0,0,0,.3);
+  --c-beta:#8FB0D6; --c-anti:#B6A2D6; --c-combo:#86C2AC; --c-xan:#D6A67A; --c-bio:#D69AB4; --c-masto:#A8C689; --c-ltm:#D1BD7E; --c-abx:#DE978F; --c-muco:#86BFC8; --c-ster:#C9A58A; --c-dil:#A6B3AC;
+  --good:#8FCB9E; --good-bg:#1E3324; --warn:#E3A097; --warn-bg:#3A2420; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141A16; --surface:#1B231D; --ink:#E2E9DF; --muted:#9BA897; --line:#29342B; --line-strong:#374438;
+  --accent:#A3C2A2; --accent-ink:#141A16; --accent-soft:#243126; --band:#1F2821; --shadow:0 1px 2px rgba(0,0,0,.3);
+  --c-beta:#8FB0D6; --c-anti:#B6A2D6; --c-combo:#86C2AC; --c-xan:#D6A67A; --c-bio:#D69AB4; --c-masto:#A8C689; --c-ltm:#D1BD7E; --c-abx:#DE978F; --c-muco:#86BFC8; --c-ster:#C9A58A; --c-dil:#A6B3AC;
+  --good:#8FCB9E; --good-bg:#1E3324; --warn:#E3A097; --warn-bg:#3A2420; color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;margin:0}
+button,input{font:inherit;color:inherit}
+/* ---------- shared site nav: brand + Look up / Practice menus + Search ---------- */
+.site-nav{background:var(--surface);border-bottom:1px solid var(--line);position:relative;z-index:40}
+.site-nav .in{max-width:1440px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.site-brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:16px;letter-spacing:-.01em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.site-brand .mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:12.5px;font-weight:800;letter-spacing:.02em}
+.site-menus{display:flex;align-items:center;gap:6px}
+.menu{position:relative}
+.menu > summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:999px;font-family:var(--f-display);font-weight:600;font-size:14.5px;color:var(--muted);user-select:none;-webkit-user-select:none}
+.menu > summary::-webkit-details-marker{display:none}
+.menu > summary:hover{color:var(--ink);background:var(--band)}
+.menu > summary.on{color:var(--ink);background:var(--accent-soft)}
+.menu[open] > summary{color:var(--ink);background:var(--accent-soft)}
+.menu > summary .chev{transition:transform .15s}
+.menu[open] > summary .chev{transform:rotate(180deg)}
+.menu > summary:focus-visible,.site-brand:focus-visible,.mi:focus-visible,.sr:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.menu .panel{position:absolute;right:0;top:calc(100% + 8px);width:360px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 40px rgba(20,30,22,.16),0 2px 6px rgba(20,30,22,.06);padding:8px;display:grid;gap:2px}
+.menu .ptitle{margin:6px 10px 4px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mi{display:flex;align-items:flex-start;gap:12px;padding:10px;border-radius:12px;text-decoration:none;color:var(--ink)}
+.mi:hover{background:var(--band)}
+.mi[aria-current]{background:var(--accent-soft)}
+.mi .ico{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent)}
+.mi[aria-current] .ico{background:var(--accent);color:var(--accent-ink)}
+.mi b{display:block;font-family:var(--f-display);font-size:14.5px;font-weight:700;line-height:1.3}
+.mi span span{display:block;font-size:13px;color:var(--muted);line-height:1.35;margin-top:1px}
+
+/* search (nav panel and the landing page hero share this) */
+.srch{display:grid;gap:8px}
+.srch .sbox{display:flex;align-items:center;gap:10px;border:1px solid var(--line-strong);border-radius:12px;background:var(--bg);padding:0 12px}
+.srch .sbox:focus-within{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.srch .sbox svg{flex:none;color:var(--muted)}
+.srch input{flex:1;min-width:0;font:inherit;font-size:16px;color:var(--ink);background:none;border:0;outline:none;padding:12px 0}
+.srch input::-webkit-search-cancel-button{cursor:pointer}
+.sres{list-style:none;margin:0;padding:0;display:grid;gap:2px;max-height:min(60vh,440px);overflow:auto}
+.sres:empty{display:none}
+.sr{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;align-items:baseline;padding:9px 10px;border-radius:10px;text-decoration:none;color:var(--ink)}
+.sr:hover,.sr.act{background:var(--band)}
+.sr .sg{grid-row:span 2;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:2px 8px;border-radius:999px;white-space:nowrap;align-self:start;margin-top:2px}
+.sr b{font-family:var(--f-display);font-weight:700;font-size:14.5px;line-height:1.3}
+.sr span.ss{font-size:13px;color:var(--muted);line-height:1.35}
+.snote{font-size:13px;color:var(--muted);margin:2px 4px}
+.snote a{color:var(--accent)}
+.menu .panel.search{width:440px;padding:12px}
+/* a closed menu's panel takes no space (stops it widening the page on phones) */
+.menu:not([open]) > .panel{display:none}
+.menu .panel{max-height:calc(100vh - 84px);max-height:calc(100dvh - 84px);overflow-y:auto;overscroll-behavior:contain}
+.menu > summary.sbtn{padding:9px 12px}
+
+@media (max-width:760px){
+  .site-nav .in{padding:8px 12px}
+  .site-menus{gap:2px}
+  .menu{position:static}
+  .menu > summary{padding:9px 11px;font-size:14px}
+  .menu .panel,.menu .panel.search{left:8px;right:8px;width:auto;top:calc(100% + 4px)}
+  .menu > summary.sbtn .lbl{display:none}
+}
+@media (max-width:480px){.site-brand .bt{display:none}}
+@media (prefers-reduced-motion:reduce){.menu > summary .chev{transition:none}}
+@media print{.site-nav{display:none}}
+.mbadge{display:inline-block;margin-left:6px;min-width:20px;padding:0 7px;border-radius:999px;background:var(--warn);color:var(--surface);font:700 12px/1.6 var(--f-body);font-style:normal;text-align:center;vertical-align:1px;letter-spacing:0}
+.mbadge[hidden]{display:none}
+
+
+.wrap{max-width:1040px;margin:0 auto;padding:36px 24px 56px;display:flex;flex-direction:column;gap:36px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+h1,h2,h3{font-family:var(--f-display);letter-spacing:-.02em;margin:0;color:var(--ink)}
+h1{font-weight:700;font-size:clamp(28px,4vw,40px);line-height:1.1;text-wrap:balance}
+h2{font-weight:700;font-size:22px;line-height:1.2}
+h3{font-weight:700;font-size:16px;letter-spacing:-.01em;line-height:1.3}
+.sub{color:var(--muted);margin:10px 0 0;font-size:15px;max-width:66ch}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+[hidden]{display:none!important}
+section{display:flex;flex-direction:column;gap:14px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px}
+.sec-head p{margin:0;font-size:13.5px;color:var(--muted)}
+.btn{font-weight:600;font-size:14px;padding:8px 14px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+/* finder */
+.finder{display:grid;gap:12px;margin-top:18px}
+.sbox{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line-strong);border-radius:12px;padding:0 12px;max-width:440px}
+.sbox input{border:0;background:none;outline:none;padding:10px 0;width:100%;min-width:0;font-size:15px}
+.sbox svg{flex:none;color:var(--muted)}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;margin:0 -24px;padding-inline:24px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font-size:13.5px;font-weight:600;padding:7px 14px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+/* tiles */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.tile{display:grid;gap:4px;align-content:start;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px 16px;cursor:pointer;text-decoration:none;color:var(--ink);min-width:0}
+.tile:hover{border-color:var(--accent)}
+.tile b{font-family:var(--f-display);font-size:16px}
+.tile small{font-size:12.5px;font-weight:600;color:var(--muted)}
+.tile span{font-size:14px;color:var(--muted)}
+.empty{color:var(--muted);margin:0}
+
+/* one-pager */
+.op{display:grid;gap:16px}
+.op-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.op-head{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:20px 22px;display:grid;gap:10px}
+.op-head .grp{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.op-head h2{font-size:clamp(26px,3.4vw,34px)}
+.op-head .aka{font-size:14px;font-weight:600;color:var(--muted);margin-top:-6px}
+.op-head .one{font-family:var(--f-display);font-weight:700;font-size:17px;margin:0}
+.op-head .what{margin:0;font-size:15px;line-height:1.55}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.fact h3{display:flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.fact h3 i{width:22px;height:22px;border-radius:7px;background:var(--accent-soft);display:grid;place-items:center;font-style:normal;font-size:12px}
+.fact p{margin:0;font-size:14.5px;line-height:1.5}
+.fact ul{margin:0;padding-left:18px;font-size:14.5px;line-height:1.5}
+.fact li{margin:3px 0}
+.fact.wide{grid-column:1/-1}
+.pearl{background:var(--accent-soft);border-radius:var(--r);padding:14px 18px;font-size:15px}
+.pearl b{font-family:var(--f-display)}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.links a{font-size:13.5px;font-weight:600;padding:6px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line-strong);color:var(--ink);text-decoration:none}
+.links a:hover{border-color:var(--accent)}
+.pn{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pn .btn{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+
+/* compare */
+.cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cmp .cc:last-child{grid-column:1/-1}
+.cc{overflow-x:auto;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px 16px;display:grid;gap:8px;align-content:start}
+.cc table{width:100%;border-collapse:collapse;font-size:13.5px;line-height:1.4}
+.cc th{text-align:left;font-size:12px;color:var(--muted);font-weight:700;padding:4px 6px 4px 0;border-bottom:1px solid var(--line)}
+.cc td{padding:5px 6px 5px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.cc td:first-child{font-weight:700;color:var(--muted);font-size:12.5px}
+.cc tr:last-child td{border-bottom:0}
+
+/* quick-check quiz card (PPMini) */
+.mq{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px 20px;display:grid;gap:12px;min-width:0}
+.mq-top{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--muted)}
+.mq-s{margin:0;font-size:14.5px;background:var(--band);border-radius:10px;padding:10px 12px}
+.mq-q{margin:0;font-family:var(--f-display);font-weight:700;font-size:17px;line-height:1.35;color:var(--ink)}
+.mq-opts{display:grid;gap:8px}
+.mq-opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line-strong);background:var(--surface);cursor:pointer;font-size:14.5px;line-height:1.4}
+.mq-opt:hover:not(:disabled){border-color:var(--accent)}
+.mq-opt:disabled{cursor:default}
+.mq-l{flex:none;display:grid;place-items:center;width:24px;height:24px;border-radius:7px;background:var(--band);font-weight:700;font-size:12.5px;color:var(--muted)}
+.mq-opt.ok{border-color:var(--good);background:var(--good-bg)}
+.mq-opt.ok .mq-l{background:var(--good);color:var(--surface)}
+.mq-opt.no{border-color:var(--warn);background:var(--warn-bg)}
+.mq-opt.no .mq-l{background:var(--warn);color:var(--surface)}
+.mq-fb{border-radius:12px;padding:12px 14px;font-size:14.5px;line-height:1.5;background:var(--band)}
+.mq-fb.ok b{color:var(--good)}.mq-fb.no b{color:var(--warn)}
+.mq-next{margin-top:10px}
+.mq-end{display:grid;gap:8px;justify-items:start}
+.mq-end p{margin:0}
+.mq-big{font-family:var(--f-display);font-weight:800;font-size:34px;color:var(--accent)}
+@media (max-width:760px){.mq{padding:16px}}
+
+
+footer{padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;display:grid;gap:6px}
+footer p{margin:0}
+
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cmp{grid-template-columns:1fr}}
+@media (max-width:760px){
+  .wrap{padding:24px 16px 40px;gap:30px}
+  .chips{margin:0 -16px;padding-inline:16px}
+  .facts{grid-template-columns:1fr}
+  .op-head{padding:16px}
+}
+@media (max-width:520px){.grid{grid-template-columns:1fr}.tile{padding:12px 14px}}
+@media print{
+  body{background:#fff;font-size:12.5px}
+  .site-nav,.finder,.op-top,.pn,#opCheck,#list,#compare,#check,footer,header .sub{display:none!important}
+  .wrap{padding:0;gap:10px}
+  .fact,.op-head{box-shadow:none;break-inside:avoid}
+  .facts{grid-template-columns:1fr 1fr}
+}
+</style>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22%234E6E52%22/%3E%3Cg%20transform%3D%22translate%284%204%29%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%203.5v7.5M12%2011l-2.6%202.4M12%2011l2.6%202.4%22/%3E%3Cpath%20d%3D%22M9.3%206.6C6.4%207.4%204%2011.3%204%2015.6%204%2018.4%205.2%2020%207.1%2020c1.5%200%202.4-1%202.4-2.6V7.4c0-.5-.1-.8-.2-.8z%22/%3E%3Cpath%20d%3D%22M14.7%206.6c2.9.8%205.3%204.7%205.3%209%200%202.8-1.2%204.4-3.1%204.4-1.5%200-2.4-1-2.4-2.6V7.4c0-.5.1-.8.2-.8z%22/%3E%3C/g%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Pocket Pulmo">
+<meta name="application-name" content="Pocket Pulmo">
+<meta name="theme-color" content="#4E6E52">
+<script src="stats.js" defer></script>
+<script>
+/* Review my mistakes: one deck of every question missed in any quiz, saved on this device.
+   Items: { id, src, kind:"choice"|"num", s, v[], q, r[], a, o[], ord[], x, d[], unit, tol, work[], final, n, t } */
+window.PPMistakes = (function () {
+  "use strict";
+  var KEY = "pp:mistakes", CAP = 300;
+  var SRC = {
+    o2:   { n: "O₂ device cases", k: "var(--accent)" },
+    med:  { n: "Med cases",       k: "var(--c-abx)" },
+    medq: { n: "Medication quiz", k: "var(--c-beta)" },
+    math: { n: "O₂ math",         k: "var(--c-xan)" },
+    dose: { n: "Dosage calc",     k: "var(--c-ster)" },
+    abg:  { n: "ABG practice",    k: "var(--c-anti)" },
+    assess: { n: "Assessment lab", k: "var(--c-muco)" },
+    airway: { n: "Airway clearance", k: "var(--c-combo)" },
+    dz:   { n: "Diseases",        k: "var(--c-bio)" }
+  };
+  function load() { try { var v = JSON.parse(localStorage.getItem(KEY) || "[]"); return Array.isArray(v) ? v : []; } catch (e) { return []; } }
+  function save(list) { try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {} badges(list.length); }
+  function hash(str) { var h = 5381; for (var i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0; return (h >>> 0).toString(36); }
+  function id(src, s, q) { return src + "-" + hash((s || "") + "|" + (q || "")); }
+
+  function add(item) {
+    if (!item || !item.src || !item.q) return;
+    item.id = item.id || id(item.src, item.s, item.q);
+    var list = load(), old = null;
+    list = list.filter(function (x) { if (x.id === item.id) { old = x; return false; } return true; });
+    item.n = (old ? old.n || 1 : 0) + 1;
+    item.t = Date.now();
+    list.unshift(item);
+    if (list.length > CAP) list = list.slice(0, CAP);
+    save(list);
+  }
+  function remove(itemId) {
+    var list = load(), keep = list.filter(function (x) { return x.id !== itemId; });
+    if (keep.length !== list.length) save(keep);
+  }
+  /* record one answer: wrong → into the deck, right → out of it */
+  function record(item, right) {
+    item.id = item.id || id(item.src, item.s, item.q);
+    if (right) remove(item.id); else add(item);
+  }
+  function badges(n) {
+    if (n === undefined) n = load().length;
+    document.querySelectorAll("[data-pp-mistakes]").forEach(function (el) {
+      el.textContent = n; el.hidden = !n;
+      el.setAttribute("aria-label", n + " to review");
+    });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { badges(); });
+  else badges();
+  window.addEventListener("storage", function (e) { if (e.key === KEY) badges(); });
+
+  return {
+    SRC: SRC, id: id, add: add, remove: remove, record: record, badges: badges,
+    all: load, count: function () { return load().length; },
+    clear: function (src) { save(src ? load().filter(function (x) { return x.src !== src; }) : []); }
+  };
+})();
+</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site">
+  <div class="in">
+    <a class="site-brand" href="index.html"><span class="mark" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v7.5M12 11l-2.6 2.4M12 11l2.6 2.4"/><path d="M9.3 6.6C6.4 7.4 4 11.3 4 15.6 4 18.4 5.2 20 7.1 20c1.5 0 2.4-1 2.4-2.6V7.4c0-.5-.1-.8-.2-.8z"/><path d="M14.7 6.6c2.9.8 5.3 4.7 5.3 9 0 2.8-1.2 4.4-3.1 4.4-1.5 0-2.4-1-2.4-2.6V7.4c0-.5.1-.8.2-.8z"/></svg></span><span class="bt">Pocket Pulmo</span></a>
+    <div class="site-menus">
+      <details class="menu">
+        <summary class="mlook on">Look up <svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <div class="panel">
+          <p class="ptitle">Quick reference</p>
+        <a class="mi" data-id="abg" href="abg-o2.html#abg"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></span><span><b>ABG values</b><span>Normal ranges, ROME, compensation, the O₂ curve</span></span></a>
+        <a class="mi" data-id="meds" href="meds.html#table"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 20.5 3.5 13.5a4.95 4.95 0 0 1 7-7l7 7a4.95 4.95 0 0 1-7 7zM7 10l7 7"/></svg></span><span><b>Medications</b><span>55 respiratory drugs, every detail</span></span></a>
+        <a class="mi" data-id="o2" href="abg-o2.html#o2"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h11a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h7"/></svg></span><span><b>O₂ devices</b><span>Flow, FiO₂ and when to use each of the 6 devices</span></span></a>
+        <a class="mi" data-id="formulas" href="formulas.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 5H6l6 7-6 7h12"/></svg></span><span><b>Formulas</b><span>Every formula: O₂, tanks, content, vent, MAP, drug math</span></span></a>
+        <a class="mi" data-id="gas" href="gas.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="6" width="10" height="15" rx="4"/><path d="M10 6V3h4v3M7 11h10"/></svg></span><span><b>Gas cylinders</b><span>Colors, uses and pin index for every medical gas</span></span></a>
+        <a class="mi" data-id="sounds" href="sounds.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 2v2M5 2v2M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/></svg></span><span><b>Breath sounds</b><span>Hear every breath sound, sorted by type</span></span></a>
+        <a class="mi" data-id="pft" href="pft.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M4 14c1.2-2.5 2.2-2.5 3 0s1.8 2.5 3 0l2-9 3 14 2-5c.8-2.5 1.8-2.5 3 0"/></svg></span><span><b>Lung volumes & PFTs</b><span>Interactive spirogram, FEV₁/FVC, obstructive vs restrictive</span></span></a>
+        <a class="mi" data-id="diseases" href="diseases.html" aria-current="page"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5z"/><path d="M4 19a2 2 0 0 1 2-2h13M9 7h6M9 11h6"/></svg></span><span><b>Disease one-pagers</b><span>COPD, asthma, ARDS, CHF and more: ABG, CXR, sounds, treatment</span></span></a>
+        <a class="mi" data-id="airway" href="airway.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h3l2-5 3 10 2-5h2"/><path d="M18 9c1.5 1 2.5 2 2.5 3s-1 2-2.5 3M16 7c2.5 1.5 4 3.2 4 5"/></svg></span><span><b>Airway clearance</b><span>Lung expansion, PEP, the vest, cough assist, postural drainage</span></span></a>
+        <a class="mi" data-id="mem" href="meds.html#mem"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></span><span><b>Mnemonics</b><span>Memory aids for every drug class</span></span></a>
+        </div>
+      </details>
+      <details class="menu">
+        <summary class="mprac">Practice <svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <div class="panel">
+          <p class="ptitle">Test yourself</p>
+        <a class="mi" data-id="cases" href="o2-cases.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h3"/></svg></span><span><b>O₂ device cases</b><span>81 patient scenarios: pick the right device</span></span></a>
+        <a class="mi" data-id="medcases" href="med-cases.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 20.5 3.5 13.5a4.95 4.95 0 0 1 7-7l7 7a4.95 4.95 0 0 1-7 7zM7 10l7 7"/></svg></span><span><b>Med cases</b><span>209 clinical scenarios: pick the drug, spot the side effect</span></span></a>
+        <a class="mi" data-id="mathq" href="math-quiz.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18h.01M12 18h.01"/></svg></span><span><b>O₂ math quiz</b><span>Total flow and cylinder duration problems</span></span></a>
+        <a class="mi" data-id="dose" href="dose-quiz.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4M17 7l3-3M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5M9 11l4 4M5 19l-3 3M14 4l6 6"/></svg></span><span><b>Dosage calc practice</b><span>% solutions, mg/kg, D/H × Q, continuous nebs, drips</span></span></a>
+        <a class="mi" data-id="abgq" href="abg-practice.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span><span><b>ABG practice</b><span>Unlimited random gases with worked answers</span></span></a>
+        <a class="mi" data-id="assess" href="assess.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 5.65-7 10-7 10z"/></svg></span><span><b>Assessment sim lab</b><span>Vital signs, chest exam and 21 patients to assess</span></span></a>
+        <a class="mi" data-id="vent" href="vent.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></span><span><b>Vent practice lab</b><span>Bedside ventilator simulator: modes, alarms, troubleshooting</span></span></a>
+        <a class="mi" data-id="medq" href="meds.html#quiz"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.5 2.5L16 9.5"/></svg></span><span><b>Medication quiz</b><span>NBRC-style questions on all 55 drugs</span></span></a>
+        <a class="mi" data-id="flash" href="meds.html#flash"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="13" height="13" rx="2"/><path d="M8 4h10a2 2 0 0 1 2 2v10"/></svg></span><span><b>Med flashcards</b><span>Flip through drugs and track what you know</span></span></a>
+        <a class="mi" data-id="mock" href="mock-exam.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M10 2h4M12 2v3"/></svg></span><span><b>Mock exam</b><span>Timed, TMC-style test pulling from every quiz</span></span></a>
+        <a class="mi" data-id="review" href="review.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5"/></svg></span><span><b>Review my mistakes <em class="mbadge" data-pp-mistakes hidden></em></b><span>Every question you’ve missed, in one deck</span></span></a>
+        </div>
+      </details>
+      <details class="menu search-menu">
+        <summary class="sbtn" aria-label="Search the site"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="lbl">Search</span></summary>
+        <div class="panel search">
+          <form class="srch" role="search">
+            <label class="sbox"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="Search a drug, device, gas or formula" aria-label="Search the site" autocomplete="off"></label>
+            <ul class="sres"></ul>
+          </form>
+        </div>
+      </details>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header>
+    <p class="eyebrow">Pocket Pulmo</p>
+    <h1>Disease One-Pagers</h1>
+    <p class="sub">Each disease on one page, in the same order every time: what it is, signs, ABG, chest X-ray, breath sounds, PFTs, treatment and what the RT focuses on.</p>
+    <div class="finder" id="finder">
+      <label class="sbox"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="q" placeholder="Search a disease, sign or finding" aria-label="Search diseases" autocomplete="off"></label>
+      <div class="chips" id="chips" role="group" aria-label="Filter by type"></div>
+    </div>
+  </header>
+
+  <section id="list" aria-label="Diseases">
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="one" hidden></section>
+
+  <section id="compare" aria-labelledby="cmp-h">
+    <div class="sec-head"><h2 id="cmp-h">Commonly confused</h2><p>The quickest way to tell them apart</p></div>
+    <div class="cmp">
+      <div class="cc"><h3>Croup vs epiglottitis</h3>
+        <table><thead><tr><th></th><th>Croup</th><th>Epiglottitis</th></tr></thead><tbody>
+          <tr><td>Cause</td><td>Virus</td><td>Bacteria</td></tr>
+          <tr><td>Onset</td><td>Gradual, after a cold</td><td>Sudden</td></tr>
+          <tr><td>Key sign</td><td>Barking cough</td><td>Drooling, tripod</td></tr>
+          <tr><td>Fever</td><td>Low-grade</td><td>High, toxic</td></tr>
+          <tr><td>X-ray</td><td>Steeple sign (AP)</td><td>Thumb sign (lateral)</td></tr>
+          <tr><td>Treat</td><td>Dexamethasone, racemic epi</td><td>Airway in the OR, antibiotics</td></tr>
+        </tbody></table></div>
+      <div class="cc"><h3>ARDS vs cardiogenic edema</h3>
+        <table><thead><tr><th></th><th>ARDS</th><th>CHF</th></tr></thead><tbody>
+          <tr><td>Cause</td><td>Leaky capillaries</td><td>High back-pressure</td></tr>
+          <tr><td>PCWP</td><td>≤ 18 mmHg</td><td>&gt; 18 mmHg</td></tr>
+          <tr><td>Heart size</td><td>Normal</td><td>Enlarged</td></tr>
+          <tr><td>CXR</td><td>Bilateral, patchy, to the edges</td><td>Bat wings, Kerley B, effusions</td></tr>
+          <tr><td>O₂ response</td><td>Poor (shunt)</td><td>Better</td></tr>
+          <tr><td>Treat</td><td>Low VT, PEEP, prone</td><td>CPAP/BiPAP, diuretics</td></tr>
+        </tbody></table></div>
+      <div class="cc"><h3>Chest exam by problem</h3>
+        <table><thead><tr><th></th><th>Percussion</th><th>Sounds</th><th>Trachea</th></tr></thead><tbody>
+          <tr><td>Consolidation</td><td>Dull</td><td>Bronchial</td><td>Midline</td></tr>
+          <tr><td>Effusion</td><td>Dull</td><td>↓ / absent</td><td>Away (large)</td></tr>
+          <tr><td>Pneumothorax</td><td>Hyperresonant</td><td>↓ / absent</td><td>Away (tension)</td></tr>
+          <tr><td>Atelectasis</td><td>Dull</td><td>↓ or crackles</td><td>Toward</td></tr>
+          <tr><td>COPD</td><td>Hyperresonant</td><td>↓, wheezes</td><td>Midline</td></tr>
+        </tbody></table></div>
+    </div>
+  </section>
+
+  <section id="check" aria-labelledby="qc-h">
+    <div class="sec-head"><h2 id="qc-h">Quick check: all diseases</h2><p>10 random questions · misses go to Review my mistakes</p></div>
+    <div class="mq" id="mq"></div>
+  </section>
+
+  <footer>
+    <p>Condensed from standard RT textbooks (Egan’s, Wilkins’ Clinical Assessment) and current guidelines (GOLD, GINA, Berlin ARDS, AARC). Always follow your program and the physician’s order.</p>
+  </footer>
+</main>
+
+<script>
+/* Disease one-pagers. Fields:
+   id, n (name), aka, g (group), one (one line), what, signs[], abg, cxr, snd (breath sounds & exam), pft, tx[], rt[] (RT priorities), pearl, links[[text, href]] */
+var DZ_GROUPS = [
+  ["obs", "Obstructive"], ["rest", "Restrictive & interstitial"], ["inf", "Infection"], ["edema", "Fluid & lung injury"],
+  ["vasc", "Vascular"], ["pleural", "Pleural"], ["sleep", "Sleep"], ["peds", "Peds & neonatal"]
+];
+var DZ = [
+/* ---------- obstructive ---------- */
+{id:"copd", n:"COPD", aka:"Emphysema · chronic bronchitis", g:"obs",
+ one:"Airflow limitation that doesn’t fully reverse, mostly from smoking.",
+ what:"<b>Emphysema</b>: alveolar walls are destroyed, the lungs lose their elastic recoil, and air gets trapped. <b>Chronic bronchitis</b>: a productive cough for at least 3 months in 2 years in a row, from inflamed airways that make too much mucus. Most patients have some of both. Alpha-1 antitrypsin deficiency causes emphysema in young or non-smoking patients.",
+ signs:["Dyspnea on exertion, chronic cough","Barrel chest (↑ AP diameter), pursed-lip breathing, tripod position, accessory muscles","Emphysema: thin, ‘pink puffer’","Chronic bronchitis: cyanosis, edema, cor pulmonale, ‘blue bloater’"],
+ abg:"Stable: chronic compensated respiratory acidosis (↑ PaCO₂, ↑ HCO₃⁻, pH near normal) with hypoxemia in advanced disease. A flare-up drops the pH (acute on chronic).",
+ cxr:"Hyperinflation: flat diaphragms, hyperlucent lungs, narrow ‘teardrop’ heart, ↑ retrosternal air space, wide rib spaces; bullae.",
+ snd:"Diminished breath sounds, wheezes, rhonchi (bronchitis); hyperresonant to percussion; ↓ fremitus.",
+ pft:"Obstructive: FEV₁/FVC < 70% after a bronchodilator. ↑ RV, FRC and TLC. ↓ DLCO in emphysema (normal in chronic bronchitis). GOLD grade by FEV₁ % predicted: 1 ≥ 80 · 2 50–79 · 3 30–49 · 4 < 30.",
+ tx:["Stop smoking (the only thing that slows the decline)","Long-acting bronchodilators (LAMA, LABA); add an ICS if eosinophils ≥ 300 or frequent flares","Pulmonary rehab, flu, COVID-19 and pneumococcal vaccines","Home O₂ if PaO₂ ≤ 55 mmHg or SpO₂ ≤ 88% at rest","Flare-up: SABA + SAMA, prednisone 40 mg × 5 days, antibiotics if sputum is purulent, BiPAP for hypercapnic acidosis"],
+ rt:["Target SpO₂ 88–92%; a Venturi mask gives a steady FiO₂","BiPAP if pH < 7.35 with PaCO₂ > 45","On the vent: long expiratory time, watch for auto-PEEP","Teach pursed-lip breathing and inhaler technique"],
+ pearl:"Don’t withhold O₂ from a hypoxemic COPD patient. Titrate it to 88–92% and watch the CO₂.",
+ links:[["O₂ device cases","o2-cases.html"],["Tiotropium in the med chart","meds.html?q=Tiotropium%20bromide#table"],["PFT patterns","pft.html#patterns"]]},
+
+{id:"asthma", n:"Asthma", aka:"Reactive airway disease", g:"obs",
+ one:"Airway inflammation with bronchospasm that reverses.",
+ what:"Chronic airway inflammation makes the airways twitchy (hyperresponsive). Triggers cause bronchospasm, swelling and mucus plugging, which mostly reverse with treatment. Triggers: allergens, exercise, cold air, smoke, viral infections, aspirin or NSAIDs, GERD.",
+ signs:["Episodic wheeze, cough (often at night), chest tightness, dyspnea","Severe: speaking in words only, accessory muscles, pulsus paradoxus > 10–12 mmHg, diaphoresis","A silent chest is ominous: too little air moving to wheeze"],
+ abg:"Early attack: respiratory alkalosis with mild hypoxemia. A ‘normal’ or rising PaCO₂ in a struggling patient means they’re tiring: impending respiratory failure.",
+ cxr:"Often normal; hyperinflation during an attack. Look for a pneumothorax or pneumonia.",
+ snd:"Expiratory wheezes with a prolonged expiration; diminished or absent sounds in severe attacks.",
+ pft:"Obstructive during symptoms. Reversible: FEV₁ ↑ ≥ 12% and ≥ 200 mL after a bronchodilator. Methacholine challenge shows hyperresponsiveness. Peak flow zones: green ≥ 80%, yellow 50–79%, red < 50% of personal best.",
+ tx:["Reliever: as-needed ICS-formoterol (GINA’s preferred reliever) or a SABA","Controller: ICS first; step up with LABA, LTRA, LAMA, then biologics for severe asthma","Acute: SABA every 20 min × 3 or continuous, ipratropium in the ED, systemic steroids early","Severe: IV magnesium, heliox; intubation as a last resort"],
+ rt:["Peak flow or FEV₁ before and after treatment","Check inhaler and spacer technique every visit","On the vent: low rate, long expiratory time, watch for auto-PEEP and high pressures"],
+ pearl:"LABAs are never used alone in asthma; they always come with an inhaled steroid.",
+ links:[["Albuterol in the med chart","meds.html?q=Albuterol#table"],["Wheezes","sounds.html#s-wheeze"],["Med cases","med-cases.html"]]},
+
+{id:"bronchiectasis", n:"Bronchiectasis", g:"obs",
+ one:"Permanently widened, scarred airways full of mucus.",
+ what:"Repeated infection and inflammation damage the bronchial walls, which widen and stop clearing mucus. The mucus breeds more infection, and the cycle continues. Causes: CF, past severe infections (TB, pertussis), immune deficiency, primary ciliary dyskinesia (Kartagener syndrome).",
+ signs:["Chronic cough with large amounts of purulent sputum (settles into three layers)","Hemoptysis, clubbing, recurrent chest infections","Fatigue, weight loss"],
+ abg:"Often normal early; hypoxemia, then chronic hypercapnia, as it advances.",
+ cxr:"‘Tram tracks’ (thick, parallel airway walls) and ring shadows. High-resolution CT is the test of choice: an airway wider than its artery (‘signet ring’).",
+ snd:"Coarse crackles, rhonchi, sometimes wheezes; may change after coughing.",
+ pft:"Usually obstructive.",
+ tx:["Daily airway clearance: PEP, OPEP, the vest, ACBT","Hypertonic saline, bronchodilators","Antibiotics for flares; sometimes long-term macrolides","Vaccines"],
+ rt:["Airway clearance is the cornerstone; match the method to the patient","Dornase alfa helps in CF but is not recommended in non-CF bronchiectasis"],
+ pearl:"Big volumes of foul sputum plus clubbing: think bronchiectasis.",
+ links:[["Airway clearance","airway.html#clearance"],["Coarse crackles","sounds.html#s-coarse"]]},
+
+{id:"cf", n:"Cystic fibrosis", aka:"CF", g:"obs",
+ one:"Genetic disease that makes secretions thick and sticky.",
+ what:"An autosomal recessive defect in the CFTR chloride channel dehydrates secretions in the lungs, pancreas, gut and sweat glands. Thick mucus plugs the airways and leads to infection and bronchiectasis. Diagnosed by newborn screening and a sweat chloride ≥ 60 mmol/L.",
+ signs:["Chronic productive cough, recurrent infections (Staph aureus early, Pseudomonas later)","Clubbing, nasal polyps, salty skin","Poor growth, greasy stools (pancreatic insufficiency), meconium ileus in newborns"],
+ abg:"Hypoxemia; chronic hypercapnia in advanced disease.",
+ cxr:"Hyperinflation, bronchiectasis, upper-lobe-predominant changes.",
+ snd:"Crackles, rhonchi, wheezes.",
+ pft:"Obstructive, becoming mixed as it progresses.",
+ tx:["Daily airway clearance (vest, PEP, ACBT, autogenic drainage)","Dornase alfa, hypertonic saline","Inhaled tobramycin or aztreonam for Pseudomonas","CFTR modulators (elexacaftor/tezacaftor/ivacaftor)","Pancreatic enzymes, high-calorie diet"],
+ rt:["Order: bronchodilator → hypertonic saline → dornase → airway clearance → inhaled antibiotic","Infection control: keep CF patients at least 6 feet apart"],
+ pearl:"Sweat chloride ≥ 60 mmol/L confirms CF.",
+ links:[["Airway clearance","airway.html#clearance"],["Dornase alfa","meds.html?q=Dornase%20alfa#table"],["Tobramycin","meds.html?q=Tobramycin%20sulfate#table"]]},
+
+/* ---------- restrictive ---------- */
+{id:"ild", n:"Pulmonary fibrosis", aka:"Interstitial lung disease · IPF", g:"rest",
+ one:"Scarred, stiff lungs that don’t transfer oxygen well.",
+ what:"Scarring and thickening of the interstitium make the lungs small and stiff and block diffusion. Causes: idiopathic (IPF), occupational (asbestosis, silicosis, coal worker’s lung), hypersensitivity (farmer’s lung), drugs (amiodarone, bleomycin, methotrexate, nitrofurantoin), radiation, autoimmune disease (sarcoidosis, scleroderma, RA).",
+ signs:["Slowly worsening exertional dyspnea, dry cough","Rapid, shallow breathing","Clubbing; desaturates with exercise"],
+ abg:"Hypoxemia (worse with exercise) with respiratory alkalosis; CO₂ retention only late.",
+ cxr:"Reticular (net-like) opacities, small lung volumes; honeycombing at the bases on high-resolution CT.",
+ snd:"Fine, late-inspiratory ‘Velcro’ crackles at the bases.",
+ pft:"Restrictive: ↓ TLC, ↓ FVC, normal or ↑ FEV₁/FVC. ↓ DLCO.",
+ tx:["Antifibrotics (pirfenidone, nintedanib) for IPF","O₂, especially with exertion","Pulmonary rehab; remove the exposure","Steroids for some types; lung transplant"],
+ rt:["Check exertional SpO₂ (walk test)","On the vent: stiff lungs mean high plateau pressures; use small tidal volumes"],
+ pearl:"Restrictive + low DLCO = a lung problem (fibrosis). Restrictive + normal DLCO = a chest wall or muscle problem.",
+ links:[["PFT patterns","pft.html#patterns"],["Fine crackles","sounds.html#s-fine"]]},
+
+{id:"nm", n:"Neuromuscular weakness", aka:"Guillain-Barré · myasthenia gravis", g:"rest",
+ one:"Normal lungs, weak breathing muscles.",
+ what:"The lungs are normal, but the muscles can’t take a deep breath or cough. <b>Guillain-Barré</b>: ascending paralysis, often 1–3 weeks after a viral or GI illness. <b>Myasthenia gravis</b>: autoimmune attack on acetylcholine receptors; weakness that worsens with use and later in the day. ALS, muscular dystrophy and spinal cord injury behave the same way.",
+ signs:["Weak cough, rapid shallow breathing, paradoxical (inward) belly movement","Trouble swallowing, can’t count to 20 in one breath","MG: ptosis, double vision"],
+ abg:"Often normal until late, then acute respiratory acidosis. Don’t wait for the ABG; trend the bedside numbers.",
+ cxr:"Often normal; atelectasis or aspiration pneumonia.",
+ snd:"Diminished at the bases; crackles with atelectasis.",
+ pft:"Restrictive: ↓ VC and TLC with normal FEV₁/FVC; ↓ MIP and MEP.",
+ tx:["GBS: IVIG or plasmapheresis (not steroids)","MG: pyridostigmine, steroids or immunosuppressants, thymectomy; IVIG or plasmapheresis for a crisis","Supportive: lung expansion, cough assist, NIV or intubation"],
+ rt:["Measure VC and MIP (NIF) every 2–4 hours","‘20/30/40’: intubate if VC < 20 mL/kg, MIP weaker than −30 cmH₂O or MEP < 40 cmH₂O, or a steady fall","MI-E (cough assist) for a weak cough"],
+ pearl:"A falling vital capacity is the warning sign. The ABG turns bad last.",
+ links:[["Cough assist (MI-E)","airway.html#mie"],["Vent practice lab","vent.html"]]},
+
+/* ---------- infection ---------- */
+{id:"pna", n:"Pneumonia", aka:"CAP · HAP · VAP · aspiration", g:"inf",
+ one:"Infection that fills alveoli with fluid and pus.",
+ what:"Infection of the lung tissue. <b>Community-acquired</b> (Strep pneumoniae is the most common), <b>hospital-acquired</b>, <b>ventilator-associated</b> (≥ 48 h after intubation) and <b>aspiration</b> (often the right lower lobe, since the right mainstem is straighter).",
+ signs:["Fever, chills, productive cough (rust-colored with pneumococcus)","Pleuritic chest pain, tachypnea, tachycardia","Older adults may only be confused"],
+ abg:"Hypoxemia (shunt) with respiratory alkalosis; respiratory acidosis if the patient tires.",
+ cxr:"Consolidation (lobar or patchy) with air bronchograms; sometimes an effusion.",
+ snd:"Bronchial breath sounds and crackles over the area; dull to percussion; ↑ tactile fremitus; egophony (E → A).",
+ pft:"Not used to diagnose; a restrictive pattern while acute.",
+ tx:["Antibiotics","O₂; HFNC or NIV if needed","Airway clearance and lung expansion if secretions or atelectasis","VAP bundle: head of bed 30–45°, oral care, daily sedation break and SBT, subglottic suction tubes"],
+ rt:["Unilateral pneumonia: ‘good lung down’ to improve oxygenation","Sputum culture before antibiotics when possible"],
+ pearl:"Consolidation = bronchial breath sounds + dull percussion + ↑ fremitus.",
+ links:[["Bronchial breath sounds","sounds.html#s-bronch"],["Assessment sim lab","assess.html"]]},
+
+{id:"tb", n:"Tuberculosis", aka:"TB", g:"inf",
+ one:"Airborne bacterial infection that can be latent or active.",
+ what:"Mycobacterium tuberculosis spreads by tiny airborne droplet nuclei. <b>Latent TB</b> isn’t contagious and causes no symptoms. <b>Active TB</b> is contagious and destroys lung tissue, often in the upper lobes.",
+ signs:["Cough > 3 weeks, hemoptysis","Night sweats, fever, weight loss, fatigue"],
+ abg:"Often normal unless the disease is extensive.",
+ cxr:"Upper-lobe infiltrates and cavities; a calcified Ghon complex from old infection.",
+ snd:"Crackles over the affected area; sometimes bronchial sounds or none.",
+ pft:"Not used to diagnose.",
+ tx:["Screening: TB skin test (PPD) or IGRA blood test","Diagnosis: sputum AFB smear and culture × 3 (sputum induction with 3% saline)","Treatment: several drugs for months (RIPE: rifampin, isoniazid, pyrazinamide, ethambutol), often by directly observed therapy"],
+ rt:["Airborne precautions: negative-pressure (AIIR) room, fit-tested N95","Patient wears a surgical mask during transport","Do sputum inductions in a booth or negative-pressure room"],
+ pearl:"Airborne = N95 and a negative-pressure room. A surgical mask goes on the patient, not on you.",
+ links:[["Hypertonic saline","meds.html?q=Hypertonic%20saline%20solution#table"]]},
+
+/* ---------- fluid & lung injury ---------- */
+{id:"ards", n:"ARDS", aka:"Acute respiratory distress syndrome", g:"edema",
+ one:"Leaky, stiff lungs with oxygen levels that won’t come up.",
+ what:"A widespread inflammatory injury makes the lung capillaries leak, causing non-cardiac pulmonary edema, collapsed alveoli and stiff lungs. Causes: sepsis (most common), pneumonia, aspiration, trauma, pancreatitis, transfusions, smoke inhalation. <b>Berlin definition</b>: within 1 week of the insult, bilateral opacities, not fully explained by heart failure, and P/F (on PEEP ≥ 5) of 201–300 mild, 101–200 moderate, ≤ 100 severe.",
+ signs:["Severe dyspnea, tachypnea","Hypoxemia that doesn’t improve much with more O₂ (shunt)"],
+ abg:"Hypoxemia with respiratory alkalosis early; later respiratory and lactic (metabolic) acidosis.",
+ cxr:"Bilateral, patchy-to-white infiltrates with air bronchograms; normal heart size.",
+ snd:"Crackles, sometimes fewer than you’d expect from the film.",
+ pft:"Not done. On the vent: ↓ compliance (high plateau pressures) and ↓ FRC.",
+ tx:["Treat the cause","Lung-protective ventilation: VT 6 mL/kg PBW (4–8), plateau ≤ 30 cmH₂O, driving pressure < 15","PEEP/FiO₂ table; accept a higher PaCO₂ (permissive hypercapnia)","Prone positioning (≥ 12–16 h/day) for P/F < 150; conservative fluids; paralytics or ECMO in severe cases"],
+ rt:["Oxygenation goal: PaO₂ 55–80 mmHg or SpO₂ 88–95%","Use predicted (ideal) body weight for tidal volume, not actual weight"],
+ pearl:"Refractory hypoxemia + bilateral infiltrates + no heart failure = ARDS.",
+ links:[["P/F ratio & IBW calculators","formulas.html#vent"],["Vent practice lab","vent.html"]]},
+
+{id:"chf", n:"Cardiogenic pulmonary edema", aka:"CHF · left heart failure", g:"edema",
+ one:"Fluid backs up into the lungs because the left heart can’t keep up.",
+ what:"When the left ventricle can’t pump forward, pressure backs up into the pulmonary capillaries, and fluid leaks into the interstitium and alveoli. Wedge pressure (PCWP) is high, > 18 mmHg; in ARDS it is ≤ 18.",
+ signs:["Orthopnea, paroxysmal nocturnal dyspnea","Pink, frothy sputum","JVD, ankle edema, S3, anxiety, sweating, tachycardia"],
+ abg:"Hypoxemia; respiratory alkalosis early, acidosis if severe.",
+ cxr:"Big heart (cardiothoracic ratio > 50%), perihilar ‘bat-wing’ infiltrates, Kerley B lines, upper-lobe vessels (cephalization), blunted costophrenic angles.",
+ snd:"Crackles at the bases that climb as it worsens; sometimes wheezes (‘cardiac asthma’).",
+ pft:"Not used. BNP is high.",
+ tx:["Sit upright; O₂","CPAP or BiPAP: lowers preload and afterload and pushes fluid back","Diuretics (furosemide), nitrates or other vasodilators","Treat the cause (MI, arrhythmia, valve disease)"],
+ rt:["CPAP about 5–10 cmH₂O works quickly","Positive pressure lowers venous return; watch the BP"],
+ pearl:"Big heart + bat wings + Kerley B lines = cardiac. Normal heart + bilateral infiltrates = think ARDS.",
+ links:[["Coarse crackles","sounds.html#s-coarse"],["O₂ device cases","o2-cases.html"]]},
+
+{id:"atel", n:"Atelectasis", g:"edema",
+ one:"Collapsed alveoli, most often after surgery.",
+ what:"<b>Passive</b>: shallow breathing after surgery, pain, sedation or bed rest. <b>Resorptive (obstructive)</b>: a mucus plug, tumor or foreign body blocks an airway and the air behind it is absorbed. <b>Compressive</b>: an effusion or pneumothorax squeezes the lung.",
+ signs:["Tachypnea, low-grade fever, ↓ SpO₂","Often within 1–3 days of surgery"],
+ abg:"Hypoxemia with respiratory alkalosis.",
+ cxr:"Denser area, raised hemidiaphragm, crowded ribs, and the trachea or mediastinum shifted toward the collapse.",
+ snd:"Fine, late-inspiratory crackles or diminished sounds; bronchial sounds if the airway is open.",
+ pft:"Not used.",
+ tx:["Lung expansion: IS, deep breathing, early walking; IPPB or CPAP if IS isn’t possible","Airway clearance for mucus plugs; bronchoscopy if that fails","Pain control"],
+ rt:["Prevention starts before surgery: teach IS pre-op"],
+ pearl:"Atelectasis pulls things toward it. Effusions and pneumothoraces push things away.",
+ links:[["Lung expansion","airway.html#expansion"],["Fine crackles","sounds.html#s-fine"]]},
+
+/* ---------- vascular ---------- */
+{id:"pe", n:"Pulmonary embolism", aka:"PE", g:"vasc",
+ one:"A clot blocks blood flow to part of the lung.",
+ what:"A clot, usually a DVT from the legs, lodges in the pulmonary arteries. Ventilated alveoli lose their blood supply, creating <b>dead space</b>. Risk factors follow Virchow’s triad (stasis, hypercoagulability, vessel injury): bed rest, surgery, long flights, pregnancy, estrogen, cancer.",
+ signs:["Sudden dyspnea, tachypnea, tachycardia, pleuritic chest pain, anxiety","Sometimes hemoptysis or a swollen leg","Massive PE: hypotension, JVD, syncope"],
+ abg:"Hypoxemia with respiratory alkalosis; ↑ A–a gradient. ↑ dead space widens the PaCO₂–ETCO₂ gap.",
+ cxr:"Often normal. Hypoxemia with a clear CXR is the clue.",
+ snd:"Often clear; sometimes a pleural friction rub.",
+ pft:"Not used. CT pulmonary angiography confirms it; V/Q scan (mismatch) if contrast can’t be used; a normal D-dimer helps rule it out in low-risk patients.",
+ tx:["O₂","Anticoagulation (heparin, then oral)","Thrombolytics (tPA) for massive PE with shock; IVC filter if anticoagulation isn’t possible; embolectomy","Prevention: early walking, compression devices, prophylactic heparin"],
+ rt:["Sudden ↓ ETCO₂ with ↑ dead space on the vent suggests a PE"],
+ pearl:"Sudden dyspnea + tachycardia + a clear chest film = think PE.",
+ links:[["Pleural friction rub","sounds.html#s-rub"],["Dead space formula","formulas.html#vent"]]},
+
+/* ---------- pleural ---------- */
+{id:"ptx", n:"Pneumothorax", g:"pleural",
+ one:"Air in the pleural space collapses the lung.",
+ what:"<b>Spontaneous</b>: primary in tall, thin young men (ruptured blebs); secondary in COPD or CF. <b>Traumatic</b> or <b>iatrogenic</b> (central lines, barotrauma on the vent). <b>Tension</b>: air keeps entering and can’t escape, pushing the mediastinum away and causing shock.",
+ signs:["Sudden, sharp pleuritic pain and dyspnea","Tension: trachea shifted away, hypotension, JVD","On the vent: sudden ↑ PIP and plateau, ↓ SpO₂, ↓ BP"],
+ abg:"Hypoxemia; respiratory alkalosis early, acidosis in tension.",
+ cxr:"A visible pleural line with no lung markings beyond it. Tension: mediastinal shift away, flat diaphragm. Supine films: deep sulcus sign.",
+ snd:"Absent or diminished breath sounds; hyperresonant percussion; ↓ fremitus.",
+ pft:"Not used.",
+ tx:["Small and stable: observe, O₂ (high FiO₂ speeds reabsorption)","Larger: needle aspiration or chest tube","Tension: immediate needle decompression, then a chest tube"],
+ rt:["Tension on the vent: think DOPE (the P is pneumothorax)","Check the chest tube drainage system for bubbling (air leak)"],
+ pearl:"Hyperresonant + absent sounds + shift away = tension pneumothorax. Don’t wait for the X-ray.",
+ links:[["Vent troubleshooting","vent.html"],["Diminished breath sounds","sounds.html#s-dim"]]},
+
+{id:"eff", n:"Pleural effusion", aka:"Empyema · hemothorax", g:"pleural",
+ one:"Fluid in the pleural space.",
+ what:"<b>Transudate</b> (fluid pushed out by pressure): CHF is the most common cause, plus cirrhosis and nephrotic syndrome. <b>Exudate</b> (leaky, inflamed pleura): pneumonia, cancer, PE, TB. Empyema is pus; hemothorax is blood.",
+ signs:["Dyspnea, pleuritic pain","Large: trachea shifted away"],
+ abg:"Hypoxemia if large.",
+ cxr:"Blunted costophrenic angle with a meniscus; a lateral decubitus film shows free fluid layering. Large: shift away.",
+ snd:"Dull or flat percussion, ↓ fremitus, ↓ or absent sounds over the fluid; bronchial sounds or egophony at the top edge.",
+ pft:"Not used.",
+ tx:["Treat the cause","Thoracentesis to test (transudate vs exudate) and to drain","Chest tube for empyema or hemothorax; pleurodesis for repeat malignant effusions"],
+ rt:["Positioning the good lung down helps oxygenation"],
+ pearl:"Effusion = dull. Pneumothorax = hyperresonant. Both have diminished sounds.",
+ links:[["Chest exam findings","assess.html#normals"]]},
+
+/* ---------- sleep ---------- */
+{id:"osa", n:"Obstructive sleep apnea", aka:"OSA", g:"sleep",
+ one:"The upper airway collapses again and again during sleep.",
+ what:"During sleep the throat relaxes and closes, causing apneas and hypopneas, drops in SpO₂ and arousals. Risk: obesity, neck > 17 in (men) or > 16 in (women), male sex, age, big tonsils (kids), alcohol and sedatives. An <b>apnea</b> is a ≥ 90% airflow drop for ≥ 10 s. In <b>central</b> apnea there is no breathing effort at all.",
+ signs:["Loud snoring, witnessed apneas, gasping","Daytime sleepiness, morning headaches","High blood pressure; STOP-BANG screening"],
+ abg:"Usually normal while awake. Daytime PaCO₂ > 45 in an obese patient suggests obesity hypoventilation syndrome.",
+ cxr:"Usually normal.",
+ snd:"Usually normal.",
+ pft:"Not used. Polysomnography diagnoses it. AHI (events per hour): < 5 normal · 5–14 mild · 15–29 moderate · ≥ 30 severe.",
+ tx:["CPAP, titrated (often 5–20 cmH₂O) or auto-CPAP","Weight loss, side sleeping, no alcohol or sedatives at night","Oral appliance; surgery (UPPP, hypoglossal nerve stimulator)","BiPAP if CPAP isn’t tolerated or there is hypoventilation"],
+ rt:["Mask fit and leaks; heated humidifier for a dry nose","Adherence: insurance often wants ≥ 4 h a night on 70% of nights"],
+ pearl:"CPAP works as a pneumatic splint that holds the throat open.",
+ links:[["O₂ device cases","o2-cases.html"]]},
+
+/* ---------- peds & neonatal ---------- */
+{id:"croup", n:"Croup", aka:"Laryngotracheobronchitis", g:"peds",
+ one:"Viral swelling below the vocal cords with a barking cough.",
+ what:"A viral infection (parainfluenza most often) swells the subglottic airway. Usually ages 6 months to 3 years, with a gradual onset after a cold, worse at night.",
+ signs:["Barking, seal-like cough, hoarseness","Inspiratory stridor; low-grade fever","Child looks okay between coughs"],
+ abg:"Usually not needed; hypoxemia only if severe.",
+ cxr:"AP neck film: ‘steeple sign’ (narrowing below the cords).",
+ snd:"Inspiratory stridor over the neck.",
+ pft:"Not used.",
+ tx:["Dexamethasone 0.6 mg/kg (max 16 mg)","Racemic epinephrine for stridor at rest; observe 2–4 h for rebound","O₂ if hypoxemic; heliox for severe cases","Keep the child calm (on a parent’s lap)"],
+ rt:["Rebound swelling can return about 2 hours after racemic epi"],
+ pearl:"Croup: barking cough, gradual, steeple sign. Epiglottitis: drooling, sudden, thumb sign.",
+ links:[["Racemic epinephrine","meds.html?q=Racemic%20Epinephrine#table"],["Stridor","sounds.html#s-stridor"]]},
+
+{id:"epi", n:"Epiglottitis", g:"peds",
+ one:"Bacterial swelling of the epiglottis: an airway emergency.",
+ what:"A bacterial infection (historically Haemophilus influenzae type b, now rare thanks to the Hib vaccine) swells the epiglottis. It can close off the airway quickly. Classically ages 2–6, but adults get it too.",
+ signs:["Sudden high fever, toxic appearance","Drooling, trouble swallowing, muffled ‘hot potato’ voice","Sitting up, leaning forward (tripod); soft stridor; no barky cough"],
+ abg:"Don’t delay airway care to get one.",
+ cxr:"Lateral neck film: ‘thumb sign’ (swollen epiglottis). Never delay the airway for imaging.",
+ snd:"Soft inspiratory stridor.",
+ pft:"Not used.",
+ tx:["Keep the child calm and upright; don’t lay them flat or look in the throat with a tongue depressor","O₂ as tolerated","Secure the airway in the OR with anesthesia and ENT ready for a surgical airway","IV antibiotics"],
+ rt:["Have intubation equipment a size or two smaller ready"],
+ pearl:"Drooling + tripod + muffled voice = protect the airway first.",
+ links:[["Stridor","sounds.html#s-stridor"]]},
+
+{id:"bronchiolitis", n:"Bronchiolitis", aka:"RSV", g:"peds",
+ one:"Viral infection of the small airways in infants.",
+ what:"A viral infection (RSV most often) inflames the bronchioles, causing mucus plugging and air trapping. Under age 2, peak at 2–6 months, mostly in winter.",
+ signs:["Starts as a runny nose, then cough and fast breathing","Wheezes and crackles, retractions, nasal flaring, poor feeding","Apnea in young infants and preemies"],
+ abg:"Hypoxemia; respiratory acidosis if the infant is tiring.",
+ cxr:"Not needed routinely; hyperinflation, patchy atelectasis.",
+ snd:"Diffuse wheezes and fine crackles.",
+ pft:"Not used.",
+ tx:["Supportive: nasal suctioning, fluids or feeding support","O₂ if SpO₂ < 90%; HFNC or CPAP if needed","Not routine: albuterol, steroids, antibiotics, chest PT","Prevention: nirsevimab or palivizumab for infants, RSV vaccine in pregnancy"],
+ rt:["Suction the nose before feeds and treatments","Contact and droplet precautions; handwashing"],
+ pearl:"Most care is supportive: suction, O₂, fluids.",
+ links:[["Ribavirin","meds.html?q=Ribavirin#table"],["O₂ device cases","o2-cases.html"]]},
+
+{id:"rds", n:"Neonatal RDS", aka:"Hyaline membrane disease", g:"peds",
+ one:"Premature lungs without enough surfactant.",
+ what:"Surfactant isn’t mature until about 35 weeks. Without it, alveoli collapse with every breath, compliance drops and work of breathing soars. Risk: prematurity, maternal diabetes, male sex, C-section without labor. Lung maturity: L/S ratio ≥ 2:1 with phosphatidylglycerol present.",
+ signs:["Within minutes to hours of birth: grunting, nasal flaring, retractions","RR > 60, cyanosis"],
+ abg:"Hypoxemia with respiratory and metabolic acidosis.",
+ cxr:"Ground-glass (reticulogranular) pattern, air bronchograms, low lung volumes; ‘white-out’ if severe.",
+ snd:"Diminished breath sounds, fine crackles.",
+ pft:"Not used.",
+ tx:["Prevention: antenatal steroids (betamethasone) to the mother","Early CPAP (about 5–8 cmH₂O)","Surfactant (beractant 4 mL/kg, poractant 2.5 mL/kg, calfactant 3 mL/kg)","Mechanical ventilation if needed"],
+ rt:["Target SpO₂ about 90–95%; avoid too much O₂ (retinopathy, BPD)","Grunting is the baby making its own PEEP"],
+ pearl:"Grunting = auto-PEEP from a partly closed glottis, holding the alveoli open.",
+ links:[["Dosage calc (surfactant doses)","dose-quiz.html"]]}
+];
+
+/* quick-check questions: d = disease id */
+var DZ_Q = [
+{d:"copd",q:"Which ABG is typical of a stable patient with severe COPD?",a:"pH 7.37, PaCO₂ 58, HCO₃⁻ 33",o:["pH 7.52, PaCO₂ 28, HCO₃⁻ 22","pH 7.20, PaCO₂ 70, HCO₃⁻ 26","pH 7.40, PaCO₂ 40, HCO₃⁻ 24"],x:"Long-term CO₂ retention is balanced by the kidneys holding on to bicarbonate, so the pH stays near normal: a compensated respiratory acidosis. pH 7.20 with PaCO₂ 70 and a normal HCO₃⁻ is an acute (uncompensated) respiratory acidosis."},
+{d:"copd",q:"Which CXR finding fits emphysema?",a:"Flattened diaphragms and hyperlucent lung fields",o:["Bat-wing perihilar infiltrates","Ground-glass pattern with low lung volumes","A blunted costophrenic angle with a meniscus"],x:"Air trapping overinflates the lungs, pushing the diaphragms flat and making the lungs look dark (hyperlucent). Bat-wing infiltrates suggest CHF, and a meniscus suggests an effusion."},
+{d:"copd",q:"A COPD patient’s ABG is pH 7.28, PaCO₂ 72. What is the first-line support?",a:"BiPAP (noninvasive ventilation)",o:["A non-rebreather at 15 L/min","Immediate intubation for every patient","A simple mask at 10 L/min"],x:"Hypercapnic acidosis (pH < 7.35, PaCO₂ > 45) in a COPD flare is the classic indication for BiPAP. It lowers the work of breathing and the CO₂ and often avoids intubation."},
+{d:"asthma",q:"A patient in a severe asthma attack has a PaCO₂ that has risen from 32 to 44 mmHg over an hour. What does this mean?",a:"She is tiring and heading for respiratory failure",o:["She is getting better","It’s normal, so no change is needed","She is hyperventilating more"],x:"Early in an attack patients hyperventilate (PaCO₂ low). A ‘normal’ PaCO₂ in a patient who is still working hard means the muscles are failing. Get ready for escalation."},
+{d:"asthma",q:"Which result confirms reversible airflow obstruction?",a:"FEV₁ improves by ≥ 12% and ≥ 200 mL after a bronchodilator",o:["FEV₁/FVC above 80%","DLCO of 50% predicted","TLC of 60% predicted"],x:"A significant bronchodilator response (≥ 12% and ≥ 200 mL) points to asthma. Low DLCO and low TLC point to other diseases."},
+{d:"asthma",q:"Which finding during an asthma attack is the most dangerous?",a:"A silent chest",o:["Loud expiratory wheezes","A peak flow of 70% of personal best","Mild tachycardia"],x:"A silent chest means so little air is moving that it can’t make a wheeze. It is a sign of near-fatal asthma."},
+{d:"bronchiectasis",q:"Which test best confirms bronchiectasis?",a:"High-resolution CT",o:["Sweat chloride test","Methacholine challenge","Pulse oximetry"],x:"HRCT shows the widened airways (bigger than the artery next to them, the ‘signet ring’). A sweat test looks for CF, one possible cause."},
+{d:"bronchiectasis",q:"Which therapy is the cornerstone of bronchiectasis care?",a:"Daily airway clearance",o:["Long-term high-dose oral steroids","Dornase alfa for every patient","Bed rest"],x:"The disease is a cycle of mucus, infection and damage, so clearing mucus every day is key. Dornase alfa helps in CF but isn’t recommended in non-CF bronchiectasis."},
+{d:"cf",q:"Which sweat chloride result confirms CF?",a:"≥ 60 mmol/L",o:["≥ 20 mmol/L","≤ 10 mmol/L","Exactly 40 mmol/L"],x:"A sweat chloride of 60 mmol/L or higher (on two tests, or with a genetic test) confirms CF. 30–59 is intermediate."},
+{d:"cf",q:"Which organism commonly infects the lungs of adults with CF?",a:"Pseudomonas aeruginosa",o:["Haemophilus influenzae type b only","Mycobacterium tuberculosis","Streptococcus pyogenes"],x:"Staph aureus is common in childhood, and Pseudomonas becomes common in adults. That’s why inhaled tobramycin and aztreonam are part of CF care."},
+{d:"ild",q:"Which PFT pattern fits pulmonary fibrosis?",a:"↓ TLC, normal or high FEV₁/FVC, ↓ DLCO",o:["↑ TLC, FEV₁/FVC 55%, normal DLCO","Normal TLC, FEV₁/FVC 60%, ↑ DLCO","Normal everything"],x:"Scarring makes the lungs small (↓ TLC, restrictive) and blocks diffusion (↓ DLCO). The ratio is normal or high because the stiff lungs empty quickly."},
+{d:"ild",q:"Which breath sounds are classic for pulmonary fibrosis?",a:"Fine, late-inspiratory ‘Velcro’ crackles at the bases",o:["Expiratory wheezes","Inspiratory stridor","Coarse crackles that clear with coughing"],x:"Stiff, scarred alveoli pop open late in inspiration, making a sound like Velcro pulling apart."},
+{d:"ild",q:"Which drug can cause pulmonary fibrosis?",a:"Amiodarone",o:["Albuterol","Acetaminophen","Furosemide"],x:"Amiodarone, bleomycin, methotrexate and nitrofurantoin are well-known causes of drug-induced lung fibrosis."},
+{d:"nm",q:"A Guillain-Barré patient’s vital capacity has fallen from 35 to 18 mL/kg. His ABG is normal. What should happen?",a:"Prepare to intubate; the VC is below 20 mL/kg and falling",o:["Nothing, since the ABG is normal","Recheck in 24 hours","Give a bronchodilator"],x:"In neuromuscular disease the ABG stays normal until very late. VC < 20 mL/kg, MIP weaker than −30 cmH₂O or MEP < 40 (the 20/30/40 rule) or a rapid fall means it’s time to secure the airway."},
+{d:"nm",q:"Which bedside measurement best tracks breathing muscle strength in myasthenia gravis?",a:"Maximal inspiratory pressure (MIP or NIF) and vital capacity",o:["SpO₂ alone","Peak flow in asthma zones","Heart rate"],x:"MIP and VC show muscle strength directly and fall before the SpO₂ or ABG change."},
+{d:"pna",q:"Which exam findings fit lobar pneumonia with consolidation?",a:"Bronchial breath sounds, dull percussion and ↑ tactile fremitus",o:["Hyperresonance, absent sounds and ↓ fremitus","Normal sounds and resonant percussion","Expiratory wheezes and a barrel chest"],x:"Solid (consolidated) lung carries sound and vibration better, so fremitus rises and bronchial sounds are heard. Fluid or air in the pleural space does the opposite."},
+{d:"pna",q:"A patient has pneumonia in the left lung only. How can you position him to improve oxygenation?",a:"Lying on his right side (good lung down)",o:["Lying on his left side (bad lung down)","Flat on his back only","Trendelenburg"],x:"Gravity sends more blood to the lower lung. Putting the healthy lung down matches more blood with the well-ventilated lung, improving V/Q."},
+{d:"pna",q:"Which is part of a VAP prevention bundle?",a:"Head of the bed raised 30–45°",o:["Changing the vent circuit every day","Keeping the patient flat","Deep sedation without daily breaks"],x:"Raising the head of the bed lowers aspiration. Other parts: oral care, daily sedation breaks and SBTs, and subglottic suction tubes. Routine circuit changes don’t help."},
+{d:"tb",q:"What protection does an RT need when caring for a patient with suspected active TB?",a:"A fit-tested N95 respirator, with the patient in a negative-pressure room",o:["A surgical mask only","Gloves only","No precautions until the culture comes back"],x:"TB spreads on tiny airborne droplet nuclei, so airborne precautions are used as soon as TB is suspected. The patient wears a surgical mask when outside the room."},
+{d:"tb",q:"How is active TB confirmed?",a:"Sputum AFB smear and culture",o:["A single TB skin test","A chest X-ray alone","Pulse oximetry"],x:"Skin tests and IGRA blood tests show exposure (latent or active). Sputum AFB smears and cultures (usually 3 samples) confirm active disease."},
+{d:"ards",q:"What tidal volume is used for lung-protective ventilation in ARDS?",a:"About 6 mL/kg of predicted (ideal) body weight",o:["10–12 mL/kg of actual body weight","15 mL/kg of predicted body weight","2 mL/kg of actual body weight"],x:"Small breaths (4–8 mL/kg PBW, starting at 6) with a plateau ≤ 30 cmH₂O limit volutrauma. Use predicted body weight, since lung size follows height, not weight."},
+{d:"ards",q:"A patient with sepsis has P/F 140 on PEEP 10, bilateral infiltrates and a normal echo. How severe is the ARDS?",a:"Moderate",o:["Mild","Severe","It isn’t ARDS"],x:"Berlin: P/F 201–300 mild, 101–200 moderate, ≤ 100 severe, measured on PEEP ≥ 5. A normal echo makes heart failure unlikely."},
+{d:"ards",q:"Which is the upper limit for plateau pressure in lung-protective ventilation?",a:"30 cmH₂O",o:["50 cmH₂O","15 cmH₂O","There is no limit"],x:"Keeping the plateau ≤ 30 cmH₂O (and the driving pressure under about 15) protects the lung from overdistension."},
+{d:"chf",q:"Which CXR findings point to cardiogenic pulmonary edema?",a:"Cardiomegaly, bat-wing infiltrates and Kerley B lines",o:["Flat diaphragms and hyperlucency","Upper-lobe cavities","A visible pleural line with no lung markings"],x:"A big heart with fluid around the hilum and fine horizontal lines at the lung edges (Kerley B) means fluid from heart failure."},
+{d:"chf",q:"How does CPAP help acute cardiogenic pulmonary edema?",a:"It lowers preload and afterload and pushes fluid out of the alveoli",o:["It increases venous return","It dries secretions","It raises blood pressure"],x:"Positive intrathoracic pressure reduces blood returning to the heart (preload) and the pressure the LV pumps against (afterload), while recruiting fluid-filled alveoli."},
+{d:"atel",q:"On a CXR, which way do structures shift in atelectasis?",a:"Toward the collapsed side",o:["Away from the collapsed side","They never shift","Always to the right"],x:"Lost volume pulls the trachea, heart and diaphragm toward the collapse. Large effusions and tension pneumothoraces push them away."},
+{d:"atel",q:"What is the best way to prevent post-op atelectasis in an alert patient?",a:"Incentive spirometry, deep breathing and early walking",o:["Bed rest for 3 days","High FiO₂ by non-rebreather","Postural drainage for every patient"],x:"Deep breaths and moving re-expand alveoli. High FiO₂ can make atelectasis worse by washing out nitrogen (absorption atelectasis)."},
+{d:"pe",q:"Which finding is typical of a pulmonary embolism?",a:"Sudden dyspnea and tachycardia with a normal chest X-ray",o:["Gradual cough with a big heart on CXR","Barking cough and stridor","Honeycombing on CT"],x:"PE causes dead space and hypoxemia, but the lungs themselves often look normal on CXR. The mismatch between how sick the patient looks and a clear film is the clue."},
+{d:"pe",q:"Which test confirms a pulmonary embolism in most patients?",a:"CT pulmonary angiography",o:["Sweat chloride","Spirometry","Sputum culture"],x:"CT pulmonary angiography shows the clot directly. A V/Q scan is used when contrast can’t be given. A negative D-dimer helps rule out PE in low-risk patients."},
+{d:"pe",q:"Which describes the main gas-exchange problem in PE?",a:"Dead space: ventilation without perfusion",o:["Shunt: perfusion without ventilation","Diffusion block from scarring","Hypoventilation from weak muscles"],x:"Alveoli beyond the clot still get air but no blood. This widens the gap between the PaCO₂ and the end-tidal CO₂."},
+{d:"ptx",q:"A ventilated patient suddenly has a high PIP and plateau, SpO₂ 82%, BP 70/40, and absent breath sounds on the right. What should be done first?",a:"Needle decompression of the right chest",o:["Get a chest X-ray first","Increase the PEEP","Suction and wait"],x:"This is a tension pneumothorax, which is a clinical diagnosis. Decompress immediately, then place a chest tube. Waiting for an X-ray can be fatal."},
+{d:"ptx",q:"Which exam findings fit a pneumothorax?",a:"Hyperresonant percussion, absent breath sounds and ↓ fremitus",o:["Dull percussion and bronchial sounds","Wheezes and a prolonged expiration","Fine crackles at the bases"],x:"Air in the pleural space makes the chest sound hollow (hyperresonant) and blocks the transmission of breath sounds and vibration."},
+{d:"eff",q:"Which percussion note is found over a pleural effusion?",a:"Dull or flat",o:["Hyperresonant","Tympanic","Normal resonance"],x:"Fluid is dense, so percussion is dull. Breath sounds and fremitus are decreased over the fluid."},
+{d:"eff",q:"What is the most common cause of a transudative pleural effusion?",a:"Congestive heart failure",o:["Bacterial pneumonia","Lung cancer","Tuberculosis"],x:"Transudates come from pressure or protein problems (CHF, cirrhosis, nephrotic syndrome). Pneumonia, cancer and TB cause exudates."},
+{d:"osa",q:"A sleep study shows an AHI of 32 events per hour. How severe is the OSA?",a:"Severe",o:["Mild","Moderate","Normal"],x:"AHI: < 5 normal, 5–14 mild, 15–29 moderate, ≥ 30 severe."},
+{d:"osa",q:"How does CPAP treat obstructive sleep apnea?",a:"It acts as a pneumatic splint that holds the upper airway open",o:["It stimulates the brain to breathe","It increases the tidal volume with each breath","It delivers extra oxygen only"],x:"Steady pressure keeps the throat from collapsing. In central apnea there is no effort to breathe, so CPAP alone isn’t enough."},
+{d:"croup",q:"A 2-year-old has a barking cough and stridor after a cold. The AP neck film shows a steeple sign. What is the most likely diagnosis?",a:"Croup",o:["Epiglottitis","Bronchiolitis","Foreign body in the right mainstem"],x:"The steeple sign is subglottic narrowing from croup. Epiglottitis shows a thumb sign on the lateral film."},
+{d:"croup",q:"Which treatment is given to almost every child with croup?",a:"A single dose of dexamethasone",o:["Antibiotics","Albuterol","Chest physiotherapy"],x:"Dexamethasone (0.6 mg/kg, max 16 mg) reduces airway swelling for hours. Racemic epinephrine is added for stridor at rest."},
+{d:"epi",q:"A 4-year-old has a high fever, is drooling and sits leaning forward. What should you avoid?",a:"Laying her flat or examining her throat with a tongue depressor",o:["Keeping her on her parent’s lap","Giving O₂ as tolerated","Calling anesthesia and ENT"],x:"Upsetting a child with epiglottitis or laying her flat can trigger complete airway obstruction. Keep her calm and upright and secure the airway in a controlled setting."},
+{d:"epi",q:"Which X-ray sign suggests epiglottitis?",a:"Thumb sign on a lateral neck film",o:["Steeple sign on an AP neck film","Bat-wing infiltrates","Deep sulcus sign"],x:"A swollen epiglottis looks like a thumb on the lateral neck film. Imaging should never delay securing the airway."},
+{d:"bronchiolitis",q:"Which treatment is recommended for typical bronchiolitis?",a:"Supportive care: nasal suctioning, O₂ if needed, and fluids",o:["Routine albuterol treatments","Routine oral steroids","Chest physiotherapy for every infant"],x:"Bronchiolitis guidelines recommend supportive care. Albuterol, steroids, antibiotics and chest PT aren’t routinely helpful."},
+{d:"bronchiolitis",q:"Which virus causes most cases of bronchiolitis?",a:"RSV",o:["Parainfluenza","Influenza B only","Epstein-Barr virus"],x:"RSV causes most bronchiolitis. Parainfluenza is the classic cause of croup."},
+{d:"rds",q:"What causes neonatal RDS?",a:"Not enough surfactant in premature lungs",o:["Too much amniotic fluid swallowed","A bacterial infection","A heart defect"],x:"Surfactant matures around 35 weeks. Without it, surface tension collapses the alveoli with every breath."},
+{d:"rds",q:"Why do infants with RDS grunt?",a:"Closing the glottis on exhalation creates their own PEEP to keep alveoli open",o:["They are in pain","It clears secretions","It’s a sign of hunger"],x:"Grunting is exhaling against a partly closed glottis, which holds pressure in the lungs (auto-PEEP). CPAP does the same thing for them."},
+{d:"rds",q:"Which L/S ratio suggests mature fetal lungs?",a:"2:1 or higher",o:["0.5:1","1:1","Any ratio, as long as glucose is normal"],x:"A lecithin/sphingomyelin ratio of at least 2:1, plus phosphatidylglycerol present, means the lungs are likely mature."}
+];
+
+/* PPMini: a small "quick check" quiz card used on reference pages.
+   PPMini.mount(el, bank, { src, n, filter })
+   bank items: { q, a, o:[3 wrong], x, s? (scenario), t? (topic tag) } */
+window.PPMini = (function () {
+  "use strict";
+  var LET = ["A", "B", "C", "D"];
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  function mount(el, bank, opt) {
+    opt = opt || {};
+    var n = opt.n || 10, S;
+    function start() {
+      var pool = opt.filter ? bank.filter(opt.filter) : bank;
+      S = { qs: shuffle(pool).slice(0, Math.min(n, pool.length)).map(function (x) { return { x: x, opts: shuffle([x.a].concat(x.o)) }; }), i: 0, score: 0, done: false, picked: null };
+      render();
+    }
+    function render() {
+      if (S.i >= S.qs.length) {
+        var pct = Math.round(S.score / S.qs.length * 100);
+        el.innerHTML = '<div class="mq-end"><p class="mq-big">' + S.score + " / " + S.qs.length + "</p><p>" +
+          (pct >= 80 ? "Nice work." : pct >= 60 ? "Getting there. Review the ones you missed." : "Worth another read-through, then try again.") +
+          (S.score < S.qs.length ? ' Misses were saved to <a href="review.html">Review my mistakes</a>.' : "") +
+          '</p><button class="btn primary" type="button" data-again>New set of questions</button></div>';
+        el.querySelector("[data-again]").onclick = start;
+        return;
+      }
+      var it = S.qs[S.i], x = it.x;
+      el.innerHTML =
+        '<div class="mq-top"><span>Question ' + (S.i + 1) + " of " + S.qs.length + "</span><span>Score " + S.score + "</span></div>" +
+        (x.s ? '<p class="mq-s">' + esc(x.s) + "</p>" : "") +
+        '<p class="mq-q">' + esc(x.q) + "</p>" +
+        '<div class="mq-opts">' + it.opts.map(function (o, j) {
+          return '<button type="button" class="mq-opt" data-j="' + j + '"><span class="mq-l">' + LET[j] + "</span><span>" + esc(o) + "</span></button>";
+        }).join("") + "</div>" +
+        '<div class="mq-fb" hidden></div>';
+      el.querySelectorAll(".mq-opt").forEach(function (b) { b.onclick = function () { answer(+b.dataset.j); }; });
+    }
+    function answer(j) {
+      var it = S.qs[S.i], x = it.x, chosen = it.opts[j], right = chosen === x.a;
+      if (right) S.score++;
+      el.querySelectorAll(".mq-opt").forEach(function (b, k) {
+        b.disabled = true;
+        if (it.opts[k] === x.a) b.classList.add("ok"); else if (k === j) b.classList.add("no");
+      });
+      var fb = el.querySelector(".mq-fb");
+      fb.hidden = false;
+      fb.className = "mq-fb " + (right ? "ok" : "no");
+      fb.innerHTML = "<b>" + (right ? "Right." : "Not quite.") + "</b> " + esc(x.x) +
+        '<div class="mq-next"><button class="btn primary" type="button">' + (S.i + 1 < S.qs.length ? "Next question" : "See score") + "</button></div>";
+      fb.querySelector("button").onclick = function () { S.i++; render(); el.scrollIntoView({ block: "nearest" }); };
+      fb.querySelector("button").focus({ preventScroll: true });
+      if (window.PPMistakes && opt.src) PPMistakes.record({ src: opt.src, kind: "choice", s: x.s || "", q: x.q, a: x.a, o: x.o, x: x.x }, right);
+    }
+    start();
+    return { restart: start };
+  }
+  return { mount: mount };
+})();
+
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var GN = {}; DZ_GROUPS.forEach(function (g) { GN[g[0]] = g[1]; });
+  var state = { g: "all", q: "" };
+  var plain = function (h) { return String(h).replace(/<[^>]+>/g, ""); };
+
+  /* filter chips */
+  $("chips").innerHTML = [["all", "All"]].concat(DZ_GROUPS).map(function (g) {
+    return '<button type="button" class="chip" data-g="' + g[0] + '" aria-pressed="' + (g[0] === "all") + '">' + g[1] + "</button>";
+  }).join("");
+  $("chips").addEventListener("click", function (e) {
+    var b = e.target.closest(".chip"); if (!b) return;
+    state.g = b.dataset.g;
+    $("chips").querySelectorAll(".chip").forEach(function (c) { c.setAttribute("aria-pressed", String(c === b)); });
+    if (location.hash) history.pushState("", document.title, location.pathname + location.search);
+    route();
+  });
+  $("q").addEventListener("input", function () {
+    state.q = this.value.trim().toLowerCase();
+    if (location.hash) history.replaceState("", document.title, location.pathname + location.search);
+    route();
+  });
+
+  function hay(d) { return (d.n + " " + (d.aka || "") + " " + d.one + " " + plain(d.what) + " " + d.signs.join(" ") + " " + d.abg + " " + d.cxr + " " + d.snd + " " + d.pft + " " + d.tx.join(" ")).toLowerCase(); }
+  function renderList() {
+    var words = state.q ? state.q.split(/\s+/) : [];
+    var list = DZ.filter(function (d) {
+      if (state.g !== "all" && d.g !== state.g) return false;
+      var h = hay(d); return words.every(function (w) { return h.indexOf(w) >= 0; });
+    });
+    $("grid").innerHTML = list.length ? list.map(function (d) {
+      return '<a class="tile" href="#' + d.id + '"><b>' + d.n + "</b>" + (d.aka ? "<small>" + d.aka + "</small>" : "<small>" + GN[d.g] + "</small>") + "<span>" + d.one + "</span></a>";
+    }).join("") : '<p class="empty">No disease matches that. Try a sign like “stridor” or “crackles”.</p>';
+  }
+
+  var FIELDS = [["signs", "Signs & symptoms", "!"], ["abg", "ABG", "pH"], ["cxr", "Chest X-ray", "X"], ["snd", "Breath sounds & exam", "♪"], ["pft", "PFTs & tests", "%"], ["rt", "RT priorities", "RT"], ["tx", "Treatment", "+"]];
+  var mini = null;
+  function renderOne(d) {
+    var i = DZ.indexOf(d), prev = DZ[(i - 1 + DZ.length) % DZ.length], next = DZ[(i + 1) % DZ.length];
+    var html = '<div class="op">' +
+      '<div class="op-top"><a class="btn" href="#" id="back">← All diseases</a><button class="btn" type="button" id="print">Print this page</button></div>' +
+      '<div class="op-head"><span class="grp">' + GN[d.g] + "</span><h2>" + d.n + "</h2>" + (d.aka ? '<span class="aka">' + d.aka + "</span>" : "") +
+        '<p class="one">' + d.one + '</p><p class="what">' + d.what + "</p></div>" +
+      '<div class="facts">' + FIELDS.map(function (f) {
+        var v = d[f[0]], body = Array.isArray(v) ? "<ul>" + v.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>" : "<p>" + v + "</p>";
+        return '<div class="fact' + (f[0] === "tx" ? " wide" : "") + '"><h3><i aria-hidden="true">' + f[2] + "</i>" + f[1] + "</h3>" + body + "</div>";
+      }).join("") + "</div>" +
+      (d.pearl ? '<div class="pearl"><b>Remember:</b> ' + d.pearl + "</div>" : "") +
+      (d.links && d.links.length ? '<div class="links">' + d.links.map(function (l) { return '<a href="' + l[1] + '">' + l[0] + " →</a>"; }).join("") + "</div>" : "") +
+      '<section id="opCheck"><div class="sec-head"><h2>Quick check: ' + d.n + '</h2></div><div class="mq" id="mq1"></div></section>' +
+      '<div class="pn"><a class="btn" href="#' + prev.id + '">← ' + prev.n + '</a><a class="btn" href="#' + next.id + '">' + next.n + " →</a></div>" +
+      "</div>";
+    $("one").innerHTML = html;
+    $("print").onclick = function () { window.print(); };
+    $("back").onclick = function (e) { e.preventDefault(); history.pushState("", document.title, location.pathname + location.search); route(); };
+    var qs = DZ_Q.filter(function (x) { return x.d === d.id; });
+    if (qs.length) PPMini.mount($("mq1"), qs, { src: "dz", n: qs.length }); else $("opCheck").hidden = true;
+    document.title = d.n + " · Pocket Pulmo";
+  }
+
+  function route(scroll) {
+    var id = location.hash.slice(1), d = DZ.filter(function (x) { return x.id === id; })[0];
+    $("list").hidden = !!d; $("compare").hidden = !!d; $("check").hidden = !!d; $("finder").hidden = !!d;
+    $("one").hidden = !d;
+    if (d) { renderOne(d); if (scroll !== false) window.scrollTo(0, 0); }
+    else { document.title = "Disease One-Pagers · Pocket Pulmo"; renderList(); }
+  }
+  window.addEventListener("hashchange", function () { route(); });
+  route(false);
+  PPMini.mount($("mq"), DZ_Q, { src: "dz", n: 10 });
+})();
+</script>
+<script>window.RTQ_INDEX=[{"g":"Page","t":"ABG values","s":"Normal ranges, ROME, compensation, the O₂ curve","u":"abg-o2.html#abg","k":"reference look up chart","w":6},{"g":"Page","t":"Medications","s":"55 respiratory drugs, every detail","u":"meds.html#table","k":"reference look up chart","w":6},{"g":"Page","t":"O₂ devices","s":"Flow, FiO₂ and when to use each of the 6 devices","u":"abg-o2.html#o2","k":"reference look up chart","w":6},{"g":"Page","t":"Formulas","s":"Every formula: O₂, tanks, content, vent, MAP, drug math","u":"formulas.html","k":"reference look up chart","w":6},{"g":"Page","t":"Gas cylinders","s":"Colors, uses and pin index for every medical gas","u":"gas.html","k":"reference look up chart","w":6},{"g":"Page","t":"Breath sounds","s":"Hear every breath sound, sorted by type","u":"sounds.html","k":"reference look up chart","w":6},{"g":"Page","t":"Lung volumes & PFTs","s":"Interactive spirogram, FEV₁/FVC, obstructive vs restrictive","u":"pft.html","k":"reference look up chart","w":6},{"g":"Page","t":"Disease one-pagers","s":"COPD, asthma, ARDS, CHF and more: ABG, CXR, sounds, treatment","u":"diseases.html","k":"reference look up chart","w":6},{"g":"Page","t":"Airway clearance","s":"Lung expansion, PEP, the vest, cough assist, postural drainage","u":"airway.html","k":"reference look up chart","w":6},{"g":"Page","t":"Mnemonics","s":"Memory aids for every drug class","u":"meds.html#mem","k":"reference look up chart","w":6},{"g":"Practice","t":"O₂ device cases","s":"81 patient scenarios: pick the right device","u":"o2-cases.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Med cases","s":"209 clinical scenarios: pick the drug, spot the side effect","u":"med-cases.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"O₂ math quiz","s":"Total flow and cylinder duration problems","u":"math-quiz.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Dosage calc practice","s":"% solutions, mg/kg, D/H × Q, continuous nebs, drips","u":"dose-quiz.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"ABG practice","s":"Unlimited random gases with worked answers","u":"abg-practice.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Assessment sim lab","s":"Vital signs, chest exam and 21 patients to assess","u":"assess.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Vent practice lab","s":"Bedside ventilator simulator: modes, alarms, troubleshooting","u":"vent.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Medication quiz","s":"NBRC-style questions on all 55 drugs","u":"meds.html#quiz","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Med flashcards","s":"Flip through drugs and track what you know","u":"meds.html#flash","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Mock exam","s":"Timed, TMC-style test pulling from every quiz","u":"mock-exam.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Review my mistakes","s":"Every question you’ve missed, in one deck","u":"review.html","k":"quiz test practice questions study exam","w":6},{"g":"Practice","t":"Total flow calculator","s":"Enter FiO₂ and O₂ flow to get total flow","u":"formulas.html#total-flow","k":"calculate","w":3},{"g":"Practice","t":"Cylinder duration calculator","s":"Size, gauge pressure and flow → minutes left","u":"formulas.html#cylinder","k":"calculate tank time","w":3},{"g":"ABG","t":"pH","s":"7.35 – 7.45 · acid–base balance overall","u":"abg-o2.html#abg","k":"acidosis alkalosis acid base abg normal values arterial blood gas","w":4},{"g":"ABG","t":"PaCO₂","s":"35 – 45 mmHg (40) · ventilation, the lungs’ side","u":"abg-o2.html#abg","k":"carbon dioxide co2 ventilation abg normal values arterial blood gas","w":4},{"g":"ABG","t":"HCO₃⁻","s":"22 – 24 mEq/L · the kidneys’ (metabolic) side","u":"abg-o2.html#abg","k":"bicarbonate bicarb abg normal values arterial blood gas","w":4},{"g":"ABG","t":"PaO₂","s":"80 – 100 mmHg · oxygenation · < 80 = hypoxemia","u":"abg-o2.html#abg","k":"oxygen oxygenation hypoxemia abg normal values arterial blood gas","w":4},{"g":"ABG","t":"SaO₂","s":"98 – 100% · SpO₂ by pulse ox 95 – 100%","u":"abg-o2.html#abg","k":"saturation spo2 sat pulse oximetry abg normal values arterial blood gas","w":4},{"g":"ABG","t":"Base excess","s":"±2 mEq/L · the kidneys’ (metabolic) side","u":"abg-o2.html#abg","k":"be base deficit abg normal values arterial blood gas","w":4},{"g":"ABG","t":"ROME","s":"Respiratory Opposite, Metabolic Equal","u":"abg-o2.html#abg","k":"mnemonic acid base interpretation abg normal values arterial blood gas","w":4},{"g":"ABG","t":"Compensation","s":"Uncompensated, partially or fully compensated · how to tell","u":"abg-o2.html#comp","k":"compensated compensation partial partially full fully uncompensated mixed combined abg","w":4},{"g":"ABG","t":"Respiratory acidosis","s":"pH ↓ · PaCO₂ ↑ · hypoventilation","u":"abg-practice.html","k":"resp acidosis copd hypoventilation co2 retention abg arterial blood gas interpret","w":3},{"g":"ABG","t":"Respiratory alkalosis","s":"pH ↑ · PaCO₂ ↓ · hyperventilation","u":"abg-practice.html","k":"resp alkalosis hyperventilation anxiety abg arterial blood gas interpret","w":3},{"g":"ABG","t":"Metabolic acidosis","s":"pH ↓ · HCO₃⁻ ↓ · DKA, lactic acidosis, renal failure","u":"abg-practice.html","k":"met acidosis dka kussmaul bicarb low abg arterial blood gas interpret","w":3},{"g":"ABG","t":"Metabolic alkalosis","s":"pH ↑ · HCO₃⁻ ↑ · vomiting, NG suction, diuretics","u":"abg-practice.html","k":"met alkalosis vomiting bicarb high abg arterial blood gas interpret","w":3},{"g":"ABG","t":"Interpret an ABG","s":"Practice on random gases with worked answers","u":"abg-practice.html","k":"interpretation analyze read abg practice abg arterial blood gas interpret","w":3},{"g":"O₂ device","t":"Large-volume nebulizer","s":"Aerosol mask, face tent, trach collar, T-piece · 10–15 L/min · FiO₂ 28–100%","u":"abg-o2.html#aerosol","k":"lvn large volume nebulizer aerosol bland mist all purpose jet","w":3},{"g":"O₂ device","t":"Trach collar","s":"Large-volume neb · total flow ≥ 3 × V̇E (≥ 40 L/min)","u":"abg-o2.html#aerosol","k":"trach collar trach mask tracheostomy aerosol total flow","w":3},{"g":"O₂ device","t":"Face tent","s":"Large-volume neb · facial burns/trauma · FiO₂ unpredictable","u":"abg-o2.html#aerosol","k":"face tent aerosol","w":3},{"g":"O₂ device","t":"T-piece","s":"Briggs adapter · ETT or trach · SBT/weaning · add reservoir tubing","u":"abg-o2.html#aerosol","k":"t piece t-piece briggs adapter weaning sbt aerosol","w":3},{"g":"O₂ device","t":"Aerosol mask","s":"Large-volume neb · humidified O₂ over nose and mouth","u":"abg-o2.html#aerosol","k":"aerosol mask cool mist","w":3},{"g":"Practice","t":"Dosage calc practice","s":"Conversions, % solutions, D/H × Q, mg/kg, continuous nebs, IV drips","u":"dose-quiz.html","k":"dosage dose calculation drug math practice quiz mg/kg percent solution drip rate ml/hr d/h x q desired over have","w":4},{"g":"O₂ device","t":"Nasal cannula","s":"1–6 L/min · 24–45% · low flow · humidify at 4 L+","u":"abg-o2.html#o2","k":"nc cannula humidify above 4 bubble humidifier oxygen device delivery","w":4},{"g":"O₂ device","t":"Simple face mask","s":"5–10 L/min · 40–60% · low flow","u":"abg-o2.html#o2","k":"simple mask minimum 5 oxygen device delivery","w":4},{"g":"O₂ device","t":"Partial rebreather","s":"10–15 L/min (keep bag inflated) · 40–60% · high flow","u":"abg-o2.html#o2","k":"prb reservoir bag oxygen device delivery","w":4},{"g":"O₂ device","t":"Non-rebreather","s":"10–15 L/min · 70–100% · high flow","u":"abg-o2.html#o2","k":"nrb nonrebreather non rebreather reservoir bag one-way valve oxygen device delivery","w":4},{"g":"O₂ device","t":"Venturi mask","s":"2–12 L/min · 24–50% · high flow, fixed FiO₂","u":"abg-o2.html#o2","k":"air entrainment venti mask copd jet adapter oxygen device delivery","w":4},{"g":"O₂ device","t":"High-flow nasal cannula","s":"Up to 60 L/min · 21–100% · high flow, heated humidity","u":"abg-o2.html#o2","k":"hfnc high flow optiflow oxygen device delivery","w":4},{"g":"O₂ device","t":"Low flow vs. high flow","s":"Which devices are which, and why FiO₂ changes with RR / VT","u":"abg-o2.html#o2","k":"concept fio2 varies oxygen device delivery","w":4},{"g":"Formula","t":"Air : O₂ ratio","s":"(100 − FiO₂) ÷ (FiO₂ − 21) · 24% 25:1 · 28% 10:1 · 30% 8:1 · 35% 5:1 · 40% 3:1 · 50% 1.7:1 · 60% 1:1","u":"formulas.html#total-flow","k":"entrainment ratio magic box venturi calculation formula","w":3},{"g":"Formula","t":"Total flow","s":"O₂ flow × (air + O₂ parts) · Enough if ≥ 3 × minute ventilation (≥ 40 L/min for most adults)","u":"formulas.html#total-flow","k":"total flow adequate venturi nebulizer trach collar tandem calculation formula","w":3},{"g":"Formula","t":"FiO₂ of a mixed gas","s":"[(O₂ × 1.0) + (air × 0.21)] ÷ total flow · Two flowmeters or a blender","u":"formulas.html#total-flow","k":"mixed blend air oxygen calculation formula","w":3},{"g":"Formula","t":"Cylinder duration","s":"(psig − residual) × factor ÷ L/min · Factors: D 0.16 · E 0.28 · M 1.56 · G 2.41 · H/K 3.14","u":"formulas.html#cylinder","k":"tank how long minutes left cylinder factor calculation formula","w":3},{"g":"Formula","t":"Nasal cannula FiO₂","s":"21% + 4% per L/min · Estimate only (low flow)","u":"formulas.html#estimates","k":"cannula estimate calculation formula","w":3},{"g":"Formula","t":"Heliox flow","s":"Reading × 1.8 (80/20) · × 1.6 (70/30) · On an O₂ flowmeter","u":"formulas.html#estimates","k":"heliox helium factor calculation formula","w":3},{"g":"Formula","t":"Arterial O₂ content (CaO₂)","s":"(Hb × 1.34 × SaO₂) + (PaO₂ × 0.003) · Normal 16–20 mL/dL · SaO₂ as a decimal","u":"formulas.html#o2-content","k":"cao2 oxygen content hemoglobin bound dissolved calculation formula","w":3},{"g":"Formula","t":"Hb from hematocrit","s":"Hb ≈ Hct ÷ 3 · Then use it in CaO₂","u":"formulas.html#o2-content","k":"hematocrit hct rule of three calculation formula","w":3},{"g":"Formula","t":"a–v O₂ difference","s":"CaO₂ − CvO₂ · Normal ≈ 5 mL/dL","u":"formulas.html#o2-content","k":"avdo2 cvo2 mixed venous svo2 extraction calculation formula","w":3},{"g":"Formula","t":"60 / 90 rule","s":"PaO₂ 60 ≈ SaO₂ 90% · Below 60, saturation falls fast","u":"formulas.html#estimates","k":"dissociation curve saturation calculation formula","w":3},{"g":"Formula","t":"P/F ratio","s":"PaO₂ ÷ FiO₂ · Normal 400–500 · ARDS < 300 mild, < 200 moderate, < 100 severe","u":"formulas.html#pf","k":"pf ratio ards oxygenation calculation formula","w":3},{"g":"Formula","t":"Boyle’s law","s":"P₁ × V₁ = P₂ × V₂ · Temperature constant · P and V move opposite (how we breathe)","u":"formulas.html#boyle","k":"boyles boyle gas law pressure volume inverse breathing plethysmography calculation formula","w":3},{"g":"Formula","t":"Charles’s law","s":"V₁ ÷ T₁ = V₂ ÷ T₂ · Pressure constant · T in Kelvin (°C + 273) · ATPS → BTPS","u":"formulas.html#charles","k":"charles charless gas law volume temperature kelvin btps atps calculation formula","w":3},{"g":"Formula","t":"Gay-Lussac’s law","s":"P₁ ÷ T₁ = P₂ ÷ T₂ · Volume constant · a heated cylinder builds pressure","u":"formulas.html#gaylussac","k":"gay lussac gay-lussacs gas law pressure temperature cylinder heat calculation formula","w":3},{"g":"Formula","t":"Combined gas law","s":"(P₁ × V₁) ÷ T₁ = (P₂ × V₂) ÷ T₂ · Hold one thing constant to get the other laws","u":"formulas.html#combined","k":"combined gas law pvt calculation formula","w":3},{"g":"Formula","t":"Dalton’s law","s":"P total = P₁ + P₂ + … · partial pressure = fraction × total · Sea level: PO₂ = 0.21 × 760 ≈ 160 · humidified 0.21 × (760 − 47) ≈ 150","u":"formulas.html#dalton","k":"daltons dalton partial pressure gas law barometric altitude pio2 water vapor 47 calculation formula","w":3},{"g":"Formula","t":"Alveolar air equation","s":"PAO₂ = FiO₂ × (760 − 47) − (PaCO₂ ÷ 0.8) · Room air ≈ 100 mmHg","u":"formulas.html#aa","k":"pao2 alveolar oxygen calculation formula","w":3},{"g":"Formula","t":"A–a gradient","s":"PAO₂ − PaO₂ · Normal < 10–15 mmHg on room air","u":"formulas.html#aa","k":"a-a gradient aa shunt vq mismatch calculation formula","w":3},{"g":"Formula","t":"New FiO₂","s":"(desired PaO₂ × current FiO₂) ÷ current PaO₂","u":"formulas.html#fio2","k":"desired fio2 change oxygen calculation formula","w":3},{"g":"Formula","t":"Ideal body weight","s":"Male 50 · female 45.5 + 2.3 × (inches − 60) · kg · inches = cm ÷ 2.54","u":"formulas.html#ibw","k":"ibw devine predicted body weight pbw calculation formula","w":3},{"g":"Formula","t":"Tidal volume","s":"6–8 mL/kg IBW · ARDS: 6 mL/kg (4–8)","u":"formulas.html#ibw","k":"vt tidal volume setting calculation formula","w":3},{"g":"Formula","t":"Minute ventilation","s":"V̇E = VT × RR · Normal 5–10 L/min","u":"formulas.html#ve","k":"ve minute volume calculation formula","w":3},{"g":"Formula","t":"New rate for a target PaCO₂","s":"(current PaCO₂ × current RR) ÷ desired PaCO₂ · Same with V̇E in place of RR","u":"formulas.html#ve","k":"desired paco2 change rate ventilation calculation formula","w":3},{"g":"Formula","t":"Static compliance","s":"Cstat = VT ÷ (Pplat − PEEP) · Normal 60–100 mL/cmH₂O","u":"formulas.html#mech","k":"cstat compliance plateau stiff lungs calculation formula","w":3},{"g":"Formula","t":"Dynamic compliance","s":"Cdyn = VT ÷ (PIP − PEEP) · Drops with stiff lungs or resistance","u":"formulas.html#mech","k":"cdyn compliance peak calculation formula","w":3},{"g":"Formula","t":"Driving pressure","s":"Pplat − PEEP · Keep < 15 · Pplat ≤ 30","u":"formulas.html#mech","k":"driving pressure delta p calculation formula","w":3},{"g":"Formula","t":"Airway resistance","s":"Raw = (PIP − Pplat) ÷ flow (L/sec) · L/min ÷ 60 = L/sec · normal 0.6–2.4","u":"formulas.html#mech","k":"raw resistance calculation formula","w":3},{"g":"Formula","t":"RSBI","s":"RR ÷ VT (in liters) · < 105 favors extubation","u":"formulas.html#rsbi","k":"rsbi rapid shallow breathing index weaning sbt tobin calculation formula","w":3},{"g":"Formula","t":"Total lung capacity","s":"TLC = IRV + VT + ERV + RV · ≈ 6,000 mL · also VC + RV · ↓ (< 80%) = restrictive","u":"pft.html#spirogram","k":"tlc total lung capacity lung volumes spirogram calculation formula","w":3},{"g":"Formula","t":"Vital capacity","s":"VC = IRV + VT + ERV · ≈ 4,800 mL · < 10–15 mL/kg: may need ventilatory support","u":"pft.html#spirogram","k":"vc vital capacity fvc lung volumes calculation formula","w":3},{"g":"Formula","t":"Inspiratory capacity","s":"IC = IRV + VT · ≈ 3,600 mL","u":"pft.html#spirogram","k":"ic inspiratory capacity lung volumes calculation formula","w":3},{"g":"Formula","t":"Functional residual capacity","s":"FRC = ERV + RV · ≈ 2,400 mL · resting lung volume · ↑ in COPD","u":"pft.html#spirogram","k":"frc functional residual capacity peep lung volumes calculation formula","w":3},{"g":"Formula","t":"FEV₁/FVC ratio","s":"FEV₁ ÷ FVC × 100 · Normal ≥ 70% · < 70% = obstruction","u":"pft.html#forced","k":"fev1 fvc ratio obstructive restrictive spirometry pft calculation formula","w":3},{"g":"Formula","t":"Bronchodilator response","s":"FEV₁ ↑ ≥ 12% and ≥ 200 mL · Significant reversibility (think asthma)","u":"pft.html#patterns","k":"reversibility bronchodilator response pre post pft asthma calculation formula","w":3},{"g":"Formula","t":"Mean arterial pressure","s":"MAP = (SBP + 2 × DBP) ÷ 3 · Normal 70–105 · keep ≥ 65","u":"formulas.html#map","k":"map mean arterial pressure perfusion calculation formula","w":3},{"g":"Formula","t":"Pulse pressure","s":"SBP − DBP · Normal ≈ 40","u":"formulas.html#map","k":"pulse pressure narrow wide calculation formula","w":3},{"g":"Formula","t":"% solution → mg/mL","s":"% × 10 · 1 : 1,000 = 1 mg/mL · 1 : 10,000 = 0.1 mg/mL","u":"formulas.html#drug-math","k":"percent solution concentration ratio epinephrine calculation formula","w":3},{"g":"Formula","t":"Dose → volume","s":"mL = dose ÷ mg/mL (D/H × Q) · Desired ÷ have × quantity","u":"formulas.html#drug-math","k":"desired over have dhq volume calculation formula","w":3},{"g":"Formula","t":"Weight-based dose","s":"mg/kg × kg · lb ÷ 2.2 = kg · check min/max","u":"formulas.html#drug-math","k":"mg/kg pediatric weight pounds calculation formula","w":3},{"g":"Formula","t":"Drip rate","s":"mL/hr = mL × 60 ÷ minutes","u":"formulas.html#drip","k":"iv drip infusion rate ml/hr calculation formula","w":3},{"g":"Formula","t":"Weight-based drip","s":"mL/hr = (mcg/kg/min × kg × 60) ÷ mcg/mL · mg/mL × 1,000 = mcg/mL","u":"formulas.html#drip","k":"mcg/kg/min dopamine infusion drip calculation formula","w":3},{"g":"Practice","t":"O₂ content calculator","s":"Hb or Hct, SaO₂ and PaO₂ → CaO₂, plus the a–v difference","u":"formulas.html#o2-content","k":"calculate cao2","w":2},{"g":"Practice","t":"IBW & tidal volume calculator","s":"Sex and height → IBW and a 6–8 mL/kg VT","u":"formulas.html#ibwCalc","k":"calculate ibw tidal volume","w":2},{"g":"Practice","t":"MAP calculator","s":"Systolic and diastolic → MAP and pulse pressure","u":"formulas.html#mapCalc","k":"calculate map","w":2},{"g":"ABG","t":"O₂ dissociation curve","s":"PaO₂ vs. SaO₂ · S-shaped curve","u":"abg-o2.html#curve","k":"oxyhemoglobin oxygen dissociation curve hbo2 hemoglobin","w":4},{"g":"ABG","t":"60 / 90 rule","s":"PaO₂ 60 mmHg ≈ SaO₂ 90%","u":"abg-o2.html#curve","k":"60 90 rule sixty ninety saturation pao2 sao2","w":4},{"g":"ABG","t":"P50","s":"PaO₂ at 50% saturation · normal ≈ 27 mmHg","u":"abg-o2.html#curve","k":"p50 affinity","w":4},{"g":"ABG","t":"Right shift (CADET)","s":"CO₂↑, acid, 2,3-DPG↑, exercise, temp↑ → releases O₂","u":"abg-o2.html#curve","k":"right shift cadet face right curve shift","w":4},{"g":"ABG","t":"Left shift","s":"CO₂↓, alkalosis, cold, CO, fetal Hb → holds O₂","u":"abg-o2.html#curve","k":"left shift curve carbon monoxide fetal","w":4},{"g":"Vent","t":"Vent practice lab","s":"30 simulated patients on the ventilator","u":"vent.html","k":"ventilator mechanical ventilation simulator vent lab icu patients ards copd dka pulmonary embolism weaning sbt bipap obesity tbi guillain barre myasthenia als pregnancy smoke inhalation","w":3},{"g":"Vent","t":"Ventilator modes","s":"VC-AC, PC-AC, SIMV, CPAP/PS, CPAP, BiPAP","u":"vent.html","k":"mode ac simv psv pressure support bipap cpap volume control pressure control","w":3},{"g":"Vent","t":"DOPE","s":"Displacement, Obstruction, Pneumothorax, Equipment","u":"vent.html","k":"dope troubleshooting vent alarm high pressure low pressure","w":3},{"g":"Vent","t":"Plateau pressure & auto-PEEP","s":"Inspiratory and expiratory holds","u":"vent.html","k":"pplat plateau auto-peep autopeep driving pressure compliance resistance pip","w":3},{"g":"Vent","t":"Ventilator circuit change","s":"Put the steps in order","u":"vent.html","k":"circuit change procedure","w":3},{"g":"Vent","t":"Vent troubleshooting","s":"Disconnect, secretions, kinked tube, mainstem, pneumothorax, cuff leak","u":"vent.html","k":"disconnect mucus plug biting mainstem pneumothorax cuff leak extubation flow starvation","w":3},{"g":"Assessment","t":"Assessment sim lab","s":"21 patients: vitals, inspection, palpation, percussion, auscultation","u":"assess.html","k":"patient assessment physical exam bedside simulator","w":3},{"g":"Assessment","t":"Normal vital signs","s":"Adult: HR 60–100 · RR 12–20 · BP < 120/80 · temp 36.5–37.5 °C","u":"assess.html#normals","k":"vitals heart rate respiratory rate blood pressure temperature normal adult","w":3},{"g":"Assessment","t":"Pediatric vital signs","s":"Normal HR, RR and BP by age","u":"assess.html#normals","k":"children infant newborn toddler peds pediatric vitals","w":3},{"g":"Assessment","t":"Chest exam findings","s":"Breath sounds, percussion, fremitus and trachea by condition","u":"assess.html#normals","k":"percussion dull hyperresonant fremitus tactile tracheal shift consolidation effusion","w":3},{"g":"Assessment","t":"Breath sounds","s":"Hear them, sorted: normal, loudness, continuous, discontinuous","u":"sounds.html","k":"auscultation adventitious listen hear audio classification continuous discontinuous","w":3},{"g":"Assessment","t":"Vesicular breath sounds","s":"Normal · soft, low · in 3 : out 1 · most lung fields","u":"sounds.html#s-ves","k":"vesicular normal breath sounds","w":3},{"g":"Assessment","t":"Bronchovesicular breath sounds","s":"Normal near mainstem bronchi · in = out","u":"sounds.html#s-bv","k":"bronchovesicular normal breath sounds","w":3},{"g":"Assessment","t":"Bronchial breath sounds","s":"Loud, high, pause · normal over manubrium, consolidation elsewhere","u":"sounds.html#s-bronch","k":"bronchial tubular consolidation breath sounds","w":3},{"g":"Assessment","t":"Tracheal breath sounds","s":"Very loud, harsh · over the trachea in the neck","u":"sounds.html#s-trach","k":"tracheal breath sounds","w":3},{"g":"Assessment","t":"Diminished / absent breath sounds","s":"Less air moving: COPD, effusion, pneumothorax, plug, mainstem intubation","u":"sounds.html#s-dim","k":"diminished decreased absent breath sounds silent chest","w":3},{"g":"Assessment","t":"Wheezes","s":"High, musical, expiratory · bronchospasm · old name sibilant rhonchi","u":"sounds.html#s-wheeze","k":"wheeze wheezing sibilant bronchospasm asthma","w":3},{"g":"Assessment","t":"Rhonchi","s":"Low, snoring · secretions in large airways · clear with cough","u":"sounds.html#s-rhonchi","k":"rhonchi sonorous secretions","w":3},{"g":"Assessment","t":"Stridor","s":"High, loud, inspiratory, over the neck · upper-airway emergency","u":"sounds.html#s-stridor","k":"stridor croup epiglottitis upper airway","w":3},{"g":"Assessment","t":"Fine crackles","s":"High, late-inspiratory pops · atelectasis, fibrosis, early CHF · rales","u":"sounds.html#s-fine","k":"fine crackles rales velcro atelectasis fibrosis","w":3},{"g":"Assessment","t":"Coarse crackles","s":"Low, bubbling, early inspiration · edema, pneumonia, secretions","u":"sounds.html#s-coarse","k":"coarse crackles rales bubbling edema","w":3},{"g":"Assessment","t":"Pleural friction rub","s":"Creaking, grating · end-in and start-out · pleurisy, PE","u":"sounds.html#s-rub","k":"pleural friction rub creaking grating pleurisy","w":3},{"g":"Assessment","t":"Name that breath sound","s":"Ear-training drill: hear a sound, pick it","u":"assess.html#drill-snd","k":"listening quiz drill ear training breath sound practice","w":3},{"g":"Assessment","t":"Breathing patterns","s":"Kussmaul, Cheyne-Stokes, Biot’s, apneustic, paradoxical","u":"assess.html#normals","k":"kussmaul cheyne stokes biot apneustic paradoxical pattern","w":3},{"g":"Assessment","t":"Vital signs practice","s":"Count a pulse and respirations, take a BP","u":"assess.html#vitals","k":"counting pulse respirations blood pressure korotkoff sphygmomanometer drill","w":3},{"g":"Disease","t":"COPD","s":"Emphysema · chronic bronchitis · Airflow limitation that doesn’t fully reverse, mostly from smoking.","u":"diseases.html#copd","k":"Emphysema · chronic bronchitis disease condition one pager signs abg cxr x-ray treatment obs Dyspnea on exertion, chronic cough Barrel chest (↑ AP diameter), pursed-lip breathing, tripod position, accessory muscles Emphysema: thin, ‘pink puffer’ Chronic bronchitis: cyanosis, edema, cor pulmonale, ‘blue bloater’ Hyperinflation: flat diaphragms, hyperlucent lungs, narrow ‘teardrop’ heart, ↑ retrosternal air space, wide rib spaces; bullae. Diminished breath sounds, wheezes, rhonchi (bronchitis); hyperresonant to percussion; ↓ fremitus. Don’t withhold O₂ from a hypoxemic COPD patient. Titrate it to 88–92% and watch the CO₂.","w":4},{"g":"Disease","t":"Asthma","s":"Reactive airway disease · Airway inflammation with bronchospasm that reverses.","u":"diseases.html#asthma","k":"Reactive airway disease disease condition one pager signs abg cxr x-ray treatment obs Episodic wheeze, cough (often at night), chest tightness, dyspnea Severe: speaking in words only, accessory muscles, pulsus paradoxus > 10–12 mmHg, diaphoresis A silent chest is ominous: too little air moving to wheeze Often normal; hyperinflation during an attack. Look for a pneumothorax or pneumonia. Expiratory wheezes with a prolonged expiration; diminished or absent sounds in severe attacks. LABAs are never used alone in asthma; they always come with an inhaled steroid.","w":4},{"g":"Disease","t":"Bronchiectasis","s":"Permanently widened, scarred airways full of mucus.","u":"diseases.html#bronchiectasis","k":" disease condition one pager signs abg cxr x-ray treatment obs Chronic cough with large amounts of purulent sputum (settles into three layers) Hemoptysis, clubbing, recurrent chest infections Fatigue, weight loss ‘Tram tracks’ (thick, parallel airway walls) and ring shadows. High-resolution CT is the test of choice: an airway wider than its artery (‘signet ring’). Coarse crackles, rhonchi, sometimes wheezes; may change after coughing. Big volumes of foul sputum plus clubbing: think bronchiectasis.","w":4},{"g":"Disease","t":"Cystic fibrosis","s":"CF · Genetic disease that makes secretions thick and sticky.","u":"diseases.html#cf","k":"CF disease condition one pager signs abg cxr x-ray treatment obs Chronic productive cough, recurrent infections (Staph aureus early, Pseudomonas later) Clubbing, nasal polyps, salty skin Poor growth, greasy stools (pancreatic insufficiency), meconium ileus in newborns Hyperinflation, bronchiectasis, upper-lobe-predominant changes. Crackles, rhonchi, wheezes. Sweat chloride ≥ 60 mmol/L confirms CF.","w":4},{"g":"Disease","t":"Pulmonary fibrosis","s":"Interstitial lung disease · IPF · Scarred, stiff lungs that don’t transfer oxygen well.","u":"diseases.html#ild","k":"Interstitial lung disease · IPF disease condition one pager signs abg cxr x-ray treatment rest Slowly worsening exertional dyspnea, dry cough Rapid, shallow breathing Clubbing; desaturates with exercise Reticular (net-like) opacities, small lung volumes; honeycombing at the bases on high-resolution CT. Fine, late-inspiratory ‘Velcro’ crackles at the bases. Restrictive + low DLCO = a lung problem (fibrosis). Restrictive + normal DLCO = a chest wall or muscle problem.","w":4},{"g":"Disease","t":"Neuromuscular weakness","s":"Guillain-Barré · myasthenia gravis · Normal lungs, weak breathing muscles.","u":"diseases.html#nm","k":"Guillain-Barré · myasthenia gravis disease condition one pager signs abg cxr x-ray treatment rest Weak cough, rapid shallow breathing, paradoxical (inward) belly movement Trouble swallowing, can’t count to 20 in one breath MG: ptosis, double vision Often normal; atelectasis or aspiration pneumonia. Diminished at the bases; crackles with atelectasis. A falling vital capacity is the warning sign. The ABG turns bad last.","w":4},{"g":"Disease","t":"Pneumonia","s":"CAP · HAP · VAP · aspiration · Infection that fills alveoli with fluid and pus.","u":"diseases.html#pna","k":"CAP · HAP · VAP · aspiration disease condition one pager signs abg cxr x-ray treatment inf Fever, chills, productive cough (rust-colored with pneumococcus) Pleuritic chest pain, tachypnea, tachycardia Older adults may only be confused Consolidation (lobar or patchy) with air bronchograms; sometimes an effusion. Bronchial breath sounds and crackles over the area; dull to percussion; ↑ tactile fremitus; egophony (E → A). Consolidation = bronchial breath sounds + dull percussion + ↑ fremitus.","w":4},{"g":"Disease","t":"Tuberculosis","s":"TB · Airborne bacterial infection that can be latent or active.","u":"diseases.html#tb","k":"TB disease condition one pager signs abg cxr x-ray treatment inf Cough > 3 weeks, hemoptysis Night sweats, fever, weight loss, fatigue Upper-lobe infiltrates and cavities; a calcified Ghon complex from old infection. Crackles over the affected area; sometimes bronchial sounds or none. Airborne = N95 and a negative-pressure room. A surgical mask goes on the patient, not on you.","w":4},{"g":"Disease","t":"ARDS","s":"Acute respiratory distress syndrome · Leaky, stiff lungs with oxygen levels that won’t come up.","u":"diseases.html#ards","k":"Acute respiratory distress syndrome disease condition one pager signs abg cxr x-ray treatment edema Severe dyspnea, tachypnea Hypoxemia that doesn’t improve much with more O₂ (shunt) Bilateral, patchy-to-white infiltrates with air bronchograms; normal heart size. Crackles, sometimes fewer than you’d expect from the film. Refractory hypoxemia + bilateral infiltrates + no heart failure = ARDS.","w":4},{"g":"Disease","t":"Cardiogenic pulmonary edema","s":"CHF · left heart failure · Fluid backs up into the lungs because the left heart can’t keep up.","u":"diseases.html#chf","k":"CHF · left heart failure disease condition one pager signs abg cxr x-ray treatment edema Orthopnea, paroxysmal nocturnal dyspnea Pink, frothy sputum JVD, ankle edema, S3, anxiety, sweating, tachycardia Big heart (cardiothoracic ratio > 50%), perihilar ‘bat-wing’ infiltrates, Kerley B lines, upper-lobe vessels (cephalization), blunted costophrenic angles. Crackles at the bases that climb as it worsens; sometimes wheezes (‘cardiac asthma’). Big heart + bat wings + Kerley B lines = cardiac. Normal heart + bilateral infiltrates = think ARDS.","w":4},{"g":"Disease","t":"Atelectasis","s":"Collapsed alveoli, most often after surgery.","u":"diseases.html#atel","k":" disease condition one pager signs abg cxr x-ray treatment edema Tachypnea, low-grade fever, ↓ SpO₂ Often within 1–3 days of surgery Denser area, raised hemidiaphragm, crowded ribs, and the trachea or mediastinum shifted toward the collapse. Fine, late-inspiratory crackles or diminished sounds; bronchial sounds if the airway is open. Atelectasis pulls things toward it. Effusions and pneumothoraces push things away.","w":4},{"g":"Disease","t":"Pulmonary embolism","s":"PE · A clot blocks blood flow to part of the lung.","u":"diseases.html#pe","k":"PE disease condition one pager signs abg cxr x-ray treatment vasc Sudden dyspnea, tachypnea, tachycardia, pleuritic chest pain, anxiety Sometimes hemoptysis or a swollen leg Massive PE: hypotension, JVD, syncope Often normal. Hypoxemia with a clear CXR is the clue. Often clear; sometimes a pleural friction rub. Sudden dyspnea + tachycardia + a clear chest film = think PE.","w":4},{"g":"Disease","t":"Pneumothorax","s":"Air in the pleural space collapses the lung.","u":"diseases.html#ptx","k":" disease condition one pager signs abg cxr x-ray treatment pleural Sudden, sharp pleuritic pain and dyspnea Tension: trachea shifted away, hypotension, JVD On the vent: sudden ↑ PIP and plateau, ↓ SpO₂, ↓ BP A visible pleural line with no lung markings beyond it. Tension: mediastinal shift away, flat diaphragm. Supine films: deep sulcus sign. Absent or diminished breath sounds; hyperresonant percussion; ↓ fremitus. Hyperresonant + absent sounds + shift away = tension pneumothorax. Don’t wait for the X-ray.","w":4},{"g":"Disease","t":"Pleural effusion","s":"Empyema · hemothorax · Fluid in the pleural space.","u":"diseases.html#eff","k":"Empyema · hemothorax disease condition one pager signs abg cxr x-ray treatment pleural Dyspnea, pleuritic pain Large: trachea shifted away Blunted costophrenic angle with a meniscus; a lateral decubitus film shows free fluid layering. Large: shift away. Dull or flat percussion, ↓ fremitus, ↓ or absent sounds over the fluid; bronchial sounds or egophony at the top edge. Effusion = dull. Pneumothorax = hyperresonant. Both have diminished sounds.","w":4},{"g":"Disease","t":"Obstructive sleep apnea","s":"OSA · The upper airway collapses again and again during sleep.","u":"diseases.html#osa","k":"OSA disease condition one pager signs abg cxr x-ray treatment sleep Loud snoring, witnessed apneas, gasping Daytime sleepiness, morning headaches High blood pressure; STOP-BANG screening Usually normal. Usually normal. CPAP works as a pneumatic splint that holds the throat open.","w":4},{"g":"Disease","t":"Croup","s":"Laryngotracheobronchitis · Viral swelling below the vocal cords with a barking cough.","u":"diseases.html#croup","k":"Laryngotracheobronchitis disease condition one pager signs abg cxr x-ray treatment peds Barking, seal-like cough, hoarseness Inspiratory stridor; low-grade fever Child looks okay between coughs AP neck film: ‘steeple sign’ (narrowing below the cords). Inspiratory stridor over the neck. Croup: barking cough, gradual, steeple sign. Epiglottitis: drooling, sudden, thumb sign.","w":4},{"g":"Disease","t":"Epiglottitis","s":"Bacterial swelling of the epiglottis: an airway emergency.","u":"diseases.html#epi","k":" disease condition one pager signs abg cxr x-ray treatment peds Sudden high fever, toxic appearance Drooling, trouble swallowing, muffled ‘hot potato’ voice Sitting up, leaning forward (tripod); soft stridor; no barky cough Lateral neck film: ‘thumb sign’ (swollen epiglottis). Never delay the airway for imaging. Soft inspiratory stridor. Drooling + tripod + muffled voice = protect the airway first.","w":4},{"g":"Disease","t":"Bronchiolitis","s":"RSV · Viral infection of the small airways in infants.","u":"diseases.html#bronchiolitis","k":"RSV disease condition one pager signs abg cxr x-ray treatment peds Starts as a runny nose, then cough and fast breathing Wheezes and crackles, retractions, nasal flaring, poor feeding Apnea in young infants and preemies Not needed routinely; hyperinflation, patchy atelectasis. Diffuse wheezes and fine crackles. Most care is supportive: suction, O₂, fluids.","w":4},{"g":"Disease","t":"Neonatal RDS","s":"Hyaline membrane disease · Premature lungs without enough surfactant.","u":"diseases.html#rds","k":"Hyaline membrane disease disease condition one pager signs abg cxr x-ray treatment peds Within minutes to hours of birth: grunting, nasal flaring, retractions RR > 60, cyanosis Ground-glass (reticulogranular) pattern, air bronchograms, low lung volumes; ‘white-out’ if severe. Diminished breath sounds, fine crackles. Grunting = auto-PEEP from a partly closed glottis, holding the alveoli open.","w":4},{"g":"Airway clearance","t":"Incentive spirometry","s":"Start at 2 × VT · slow breath in over 5–15 s, 2–3 s pause","u":"airway.html#is","k":"is incentive spirometer sustained maximal inspiration smi atelectasis post-op lung expansion","w":3},{"g":"Airway clearance","t":"IPPB","s":"Can’t do IS (VC < 10 mL/kg, IC < ⅓ predicted) · never with untreated tension pneumothorax","u":"airway.html#ippb","k":"intermittent positive pressure breathing bird lung expansion","w":3},{"g":"Airway clearance","t":"CPAP / EPAP for lung expansion","s":"Raises FRC · doesn’t add tidal volume","u":"airway.html#pap","k":"cpap epap positive airway pressure lung expansion atelectasis","w":3},{"g":"Airway clearance","t":"Huff cough (FET)","s":"Forced expiration with an open glottis · COPD","u":"airway.html#huff","k":"huff huffing forced expiration technique fet cough","w":3},{"g":"Airway clearance","t":"Active cycle of breathing (ACBT)","s":"Breathing control → thoracic expansion → huff","u":"airway.html#acbt","k":"acbt active cycle breathing","w":3},{"g":"Airway clearance","t":"Autogenic drainage","s":"Unstick, collect, evacuate","u":"airway.html#ad","k":"autogenic drainage","w":3},{"g":"Airway clearance","t":"PEP therapy","s":"10–20 cmH₂O on exhale · I:E 1:3–1:4","u":"airway.html#pep","k":"pep positive expiratory pressure mask airway clearance","w":3},{"g":"Airway clearance","t":"Flutter & Acapella (oscillating PEP)","s":"Flutter needs sitting up · Acapella works in any position","u":"airway.html#opep","k":"opep oscillating pep flutter valve acapella aerobika","w":3},{"g":"Airway clearance","t":"The vest (HFCWO)","s":"High-frequency chest wall oscillation · CF","u":"airway.html#vest","k":"vest hfcwo high frequency chest wall oscillation smartvest","w":3},{"g":"Airway clearance","t":"IPV","s":"Intrapulmonary percussive ventilation","u":"airway.html#ipv","k":"ipv intrapulmonary percussive ventilation percussionator","w":3},{"g":"Airway clearance","t":"Cough assist (MI-E)","s":"About +40 / −40 cmH₂O · weak cough, PCF < 270 L/min","u":"airway.html#mie","k":"mie mechanical insufflation exsufflation cough assist cofflator neuromuscular","w":3},{"g":"Airway clearance","t":"Suctioning","s":"Adults −100 to −120 mmHg · ≤ 15 s per pass","u":"airway.html#suction","k":"suction suctioning pressure catheter","w":3},{"g":"Airway clearance","t":"Postural drainage positions","s":"Every lobe and segment · flat, foot up 12 in or 18 in","u":"airway.html#drainage","k":"postural drainage chest physiotherapy cpt percussion vibration trendelenburg positions lobe segment","w":3},{"g":"Airway clearance","t":"Airway clearance contraindications","s":"Positioning, percussion, IPPB, PEP, MI-E","u":"airway.html#contra","k":"contraindications hazards airway clearance","w":3},{"g":"Airway clearance","t":"CPT complications: what to do","s":"Hypoxemia, hemorrhage, vomiting, bronchospasm and more · monitoring","u":"airway.html#monitor","k":"chest physiotherapy cpt complications hypoxemia hemorrhage vomiting aspiration dysrhythmia monitor sputum outcome","w":3},{"g":"Airway clearance","t":"Cough phases","s":"Irritation, inspiration, compression, expulsion · what impairs each","u":"airway.html#clearance","k":"cough reflex phases irritation inspiration compression expulsion","w":3},{"g":"Practice","t":"Mock exam","s":"Timed, TMC-style · 25, 50, 80 or 160 questions","u":"mock-exam.html","k":"mock exam tmc nbrc board practice test timed crt rrt","w":5},{"g":"Gas cylinder","t":"Oxygen","s":"Green (international: white) · pin index 2–5","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Medical air","s":"Yellow · pin index 1–5","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Heliox","s":"Brown & green · ×1.8 (80/20), ×1.6 (70/30)","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Helium","s":"Brown · never given alone","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Carbon dioxide","s":"Gray · analyzer calibration","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Carbogen (CO₂/O₂)","s":"Gray & green","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Nitrous oxide","s":"Light blue · pin index 3–5","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Nitrogen","s":"Black · pin index 1–4","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Cyclopropane","s":"Orange · pin index 3–6","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"Ethylene","s":"Red · pin index 1–3","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"PISS","s":"Pin Index Safety System · small cylinders (E and smaller)","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"ASSS","s":"American Standard Safety System · large cylinders","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Gas cylinder","t":"DISS","s":"Diameter Index Safety System · low-pressure connections","u":"gas.html#gases","k":"gas cylinder tank color code medical gas pin index","w":1},{"g":"Drug","t":"Albuterol","s":"Proventil HFA, Ventolin HFA, ProAir HFA / RespiClick, AccuNeb · SABA (short-acting β2 agonist)","u":"meds.html?q=Albuterol#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) Nebulizer pMDI DPI drug medication med  Rapid, short-acting bronchodilation Rescue for acute bronchospasm: asthma, COPD, EIB (2 puffs 15–30 min before exercise) Also shifts K⁺ into cells (used for hyperkalemia) Tachycardia, palpitations Tremor, nervousness, headache Hypokalemia, hyperglycemia Transient ↓ PaO₂ (V/Q mismatch) Paradoxical bronchospasm The go-to rescue inhaler and the most tested drug on the TMC Assess breath sounds, HR, and peak flow before and after Racemic mixture: R-isomer is active, S-isomer is not","w":2},{"g":"Drug","t":"Levalbuterol","s":"Xopenex, Xopenex HFA · SABA (R-isomer of albuterol)","u":"meds.html?q=Levalbuterol#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) Nebulizer pMDI drug medication med  Same as albuterol: rapid, short-acting bronchodilation Rescue for asthma / COPD bronchospasm Same class effects as albuterol, possibly less tachycardia and tremor Exam pick when a patient has tachycardia or palpitations on albuterol Only the active (R) isomer, so a lower dose gives similar effect","w":2},{"g":"Drug","t":"Racemic Epinephrine","s":"S2, AsthmaNefrin (racepinephrine) · Adrenergic (α + β agonist)","u":"meds.html?q=Racemic%20Epinephrine#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) Nebulizer drug medication med  Decongests the upper airway by shrinking mucosal edema, with some bronchodilation Post-extubation stridor, croup (laryngotracheobronchitis), upper airway edema Tachycardia, HTN, arrhythmias Tremor, anxiety, headache Rebound mucosal edema Know the reason: the α effect decongests the upper airway Board answer for post-extubation stridor alongside cool mist and possibly steroids","w":2},{"g":"Drug","t":"Salmeterol","s":"Serevent Diskus · LABA (long-acting β2 agonist)","u":"meds.html?q=Salmeterol#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) DPI drug medication med  Maintenance bronchodilation (12 hr) Asthma maintenance (with ICS) and COPD maintenance Prevention of EIB Headache, tremor, tachycardia, palpitations Throat irritation, cough Slow onset is why it is never a rescue drug Diskus: do not exhale into device; keep level and dry","w":2},{"g":"Drug","t":"Formoterol fumarate","s":"Perforomist (neb); Foradil Aerolizer (discontinued) · LABA","u":"meds.html?q=Formoterol%20fumarate#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) Nebulizer DPI drug medication med  Fast-onset, long-acting bronchodilation COPD maintenance (Perforomist) Tremor, tachycardia, headache, nausea Hypokalemia, hyperglycemia Fast onset LABA: key difference from salmeterol Foradil capsules are punctured in the device, never swallowed","w":2},{"g":"Drug","t":"Arformoterol","s":"Brovana · LABA (R,R-isomer of formoterol)","u":"meds.html?q=Arformoterol#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) Nebulizer drug medication med  Long-acting bronchodilation, 12 hr COPD maintenance (chronic bronchitis, emphysema) Pain, chest pain, back pain, diarrhea, leg cramps Tachycardia, tremor, nervousness Single-isomer version of formoterol, similar to levalbuterol vs albuterol A nebulized LABA option for COPD patients who can't use a DPI","w":2},{"g":"Drug","t":"Indacaterol","s":"Arcapta Neohaler · Ultra-LABA (24-hr β2 agonist)","u":"meds.html?q=Indacaterol#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) DPI drug medication med  Once-daily bronchodilation COPD maintenance Cough right after inhalation (common) Nasopharyngitis, headache, nausea Tachycardia, tremor Know it as the once-daily ultra-LABA US brand has been discontinued but it still appears in texts and exam prep","w":2},{"g":"Drug","t":"Olodaterol","s":"Striverdi Respimat · Ultra-LABA (24-hr)","u":"meds.html?q=Olodaterol#table","k":"Sympathomimetic (Adrenergic / Beta Agonist) SMI (Respimat) drug medication med  24-hr bronchodilation COPD maintenance Nasopharyngitis, URI, cough Back pain, dizziness Tachycardia, tremor Respimat is a soft mist inhaler: slow, long-lasting mist, no propellant Pairs with tiotropium in Stiolto Respimat","w":2},{"g":"Drug","t":"Ipratropium bromide","s":"Atrovent HFA · SAMA (short-acting muscarinic antagonist)","u":"meds.html?q=Ipratropium%20bromide#table","k":"Parasympatholytic (Anticholinergic) Nebulizer pMDI drug medication med  Short-acting bronchodilation COPD maintenance Added to SABA in acute asthma in the ED Can ↓ secretions; nasal form for rhinorrhea Dry mouth, cough, headache Blurred vision / pupil dilation if mist reaches eyes Urinary retention, constipation Quaternary ammonium compound: poorly absorbed, so fewer systemic effects than atropine Slower onset than albuterol: not first-line rescue alone","w":2},{"g":"Drug","t":"Tiotropium bromide","s":"Spiriva HandiHaler, Spiriva Respimat · LAMA (long-acting muscarinic antagonist)","u":"meds.html?q=Tiotropium%20bromide#table","k":"Parasympatholytic (Anticholinergic) DPI SMI (Respimat) drug medication med  24-hr bronchodilation COPD maintenance; ↓ exacerbations Respimat 1.25 mcg: add-on maintenance for asthma (≥6 yrs) Dry mouth (most common), constipation URI, sinusitis, pharyngitis Urinary retention, tachycardia, blurred vision The classic once-daily COPD maintenance drug HandiHaler: inhale twice from each capsule to empty it","w":2},{"g":"Drug","t":"Glycopyrrolate","s":"Lonhala Magnair (neb), Seebri Neohaler (DPI), Robinul (IV) · LAMA","u":"meds.html?q=Glycopyrrolate#table","k":"Parasympatholytic (Anticholinergic) Nebulizer DPI Injection drug medication med  Maintenance bronchodilation in COPD IV/IM: dries oral and airway secretions (pre-op, end of life, drooling) Dry mouth, UTI, cough, sinusitis Urinary retention, blurred vision, tachycardia Quaternary amine: doesn't cross the blood-brain barrier Appears in Bevespi and Breztri combos","w":2},{"g":"Drug","t":"Umeclidinium bromide","s":"Incruse Ellipta · LAMA","u":"meds.html?q=Umeclidinium%20bromide#table","k":"Parasympatholytic (Anticholinergic) DPI drug medication med  24-hr bronchodilation COPD maintenance Nasopharyngitis, URI, cough Arthralgia, tachycardia Dry mouth, urinary retention Ellipta: slide the cover open to load; don't shake; don't block the vent Component of Anoro and Trelegy Ellipta","w":2},{"g":"Drug","t":"Aclidinium bromide","s":"Tudorza Pressair (Eklira Genuair outside the US) · LAMA","u":"meds.html?q=Aclidinium%20bromide#table","k":"Parasympatholytic (Anticholinergic) DPI drug medication med  Long-acting bronchodilation COPD maintenance (chronic bronchitis, emphysema) Headache, nasopharyngitis, cough Diarrhea Dry mouth, urinary retention, blurred vision (less common) The twice-daily LAMA (tiotropium and umeclidinium are once daily) Rapidly broken down in the blood, so few systemic anticholinergic effects Pressair: press and release the button; the window turns green when ready and red after a correct inhalation Combined with formoterol in Duaklir Pressair (COPD)","w":2},{"g":"Drug","t":"Ipratropium bromide + Albuterol","s":"DuoNeb (neb), Combivent Respimat · SAMA + SABA","u":"meds.html?q=Ipratropium%20bromide%20%2B%20Albuterol#table","k":"Combinations Nebulizer SMI (Respimat) drug medication med  Additive bronchodilation from two mechanisms COPD with bronchospasm needing a second bronchodilator Combined: tachycardia, tremor, nervousness, dry mouth, headache, cough DuoNeb is the classic 'give ipratropium and albuterol together' answer Combines the fast onset of albuterol with the longer action of ipratropium","w":2},{"g":"Drug","t":"Umeclidinium + Vilanterol","s":"Anoro Ellipta · LAMA + LABA","u":"meds.html?q=Umeclidinium%20%2B%20Vilanterol#table","k":"Combinations DPI drug medication med  24-hr dual bronchodilation COPD maintenance Pharyngitis, sinusitis, URI Constipation, diarrhea, pain in extremities Tachycardia, urinary retention Dual bronchodilator, no steroid Adding fluticasone furoate makes Trelegy (triple therapy)","w":2},{"g":"Drug","t":"Mometasone + Formoterol","s":"Dulera · ICS + LABA","u":"meds.html?q=Mometasone%20%2B%20Formoterol#table","k":"Combinations pMDI drug medication med  Anti-inflammatory control plus 12-hr bronchodilation Asthma maintenance (≥5 yrs) Oral thrush, dysphonia Nasopharyngitis, sinusitis, headache Asthma-labeled combo; not approved for COPD in the US Use with a spacer to ↓ oral deposition","w":2},{"g":"Drug","t":"Fluticasone propionate + Salmeterol","s":"Advair Diskus, Advair HFA, Wixela Inhub (generic) · ICS + LABA","u":"meds.html?q=Fluticasone%20propionate%20%2B%20Salmeterol#table","k":"Combinations DPI pMDI drug medication med advaire advar Asthma maintenance COPD maintenance and ↓ exacerbations (250/50) Oral candidiasis (thrush), hoarseness URI, headache ↑ pneumonia risk in COPD The classic ICS/LABA board answer Salmeterol's slow onset means it never replaces albuterol for rescue","w":2},{"g":"Drug","t":"Budesonide + Formoterol","s":"Symbicort, Breyna (generic) · ICS + LABA","u":"meds.html?q=Budesonide%20%2B%20Formoterol#table","k":"Combinations pMDI drug medication med simbicort symbacort Asthma maintenance (≥6 yrs) COPD maintenance Oral thrush, dysphonia Nasopharyngitis, headache, URI ↑ pneumonia risk in COPD Formoterol's fast onset allows single maintenance-and-reliever therapy (SMART) in asthma Know it as the ICS/LABA combo that can double as reliever","w":2},{"g":"Drug","t":"Fluticasone furoate + Vilanterol","s":"Breo Ellipta · ICS + LABA","u":"meds.html?q=Fluticasone%20furoate%20%2B%20Vilanterol#table","k":"Combinations DPI drug medication med breo brio elipta ellipta once daily Once-daily anti-inflammatory control plus 24-hr bronchodilation COPD maintenance and ↓ exacerbations Asthma maintenance (≥5 yrs) Oral thrush, hoarseness (dysphonia) Nasopharyngitis, URI, headache ↑ pneumonia risk in COPD High doses: adrenal suppression, bone loss, cataracts/glaucoma Ellipta: slide the cover open until it clicks; don't shake; breathe out away from it, then one long, steady, deep breath; hold 3–4 sec; don't block the vent The once-daily ICS/LABA (Advair, Symbicort and Dulera are BID) Add umeclidinium and it becomes Trelegy Ellipta (triple therapy)","w":2},{"g":"Drug","t":"Tiotropium + Olodaterol","s":"Stiolto Respimat · LAMA + LABA","u":"meds.html?q=Tiotropium%20%2B%20Olodaterol#table","k":"Combinations SMI (Respimat) drug medication med  24-hr dual bronchodilation COPD maintenance Nasopharyngitis, cough, back pain Dry mouth, constipation Urinary retention, tachycardia, blurred vision Spiriva + Striverdi in one Respimat Respimat: prime before first use; turn the base, open the cap, press the button while breathing in slowly and deeply","w":2},{"g":"Drug","t":"Glycopyrrolate + Formoterol fumarate","s":"Bevespi Aerosphere · LAMA + LABA","u":"meds.html?q=Glycopyrrolate%20%2B%20Formoterol%20fumarate#table","k":"Combinations pMDI drug medication med  12-hr dual bronchodilation COPD maintenance URI, cough Urinary tract infection Dry mouth, urinary retention, tachycardia The LAMA/LABA in a pMDI (Anoro is a DPI, Stiolto a Respimat) BID, unlike once-daily Anoro and Stiolto","w":2},{"g":"Drug","t":"Budesonide + Glycopyrrolate + Formoterol fumarate","s":"Breztri Aerosphere · ICS + LAMA + LABA (triple therapy)","u":"meds.html?q=Budesonide%20%2B%20Glycopyrrolate%20%2B%20Formoterol%20fumarate#table","k":"Combinations pMDI drug medication med  Triple therapy: anti-inflammatory plus dual bronchodilation COPD maintenance; ↓ exacerbations URI, pneumonia Oral thrush, dysphonia Back pain, muscle spasms, urinary tract infection Symbicort's two drugs + glycopyrrolate, taken BID Triple therapy is for COPD that still has exacerbations on dual therapy","w":2},{"g":"Drug","t":"Fluticasone furoate + Umeclidinium + Vilanterol","s":"Trelegy Ellipta · ICS + LAMA + LABA (triple therapy)","u":"meds.html?q=Fluticasone%20furoate%20%2B%20Umeclidinium%20%2B%20Vilanterol#table","k":"Combinations DPI drug medication med  Once-daily triple therapy COPD maintenance; ↓ exacerbations Asthma maintenance in adults (≥18 yrs) URI, pneumonia, headache, back pain Oral thrush, hoarseness, taste changes Anticholinergic: dry mouth, urinary retention Tre = three: Breo + umeclidinium (or Anoro + fluticasone furoate) The only once-daily triple inhaler; Breztri is BID Ellipta: slide the cover open until it clicks; don't shake; don't block the vent","w":2},{"g":"Drug","t":"Theophylline","s":"Theo-24, Elixophyllin, Uniphyl; Aminophylline (IV salt) · Methylxanthine (PDE inhibitor)","u":"meds.html?q=Theophylline#table","k":"Phosphodiesterase Inhibitors Oral Injection drug medication med  Mild bronchodilation ↑ diaphragm contractility, CNS respiratory stimulation, mild diuresis Add-on for COPD or asthma not controlled on other therapy Nausea, vomiting, GI upset Headache, insomnia, restlessness Tachycardia, arrhythmias Seizures (toxicity) Boards test the therapeutic range and signs of toxicity Largely replaced by inhaled drugs","w":2},{"g":"Drug","t":"Caffeine citrate","s":"Cafcit · Methylxanthine","u":"meds.html?q=Caffeine%20citrate#table","k":"Phosphodiesterase Inhibitors Injection Oral drug medication med  Central respiratory stimulant Apnea of prematurity; aids weaning neonates off the ventilator Tachycardia, jitteriness, irritability Feeding intolerance, vomiting Watch for necrotizing enterocolitis (NEC) Preferred over theophylline in neonates: wider therapeutic range, once-daily dosing, fewer side effects Dose on the citrate: 2 mg citrate = 1 mg base","w":2},{"g":"Drug","t":"Roflumilast","s":"Daliresp · Selective PDE4 inhibitor (oral)","u":"meds.html?q=Roflumilast#table","k":"Phosphodiesterase Inhibitors Oral drug medication med  ↓ exacerbations in severe COPD with chronic bronchitis and a history of exacerbations Add-on to bronchodilators Diarrhea, nausea, ↓ appetite, weight loss Headache, back pain, insomnia Psychiatric: anxiety, depression, suicidal thoughts The oral COPD anti-inflammatory: PDE4, not a xanthine, no serum levels Board tip: severe COPD + chronic bronchitis + exacerbations → think roflumilast","w":2},{"g":"Drug","t":"Dupilumab","s":"Dupixent · Monoclonal antibody (anti-IL-4Rα; blocks IL-4 and IL-13)","u":"meds.html?q=Dupilumab#table","k":"Biologics Injection drug medication med  Add-on maintenance for moderate–severe eosinophilic asthma or oral-steroid-dependent asthma (≥6 yrs) Also COPD with eosinophilia, atopic dermatitis, nasal polyps Injection site reactions Conjunctivitis, keratitis Transient blood eosinophilia Oropharyngeal pain, hypersensitivity Targets type 2 (eosinophilic) inflammation Can be self-injected at home after training","w":2},{"g":"Drug","t":"Omalizumab","s":"Xolair · Monoclonal antibody (anti-IgE)","u":"meds.html?q=Omalizumab#table","k":"Biologics Injection drug medication med  Moderate–severe persistent allergic asthma (≥6 yrs) with positive skin test to a perennial allergen, poorly controlled on ICS Also chronic urticaria, nasal polyps, food allergy Injection site reactions URI, sinusitis, headache Arthralgia Binds free IgE so it can't trigger mast cells Dose table uses the pre-treatment IgE level and weight","w":2},{"g":"Drug","t":"Mepolizumab","s":"Nucala · Monoclonal antibody (anti-IL-5)","u":"meds.html?q=Mepolizumab#table","k":"Biologics Injection drug medication med  Add-on maintenance for severe eosinophilic asthma (≥6 yrs) Also COPD with an eosinophilic phenotype, EGPA, hypereosinophilic syndrome, nasal polyps Headache, injection site reactions Back pain, fatigue Herpes zoster has occurred (consider the shingles vaccine first) Anti-IL-5: picks off eosinophils (omalizumab = anti-IgE; dupilumab = anti-IL-4Rα) Check a blood eosinophil count to see who qualifies","w":2},{"g":"Drug","t":"Cromolyn sodium","s":"Intal (inhaler discontinued); generic neb; NasalCrom · Mast cell stabilizer (non-steroidal anti-inflammatory)","u":"meds.html?q=Cromolyn%20sodium#table","k":"Anti-asthmatic (Mast Cell Stabilizer) Nebulizer drug medication med  Prevents mast cell degranulation and mediator release Prophylaxis of mild persistent asthma, EIB, allergen-triggered asthma Cough, throat irritation, wheezing Unpleasant taste, nasal congestion Very safe: few side effects Can be mixed with albuterol in the same neb","w":2},{"g":"Drug","t":"Zafirlukast","s":"Accolate · Leukotriene receptor antagonist (LTRA)","u":"meds.html?q=Zafirlukast#table","k":"Leukotriene Modifiers Oral drug medication med  Blocks leukotriene receptors: ↓ bronchoconstriction, edema, mucus Long-term control of mild persistent asthma Headache, GI upset, infection Hepatotoxicity Food ↓ absorption, so take on an empty stomach Alternative to low-dose ICS","w":2},{"g":"Drug","t":"Montelukast","s":"Singulair · Leukotriene receptor antagonist (LTRA)","u":"meds.html?q=Montelukast#table","k":"Leukotriene Modifiers Oral drug medication med  Long-term control of asthma Prevention of EIB Allergic rhinitis Headache, abdominal pain, URI Agitation, sleep disturbance, depression Most-prescribed leukotriene drug; once daily with no food restriction Chewables contain phenylalanine (PKU caution)","w":2},{"g":"Drug","t":"Zileuton","s":"Zyflo, Zyflo CR · 5-lipoxygenase inhibitor","u":"meds.html?q=Zileuton#table","k":"Leukotriene Modifiers Oral drug medication med  Blocks leukotriene synthesis Long-term control of asthma Headache, dyspepsia, nausea Elevated liver enzymes (ALT) Different mechanism from the '-lukasts': stops leukotrienes from being made QID dosing hurts adherence","w":2},{"g":"Drug","t":"Tobramycin sulfate","s":"TOBI, Bethkis, Kitabis Pak, TOBI Podhaler · Aminoglycoside antibiotic","u":"meds.html?q=Tobramycin%20sulfate#table","k":"Anti-infectives Nebulizer DPI drug medication med  Kills gram-negative bacteria CF patients colonized with Pseudomonas aeruginosa Voice alteration, cough, bronchospasm Tinnitus, hearing loss (ototoxic) Nephrotoxicity CF sequence: bronchodilator → hypertonic saline → dornase → airway clearance → inhaled antibiotic → ICS Delivered with a PARI LC Plus jet nebulizer","w":2},{"g":"Drug","t":"Pentamidine isethionate","s":"NebuPent (inhaled), Pentam (IV) · Antiprotozoal / antifungal","u":"meds.html?q=Pentamidine%20isethionate#table","k":"Anti-infectives Nebulizer drug medication med  Prevention of Pneumocystis jirovecii pneumonia (PCP) in HIV and other immunocompromised patients Cough, bronchospasm, wheezing Metallic / bitter taste Conjunctivitis, fatigue, dizziness Pneumothorax (rare) Mix with sterile water only: saline makes it precipitate Delivered via Respirgard II nebulizer (one-way valves + expiratory filter)","w":2},{"g":"Drug","t":"Ribavirin","s":"Virazole · Antiviral","u":"meds.html?q=Ribavirin#table","k":"Anti-infectives Nebulizer (SPAG-2) drug medication med  Severe RSV lower respiratory infection in high-risk infants Worsening respiratory function, bronchospasm Conjunctivitis, rash Anemia (systemic) SPAG = small particle aerosol generator Rarely used now; RSV prevention (palivizumab, nirsevimab) is more common","w":2},{"g":"Drug","t":"Aztreonam lysine","s":"Cayston · Monobactam antibiotic","u":"meds.html?q=Aztreonam%20lysine#table","k":"Anti-infectives Nebulizer (Altera) drug medication med  Improves respiratory symptoms in CF patients (≥7 yrs) with Pseudomonas aeruginosa Cough, nasal congestion, wheezing Pharyngolaryngeal pain, fever Bronchospasm, chest discomfort Only given with the Altera vibrating-mesh nebulizer Often alternated month-to-month with tobramycin","w":2},{"g":"Drug","t":"Colistin (colistimethate sodium)","s":"Coly-Mycin M · Polymyxin antibiotic","u":"meds.html?q=Colistin%20%28colistimethate%20sodium%29#table","k":"Anti-infectives Nebulizer Injection drug medication med  Multidrug-resistant gram-negative infections: Pseudomonas, Acinetobacter, Klebsiella CF Pseudomonas; ventilator-associated pneumonia Bronchospasm, chest tightness, cough Nephrotoxicity, neurotoxicity (systemic) Paresthesias, neuromuscular blockade A 'last-resort' antibiotic for resistant organisms Neuromuscular blockade risk: watch ventilation","w":2},{"g":"Drug","t":"Nafcillin","s":"Nallpen (generic nafcillin) · Penicillinase-resistant penicillin","u":"meds.html?q=Nafcillin#table","k":"Anti-infectives Injection drug medication med  Infections from methicillin-sensitive Staphylococcus aureus (MSSA): staph pneumonia, endocarditis, osteomyelitis, bacteremia Hypersensitivity / anaphylaxis Phlebitis; tissue necrosis if extravasated Neutropenia, hypokalemia, interstitial nephritis Systemic only; not inhaled Know it as the anti-staph penicillin","w":2},{"g":"Drug","t":"Gentamicin","s":"Garamycin (generic gentamicin) · Aminoglycoside antibiotic","u":"meds.html?q=Gentamicin#table","k":"Anti-infectives Injection drug medication med  Serious gram-negative infections (Pseudomonas, E. coli, Klebsiella) Synergy with β-lactams for gram-positive infections Ototoxicity (hearing loss, vertigo) Nephrotoxicity Neuromuscular blockade Same class and toxicities as tobramycin 'Mycin' spelling is used for Streptomyces-derived drugs; gentamicin comes from Micromonospora","w":2},{"g":"Drug","t":"Acetylcysteine","s":"Mucomyst; Acetadote (IV) · Mucolytic","u":"meds.html?q=Acetylcysteine#table","k":"Mucolytics Nebulizer Direct instillation drug medication med  Breaks disulfide bonds in mucoproteins → thinner mucus Thick, tenacious secretions (bronchitis, pneumonia, atelectasis from mucus plugs) Antidote for acetaminophen overdose (oral/IV) Bronchospasm (most important) Rotten-egg (sulfur) odor, nausea, vomiting Stomatitis, rhinorrhea, hemoptysis Light purple color change in the vial is harmless Reacts with rubber and some metals","w":2},{"g":"Drug","t":"Dornase alfa","s":"Pulmozyme · Mucolytic enzyme (recombinant DNase)","u":"meds.html?q=Dornase%20alfa#table","k":"Mucolytics Nebulizer drug medication med  Cleaves extracellular DNA from dead neutrophils in purulent sputum Cystic fibrosis: improves lung function and ↓ infections Voice alteration, pharyngitis, laryngitis Chest pain, rash, conjunctivitis CF-specific; not shown to help non-CF bronchiectasis Given before airway clearance so it has time to work","w":2},{"g":"Drug","t":"Flunisolide","s":"AeroBid, Aerospan (discontinued); nasal spray · Inhaled corticosteroid (ICS)","u":"meds.html?q=Flunisolide#table","k":"Corticosteroids pMDI drug medication med  Long-term control of persistent asthma (anti-inflammatory) Oral thrush, dysphonia, cough Unpleasant taste, headache Aerospan had a built-in spacer Oral inhalers discontinued in US; still appears in study guides","w":2},{"g":"Drug","t":"Triamcinolone acetonide","s":"Azmacort (discontinued); Kenalog (inj.), Nasacort (nasal) · Corticosteroid (ICS / systemic)","u":"meds.html?q=Triamcinolone%20acetonide#table","k":"Corticosteroids pMDI Injection drug medication med  Long-term control of persistent asthma Injectable: anti-inflammatory for many conditions Oral thrush, dysphonia, cough Systemic: hyperglycemia, fluid retention Azmacort had a built-in spacer tube Inhaled form discontinued in US (2010)","w":2},{"g":"Drug","t":"Budesonide","s":"Pulmicort Respules, Pulmicort Flexhaler · Inhaled corticosteroid (ICS)","u":"meds.html?q=Budesonide#table","k":"Corticosteroids Nebulizer DPI drug medication med pulmocort pulmacort pulmicort respules budesonid Long-term control of persistent asthma Respules are used for young children who can't use inhalers Oral thrush, dysphonia, cough Respiratory infection, otitis media (peds) The only nebulized ICS in the US Mask treatments leave steroid on the face; wipe it off","w":2},{"g":"Drug","t":"Beclomethasone dipropionate","s":"QVAR RediHaler · Inhaled corticosteroid (ICS)","u":"meds.html?q=Beclomethasone%20dipropionate#table","k":"Corticosteroids pMDI (breath-actuated) drug medication med  Long-term control of persistent asthma (≥4 yrs) Oral thrush, dysphonia Headache, URI, pharyngitis RediHaler is breath-actuated: do NOT shake and do NOT use with a spacer HFA propellant gives fine particles with good lung deposition","w":2},{"g":"Drug","t":"Fluticasone","s":"Flovent HFA / Diskus (propionate); Arnuity Ellipta (furoate); ArmonAir Digihaler · Inhaled corticosteroid (ICS)","u":"meds.html?q=Fluticasone#table","k":"Corticosteroids pMDI DPI drug medication med  Long-term control of persistent asthma Anti-inflammatory; ↓ airway hyperresponsiveness Oral thrush, dysphonia, cough Headache, URI Pneumonia risk in COPD One of the most potent ICSs Flovent HFA brand ended in 2024; authorized generics remain","w":2},{"g":"Drug","t":"Ciclesonide","s":"Alvesco (inhaler); Omnaris, Zetonna (nasal) · Inhaled corticosteroid (ICS)","u":"meds.html?q=Ciclesonide#table","k":"Corticosteroids pMDI drug medication med  Asthma maintenance (≥12 yrs) Less oral thrush and hoarseness than most ICS, since little active drug sits in the mouth Headache, nasopharyngitis, URI Oral thrush and dysphonia (less common than other ICS) The prodrug ICS: activated in the lungs Prime before first use or after it sits unused (see the package insert)","w":2},{"g":"Drug","t":"Mometasone furoate","s":"Asmanex Twisthaler, Asmanex HFA · Inhaled corticosteroid (ICS)","u":"meds.html?q=Mometasone%20furoate#table","k":"Corticosteroids DPI pMDI drug medication med  Asthma maintenance (Twisthaler ≥4 yrs; HFA ≥5 yrs) Oral thrush, dysphonia Headache, nasopharyngitis, sinusitis Twisthaler: hold it upright and twist the cap off to load a dose; the counter shows doses left The steroid half of Dulera","w":2},{"g":"Drug","t":"Methylprednisolone","s":"Solu-Medrol (IV), Medrol (oral), Depo-Medrol (IM) · Systemic corticosteroid","u":"meds.html?q=Methylprednisolone#table","k":"Corticosteroids Injection Oral drug medication med  Powerful anti-inflammatory Acute asthma and COPD exacerbations, status asthmaticus, airway edema Hyperglycemia, fluid retention, HTN Insomnia, mood changes, ↑ appetite Immunosuppression Onset takes 4–6 hr, so give early in the exacerbation IV and oral routes work equally well if the patient can swallow","w":2},{"g":"Drug","t":"Prednisone","s":"Deltasone (discontinued), Rayos; generic · Systemic corticosteroid","u":"meds.html?q=Prednisone#table","k":"Corticosteroids Oral drug medication med  Oral anti-inflammatory Asthma and COPD exacerbations; steroid-dependent severe asthma Same as methylprednisolone: hyperglycemia, fluid retention, mood changes, insomnia, immunosuppression Short bursts (≤ ~10 days) usually don't need a taper Prodrug converted to prednisolone in the liver","w":2},{"g":"Drug","t":"Normal saline solution","s":"0.9% NaCl (isotonic) · Diluent / bland aerosol","u":"meds.html?q=Normal%20saline%20solution#table","k":"Diluents / Bland Aerosol Nebulizer Direct instillation drug medication med  Dilutes medications for nebulization Humidifies and thins secretions Sputum induction (with hypertonic preferred) Minimal; rare bronchospasm Contamination risk with multi-dose containers Isotonic: matches body fluid, so the least irritating diluent Routine instillation before suctioning is no longer recommended","w":2},{"g":"Drug","t":"Hypertonic saline solution","s":"3%, 3.5%, 7% NaCl (Hyper-Sal, PulmoSal) · Bland aerosol / airway hydration","u":"meds.html?q=Hypertonic%20saline%20solution#table","k":"Diluents / Bland Aerosol Nebulizer drug medication med  Draws water into the airway surface liquid → better mucociliary clearance Sputum induction (TB, PCP, cytology) Airway clearance in CF Bronchospasm (asthma, COPD) Cough, throat irritation, salty taste Hypertonic = more than 0.9% salt Given before dornase and airway clearance in CF","w":2},{"g":"Drug","t":"Sterile water","s":"USP sterile water for inhalation · Bland aerosol / humidifier fluid","u":"meds.html?q=Sterile%20water#table","k":"Diluents / Bland Aerosol Nebulizer Humidifier drug medication med  Humidification for artificial airways, oxygen therapy, and bypassed upper airways Helps thin secretions Airway irritation and bronchospasm (hypotonic) Overhydration (especially infants) The required diluent when saline would precipitate a drug (pentamidine) Sterile = free of microorganisms","w":2},{"g":"Drug","t":"Distilled water","s":"(Not a drug product) · Humidifier fluid","u":"meds.html?q=Distilled%20water#table","k":"Diluents / Bland Aerosol Humidifier drug medication med  Mineral-free water that won't leave scale in equipment Home humidification Airway irritation if aerosolized Exam distinction: distilled = minerals removed; sterile = microorganisms removed Hospital equipment uses sterile water","w":2},{"g":"Mnemonic","t":"Sympathetic = fight or flight. Parasympathetic = rest and digest.","s":"The big picture","u":"meds.html#mem","k":"In a fight you need open airways and a fast heart, so sympathetic stimulation dilates the bronchi. At rest, the vagus nerve (parasympathetic) keeps the airways slightly constricted. memory aid","w":0},{"g":"Mnemonic","t":"Mimetic mimics. Lytic lyses (breaks).","s":"The big picture","u":"meds.html#mem","k":"Sympathomimetics copy fight-or-flight. Parasympatholytics block rest-and-digest. Two different roads to the same open airway. memory aid","w":0},{"g":"Mnemonic","t":"1 heart, 2 lungs","s":"The big picture","u":"meds.html#mem","k":"β1 receptors are mainly in the heart, β2 receptors mainly in the lungs. When a β2 agonist spills onto β1, the heart speeds up. memory aid","w":0},{"g":"Mnemonic","t":"cAMP = Airways open. cGMP = Gets tight.","s":"The big picture","u":"meds.html#mem","k":"β2 agonists raise cAMP and relax airway muscle; theophylline keeps cAMP from breaking down. Acetylcholine raises cGMP and tightens the airway, so anticholinergics block it. memory aid","w":0},{"g":"Mnemonic","t":"Slow or long-acting is never the rescue answer","s":"The big picture","u":"meds.html#mem","k":"Rescue (relievers): albuterol, levalbuterol, ipratropium, racemic epinephrine. Everything long-acting or preventive (LABAs, LAMAs, ICS, leukotriene drugs, cromolyn, biologics, theophylline) is a controller. memory aid","w":0},{"g":"Mnemonic","t":"-terol = β2 agonist","s":"Sympathomimetic","u":"meds.html#mem","k":"If the name ends in -terol, it opens the airway through β2 receptors: albuterol, levalbuterol, salmeterol, formoterol, arformoterol, indacaterol, olodaterol, vilanterol. memory aid Name clue","w":0},{"g":"Mnemonic","t":"Shaky, racy, low K","s":"Sympathomimetic","u":"meds.html#mem","k":"β-agonist side effects: tremor (shaky), tachycardia and palpitations (racy), hypokalemia (low K⁺). Blood sugar goes up too. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"20 beats? Stop the treat.","s":"Sympathomimetic","u":"meds.html#mem","k":"If heart rate rises more than 20 beats/min during a β-agonist treatment, stop and notify the physician. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Lev = Less","s":"Sympathomimetic","u":"meds.html#mem","k":"Levalbuterol is the pure R-isomer: a smaller dose and less tachycardia. It's the exam answer when albuterol makes the heart race. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"S is Slow, F is Fast","s":"Sympathomimetic","u":"meds.html#mem","k":"Salmeterol takes about 20 minutes to start working; formoterol starts in 1–3 minutes. Both last 12 hours. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"The 12-hour shift and the 24-hour shift","s":"Sympathomimetic","u":"meds.html#mem","k":"Twice daily (12 hr): salmeterol, formoterol, arformoterol. Once daily (24 hr): indacaterol, olodaterol, vilanterol. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"No LABA flies solo in asthma","s":"Sympathomimetic","u":"meds.html#mem","k":"A LABA without an inhaled steroid raises the risk of asthma death. In asthma, a LABA always comes with an ICS. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Racemic epi Reduces swelling","s":"Sympathomimetic","u":"meds.html#mem","k":"Its α1 effect shrinks swollen mucosa, which is why it's used for post-extubation stridor and croup. It wears off in 0.5–2 hours, so watch for rebound stridor. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"-tropium and -clidinium = anticholinergic","s":"Parasympatholytic","u":"meds.html#mem","k":"Ipratropium, tiotropium, aclidinium, umeclidinium. Glycopyrrolate is the one that breaks the pattern. memory aid Name clue","w":0},{"g":"Mnemonic","t":"Can't see, can't pee, can't spit, can't poop","s":"Parasympatholytic","u":"meds.html#mem","k":"Anticholinergic side effects: blurred vision and glaucoma risk, urinary retention, dry mouth, constipation. Narrow-angle glaucoma and BPH are the cautions. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Dry as a bone, red as a beet, blind as a bat, mad as a hatter, hot as a hare, full as a flask","s":"Parasympatholytic","u":"meds.html#mem","k":"Full anticholinergic toxicity (systemic atropine). Inhaled quaternary drugs like ipratropium rarely cause it because so little is absorbed. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Ipra = In and out. Tio = Twenty-four hours.","s":"Parasympatholytic","u":"meds.html#mem","k":"Ipratropium is short-acting (4–6 hr, given QID). Tiotropium lasts 24 hours and is given once daily. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Tio and Umec: once a day. Aclid and Glyco: twice a day.","s":"Parasympatholytic","u":"meds.html#mem","k":"Tiotropium and umeclidinium are the once-daily LAMAs. Aclidinium and inhaled glycopyrrolate are given BID. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Mist in the eyes = big pupils","s":"Parasympatholytic","u":"meds.html#mem","k":"Anticholinergic aerosol that reaches the eyes dilates the pupils and blurs vision. Use a mouthpiece, or shield the eyes when using a mask. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Read the two halves","s":"Combinations","u":"meds.html#mem","k":"Every combo is two classes. Use the name endings: fluticasone (-sone, ICS) + salmeterol (-terol, LABA); umeclidinium (-clidinium, LAMA) + vilanterol (-terol, LABA). memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Anoro = A-NO-roid","s":"Combinations","u":"meds.html#mem","k":"Anoro Ellipta has no steroid (LAMA + LABA), so it's for COPD only, never asthma. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Steroid + LABA = asthma OK. LAMA + LABA = COPD only.","s":"Combinations","u":"meds.html#mem","k":"Advair, Symbicort and Dulera contain an ICS, so they can be used in asthma. Combos without a steroid can't. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Symbicort can Save you","s":"Combinations","u":"meds.html#mem","k":"Its formoterol is fast, so budesonide/formoterol can be both the maintenance and the reliever inhaler (SMART). memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"DuoNeb = a duo of short-actings","s":"Combinations","u":"meds.html#mem","k":"0.5 mg ipratropium + 2.5 mg albuterol in 3 mL: a SAMA and a SABA in one nebulizer treatment. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Trelegy: Tre = three","s":"Combinations","u":"meds.html#mem","k":"Triple therapy: ICS + LAMA + LABA in one inhaler (fluticasone furoate, umeclidinium, vilanterol). memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Theophylline is a teen: 10 to 20","s":"Phosphodiesterase Inhibitors","u":"meds.html#mem","k":"The classic therapeutic range is 10–20 mcg/mL. Above 20 is toxic. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Toxicity climbs: gut, heart, brain","s":"Phosphodiesterase Inhibitors","u":"meds.html#mem","k":"Nausea and vomiting come first, then tachycardia and arrhythmias, then seizures. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Smoke burns it off","s":"Phosphodiesterase Inhibitors","u":"meds.html#mem","k":"Smoking lowers theophylline levels. A sick heart (CHF), a sick liver, ciprofloxacin, erythromycin and cimetidine push levels up. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Coffee for preemies","s":"Phosphodiesterase Inhibitors","u":"meds.html#mem","k":"Caffeine citrate treats apnea of prematurity: once-daily dosing and a wider safety range than theophylline. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"-mab = monoclonal antibody","s":"Biologics","u":"meds.html#mem","k":"Omalizumab and dupilumab are injected biologics for severe asthma. They are never rescue drugs. memory aid Name clue","w":0},{"g":"Mnemonic","t":"Omalizumab = Oh My, Allergies","s":"Biologics","u":"meds.html#mem","k":"Anti-IgE for allergic asthma. Its boxed warning is anaphylaxis, so watch the patient after each injection and make sure they carry epinephrine. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Dupilumab dupes two","s":"Biologics","u":"meds.html#mem","k":"It blocks the shared IL-4 receptor, shutting down both IL-4 and IL-13. Watch for conjunctivitis. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Cromolyn = Calm before the storm","s":"Anti-asthmatic","u":"meds.html#mem","k":"It stabilizes mast cells before exposure, so it only prevents symptoms. It does nothing in an acute attack and takes 2–4 weeks for full effect. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Crazy safe","s":"Anti-asthmatic","u":"meds.html#mem","k":"Cromolyn has very few side effects (mainly cough and throat irritation), which is why it was once a go-to for children. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"-lukast blocks the Leukotriene receptor","s":"Leukotriene Modifiers","u":"meds.html#mem","k":"Montelukast and zafirlukast block the receptor. Zileuton works one step earlier and stops leukotrienes from being made. memory aid Name clue","w":0},{"g":"Mnemonic","t":"Zileuton Zaps lipoxygenase and Zings the liver","s":"Leukotriene Modifiers","u":"meds.html#mem","k":"It inhibits 5-lipoxygenase and can raise liver enzymes, so check LFTs. It also raises theophylline levels. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"ZAFIR: Zero food, Avoid in liver disease, Fix the warfarin","s":"Leukotriene Modifiers","u":"meds.html#mem","k":"Take zafirlukast on an empty stomach. It's contraindicated in hepatic impairment and raises warfarin's effect. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Montelukast's 3 M's: Moon, Mood, Mild","s":"Leukotriene Modifiers","u":"meds.html#mem","k":"Dosed in the evening (moon), boxed warning for mood and behavior changes, used for mild persistent asthma and EIB. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Matching letters: P & P, R & R, A & A","s":"Anti-infectives","u":"meds.html#mem","k":"Pentamidine for PCP. Ribavirin for RSV. Aztreonam through the Altera nebulizer. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Mean GNATS caNNOT kill anaerobes","s":"Anti-infectives","u":"meds.html#mem","k":"Aminoglycosides: Gentamicin, Neomycin, Amikacin, Tobramycin, Streptomycin. Toxicities: Nephrotoxic, Neuromuscular blockade, Ototoxic, Teratogenic. They don't cover anaerobes. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"TOBI: 28 on, 28 off","s":"Anti-infectives","u":"meds.html#mem","k":"Inhaled tobramycin for CF Pseudomonas: 300 mg BID for 28 days, then 28 days off to limit resistance. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Pentamidine likes Pure water","s":"Anti-infectives","u":"meds.html#mem","k":"Mix it with sterile water only. Saline makes it precipitate. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Protect the caregiver","s":"Anti-infectives","u":"meds.html#mem","k":"Pentamidine and ribavirin need negative-pressure rooms or booths and PPE. Ribavirin is teratogenic, so pregnant staff and visitors stay out. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Naf for staph","s":"Anti-infectives","u":"meds.html#mem","k":"Nafcillin kills methicillin-sensitive Staph aureus (MSSA). It does not work on MRSA. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Mucomyst: Must have a bronchodilator. Smells like eggs.","s":"Mucolytics","u":"meds.html#mem","k":"Acetylcysteine can cause bronchospasm, so give a bronchodilator with it. The sulfur gives the rotten-egg smell. Have suction ready. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Dornase = DNA-ase","s":"Mucolytics","u":"meds.html#mem","k":"It chops up DNA from dead neutrophils in purulent CF sputum. Never mix it with other drugs in the nebulizer. memory aid Name clue","w":0},{"g":"Mnemonic","t":"Big Happy Dogs Chase After Squirrels","s":"Mucolytics","u":"meds.html#mem","k":"CF treatment order: memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"-sone, -nide, -olone = steroid","s":"Corticosteroids","u":"meds.html#mem","k":"Fluticasone, mometasone, beclomethasone, prednisone, budesonide, flunisolide, triamcinolone, methylprednisolone. memory aid Name clue","w":0},{"g":"Mnemonic","t":"The 3 S's of inhaled steroids: Slow, Spacer, Swish & Spit","s":"Corticosteroids","u":"meds.html#mem","k":"Days to weeks for full effect, so never rescue. A spacer and rinsing the mouth prevent thrush and a hoarse voice. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"STEROIDS: long-term systemic side effects","s":"Corticosteroids","u":"meds.html#mem","k":"Why long courses need a taper and close monitoring: memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"QVAR: no shake, no spacer","s":"Corticosteroids","u":"meds.html#mem","k":"The RediHaler is breath-actuated, so a spacer won't work and it doesn't need shaking. memory aid Rule of thumb","w":0},{"g":"Mnemonic","t":"Respules for really young","s":"Corticosteroids","u":"meds.html#mem","k":"Budesonide Respules are the only nebulized steroid in the US, used for children about 1–8 years old. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Hypo irritates, iso soothes, hyper induces","s":"Diluents / Bland Aerosol","u":"meds.html#mem","k":"Sterile water is hypotonic and can trigger bronchospasm. Normal saline is isotonic and gentle. Hypertonic saline draws water in and induces sputum. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"Sterile = no bugs. Distilled = no minerals.","s":"Diluents / Bland Aerosol","u":"meds.html#mem","k":"Only sterile water goes into hospital nebulizers and humidifiers. Distilled water is for home humidifier tanks. memory aid Mnemonic","w":0},{"g":"Mnemonic","t":"0.9 is the magic number","s":"Diluents / Bland Aerosol","u":"meds.html#mem","k":"0.9% NaCl is isotonic. Anything above it is hypertonic (3%, 7%); plain water is hypotonic. memory aid Rule of thumb","w":0},{"g":"Name clue","t":"-terol","s":"β2 agonist (bronchodilator): albuterol, salmeterol, formoterol, olodaterol, vilanterol","u":"meds.html#mem","k":"suffix ending name clue","w":1},{"g":"Name clue","t":"-tropium / -clidinium","s":"Anticholinergic (SAMA / LAMA): ipratropium, tiotropium, aclidinium, umeclidinium","u":"meds.html#mem","k":"suffix ending name clue","w":1},{"g":"Name clue","t":"-sone / -nide / -olone","s":"Corticosteroid: fluticasone, mometasone, budesonide, flunisolide, methylprednisolone","u":"meds.html#mem","k":"suffix ending name clue","w":1},{"g":"Name clue","t":"-lukast","s":"Leukotriene receptor blocker: montelukast, zafirlukast","u":"meds.html#mem","k":"suffix ending name clue","w":1},{"g":"Name clue","t":"-phylline","s":"Xanthine (PDE inhibitor): theophylline, aminophylline","u":"meds.html#mem","k":"suffix ending name clue","w":1},{"g":"Name clue","t":"-mab","s":"Monoclonal antibody (biologic): omalizumab, dupilumab","u":"meds.html#mem","k":"suffix ending name clue","w":1},{"g":"Name clue","t":"-mycin / -micin","s":"Aminoglycoside antibiotic: tobramycin, gentamicin","u":"meds.html#mem","k":"suffix ending name clue","w":1},{"g":"Name clue","t":"-cillin","s":"Penicillin antibiotic: nafcillin","u":"meds.html#mem","k":"suffix ending name clue","w":1}];</script>
+<script>
+/* Shared site nav: menus that close each other / on outside click / on Esc,
+   and the site-wide search (nav panel + any other .srch box on the page).
+   The search index (window.RTQ_INDEX) is generated by the build from the site's own data. */
+(function () {
+  "use strict";
+  var menus = [].slice.call(document.querySelectorAll(".site-nav details.menu"));
+  menus.forEach(function (m) {
+    m.addEventListener("toggle", function () {
+      if (!m.open) return;
+      menus.forEach(function (o) { if (o !== m) o.open = false; });
+      var inp = m.querySelector("input");
+      if (inp) setTimeout(function () { inp.focus(); }, 0);
+    });
+  });
+  document.addEventListener("click", function (e) {
+    menus.forEach(function (m) { if (m.open && !m.contains(e.target)) m.open = false; });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    menus.forEach(function (m) { if (m.open) { m.open = false; m.querySelector("summary").focus(); } });
+  });
+  /* "/" opens search from anywhere (except while typing) */
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target;
+    if (t.closest && t.closest("input,textarea,select,[contenteditable]")) return;
+    var sm = document.querySelector(".site-nav .search-menu");
+    if (sm) { e.preventDefault(); sm.open = true; }
+  });
+  /* close a menu when one of its links points at this same page */
+  menus.forEach(function (m) {
+    m.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("a");
+      if (a && a.pathname === location.pathname) m.open = false;
+    });
+  });
+
+  /* ---------- search ---------- */
+  var IDX = (window.RTQ_INDEX || []).map(function (x) {
+    x._t = norm(x.t); x._h = norm([x.t, x.s, x.k || "", x.g].join(" ")); return x;
+  });
+  function norm(s) {
+    return String(s).replace(/[’']/g, "").replace(/β/g, "beta ").replace(/α/g, "alpha ").replace(/<[^>]+>/g, " ")
+      .normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase()
+      .replace(/[^a-z0-9%.\s-]/g, " ").replace(/\s+/g, " ").trim();
+  }
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function find(q) {
+    var nq = norm(q); if (!nq) return [];
+    var toks = nq.split(" ");
+    var out = [];
+    IDX.forEach(function (x) {
+      for (var i = 0; i < toks.length; i++) if (x._h.indexOf(toks[i]) < 0) return;
+      var sc = x._t === nq ? 120 : x._t.indexOf(nq) === 0 ? 100 : x._t.indexOf(nq) >= 0 ? 70 :
+               toks.every(function (t) { return x._t.indexOf(t) >= 0; }) ? 50 : 10;
+      sc += (x.w || 0) - x._t.length / 100;
+      out.push([sc, x]);
+    });
+    out.sort(function (a, b) { return b[0] - a[0]; });
+    return out.slice(0, 8).map(function (r) { return r[1]; });
+  }
+  var NONE = '<li class="snote">No matches. Try a drug, a device, a gas, or a formula — or browse <a href="index.html">the home page</a>.</li>';
+  document.querySelectorAll(".srch").forEach(function (box) {
+    var inp = box.querySelector("input"), list = box.querySelector(".sres"), act = -1, res = [];
+    function render() {
+      var q = inp.value.trim();
+      res = find(q); act = res.length ? 0 : -1;
+      if (!q) { list.innerHTML = ""; return; }
+      list.innerHTML = res.length ? res.map(function (x, i) {
+        return '<li><a class="sr' + (i === 0 ? " act" : "") + '" href="' + esc(x.u) + '"><span class="sg">' + esc(x.g) + "</span><b>" + esc(x.t) + '</b><span class="ss">' + esc(x.s) + "</span></a></li>";
+      }).join("") : NONE;
+    }
+    function mark() { list.querySelectorAll(".sr").forEach(function (a, i) { a.classList.toggle("act", i === act); if (i === act) a.scrollIntoView({ block: "nearest" }); }); }
+    inp.addEventListener("input", render);
+    inp.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown" && res.length) { e.preventDefault(); act = (act + 1) % res.length; mark(); }
+      else if (e.key === "ArrowUp" && res.length) { e.preventDefault(); act = (act - 1 + res.length) % res.length; mark(); }
+      else if (e.key === "Enter" && act >= 0) { e.preventDefault(); var a = list.querySelectorAll(".sr")[act]; if (a) a.click(); }
+    });
+    box.addEventListener("submit", function (e) { e.preventDefault(); });
+    /* let other scripts fill the box (landing page "Try:" chips) */
+    box.rtqSet = function (v) { inp.value = v; render(); inp.focus(); };
+  });
+})();
+</script>
+<script>if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });</script>
+</body>
+</html>
