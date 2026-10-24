@@ -117,6 +117,39 @@ a{color:var(--accent)}
 .mbadge{display:inline-block;margin-left:6px;min-width:20px;padding:0 7px;border-radius:999px;background:var(--warn);color:var(--surface);font:700 12px/1.6 var(--f-body);font-style:normal;text-align:center;vertical-align:1px;letter-spacing:0}
 .mbadge[hidden]{display:none}
 
+/* ---------- pins (pins.js) ---------- */
+.ppin{display:inline-flex;align-items:center;justify-content:center;gap:5px;vertical-align:middle;margin-left:8px;width:30px;height:30px;padding:0;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);cursor:pointer;font:600 13px/1 var(--f-body);letter-spacing:0;text-transform:none;flex:none}
+.ppin:hover{color:var(--accent);border-color:var(--accent)}
+.ppin[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.ppin[aria-pressed="true"] svg path:last-child{fill:currentColor}
+.ppin.lab{width:auto;padding:0 12px 0 10px;height:32px}
+.ppin.h1pin{vertical-align:.3em;margin-left:12px}
+.ppin.cpin{position:absolute;top:12px;right:12px;margin:0}
+.shead .ppin.cpin{position:static;margin-left:auto}
+.ppin:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.srow{display:flex;align-items:center;gap:4px}
+.srow .sr{flex:1;min-width:0}
+.srow .spin{margin:0 4px 0 0;width:32px;height:32px}
+.pins-menu .pcount{font-style:normal;font:700 11.5px/1 var(--f-body);background:var(--accent-soft);color:var(--ink);border-radius:999px;padding:3px 6px;margin-left:2px}
+.pins-menu .pcount[hidden]{display:none}
+.pinp{width:380px}
+.pinp .pi .pg2{display:block;font-style:normal;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);line-height:1.4}
+.pinp .pi .ps1,.pinp .pi .pn{overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
+.pcard .pg{flex:none;font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:2px 8px;border-radius:999px;white-space:nowrap}
+.pinp .pi b{font-size:14px}
+.pinp .pi .pn{font-style:italic}
+.pinp .pi .ico svg path:last-child{fill:currentColor}
+.pempty{margin:4px 10px 8px;font-size:13.5px;color:var(--muted);line-height:1.45}
+.pempty svg{vertical-align:-3px}
+.pmanage{display:block;margin:4px 6px 2px;padding:10px;border-radius:10px;font-size:13.5px;font-weight:600;color:var(--accent);text-decoration:none;border-top:1px solid var(--line)}
+.pmanage:hover{background:var(--band)}
+.pp-toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:60;max-width:min(92vw,440px);background:var(--ink);color:var(--bg);font-size:14px;line-height:1.4;padding:10px 16px;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.25);transition:opacity .2s,transform .2s}
+.pp-toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.pp-toast a{color:inherit}
+@media (max-width:760px){.pinp{width:auto}}
+@media (prefers-reduced-motion:reduce){.pp-toast{transition:none}}
+@media print{.ppin,.pp-toast{display:none!important}}
+
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 button,select,input{font:inherit;color:inherit}
@@ -467,6 +500,253 @@ window.PPMistakes = (function () {
     clear: function (src) { save(src ? load().filter(function (x) { return x.src !== src; }) : []); }
   };
 })();
+
+/* My pins: anything on the site can be pinned for one-tap access. Saved on this device only.
+   Pins move to another device with a sync link (or QR code) that carries the pins inside the link itself:
+   nothing is sent to a server. Item: { u: "page.html#anchor", t: title, s: subtitle, g: type, n: note } */
+window.PPPins = (function () {
+  "use strict";
+  var KEY = "pp:pins", CAP = 60;
+  var ICON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>';
+  function esc(t) { return String(t == null ? "" : t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  /* only links to this site's own pages are allowed (protects against crafted sync links) */
+  function cleanU(u) {
+    u = String(u || "").replace(/^\.\//, "");
+    return /^[a-z0-9-]+\.html(\?[^\s"'<>#]*)?(#[^\s"'<>]*)?$/i.test(u) ? u : null;
+  }
+  function cleanItem(x) {
+    if (!x) return null;
+    var u = cleanU(x.u); if (!u) return null;
+    var t = String(x.t || "").trim().slice(0, 120); if (!t) return null;
+    return { u: u, t: t, s: String(x.s || "").slice(0, 200), g: String(x.g || "").slice(0, 40), n: String(x.n || "").slice(0, 300) };
+  }
+  function load() { try { var v = JSON.parse(localStorage.getItem(KEY) || "[]"); return Array.isArray(v) ? v.map(cleanItem).filter(Boolean) : []; } catch (e) { return []; } }
+  function save(list) {
+    try { localStorage.setItem(KEY, JSON.stringify(list.slice(0, CAP))); } catch (e) {}
+    try { window.dispatchEvent(new CustomEvent("pp:pins")); } catch (e) {}
+  }
+  function idx(list, u) { for (var i = 0; i < list.length; i++) if (list[i].u === u) return i; return -1; }
+  function has(u) { return idx(load(), cleanU(u)) >= 0; }
+  function add(item) {
+    var x = cleanItem(item); if (!x) return false;
+    var list = load(); if (idx(list, x.u) >= 0) return true;
+    if (list.length >= CAP) { toast("You can keep up to " + CAP + " pins. Remove one first."); return false; }
+    list.unshift(x); save(list); return true;
+  }
+  function remove(u) { var list = load(), i = idx(list, cleanU(u)); if (i >= 0) { list.splice(i, 1); save(list); } }
+  function toggle(item) {
+    if (has(item.u)) { remove(item.u); toast("Unpinned."); return false; }
+    if (add(item)) { toast('Pinned. Find it under <b>Pins</b> at the top, or on the <a href="index.html#pins">home page</a>.'); return true; }
+    return false;
+  }
+  function move(u, d) { var list = load(), i = idx(list, u), j = i + d; if (i < 0 || j < 0 || j >= list.length) return; var t = list[i]; list[i] = list[j]; list[j] = t; save(list); }
+  function setNote(u, n) { var list = load(), i = idx(list, u); if (i >= 0) { list[i].n = String(n || "").slice(0, 300); save(list); } }
+  function replace(items) { save(items.map(cleanItem).filter(Boolean).slice(0, CAP)); }
+  function merge(items) {
+    var list = load();
+    items.map(cleanItem).filter(Boolean).forEach(function (x) { var i = idx(list, x.u); if (i < 0) list.push(x); else if (x.n && !list[i].n) list[i].n = x.n; });
+    save(list.slice(0, CAP));
+  }
+
+  /* ---------- sync link: pins packed (and compressed when the browser can) into the link ---------- */
+  function b64u(bytes) { var s = ""; for (var i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]); return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }
+  function unb64u(str) { str = str.replace(/-/g, "+").replace(/_/g, "/"); while (str.length % 4) str += "="; var s = atob(str), b = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) b[i] = s.charCodeAt(i); return b; }
+  function pipe(bytes, stream) { return new Response(new Blob([bytes]).stream().pipeThrough(stream)).arrayBuffer().then(function (b) { return new Uint8Array(b); }); }
+  function encode(list) {
+    var bytes = new TextEncoder().encode(JSON.stringify(list.map(function (p) { return [p.u, p.t, p.s || "", p.g || "", p.n || ""]; })));
+    if (window.CompressionStream) return pipe(bytes, new CompressionStream("deflate")).then(function (z) { return "z" + b64u(z); }).catch(function () { return "j" + b64u(bytes); });
+    return Promise.resolve("j" + b64u(bytes));
+  }
+  function decode(str) {
+    return Promise.resolve().then(function () {
+      var kind = str.charAt(0), bytes = unb64u(str.slice(1));
+      if (kind === "z") {
+        if (!window.DecompressionStream) throw new Error("old");
+        return pipe(bytes, new DecompressionStream("deflate"));
+      }
+      if (kind === "j") return bytes;
+      throw new Error("bad");
+    }).then(function (bytes) {
+      var arr = JSON.parse(new TextDecoder().decode(bytes));
+      if (!Array.isArray(arr)) throw new Error("bad");
+      return arr.slice(0, CAP).map(function (a) { return Array.isArray(a) ? cleanItem({ u: a[0], t: a[1], s: a[2], g: a[3], n: a[4] }) : null; }).filter(Boolean);
+    });
+  }
+  function base() { var h = location.href.split("#")[0].split("?")[0]; return h.slice(0, h.lastIndexOf("/") + 1) + "index.html"; }
+  function link(list) { return encode(list).then(function (d) { return base() + "#pins=" + d; }); }
+  function qrSVG(text) {
+    if (!window.PPQR) return "";
+    try {
+      var q = new PPQR(-1, PPQR.L); q.addData(text); q.make();
+      var n = q.getModuleCount(), m = 4, d = "";
+      for (var r = 0; r < n; r++) for (var c = 0; c < n; c++) if (q.isDark(r, c)) d += "M" + (c + m) + " " + (r + m) + "h1v1h-1z";
+      return '<svg viewBox="0 0 ' + (n + 2 * m) + " " + (n + 2 * m) + '" shape-rendering="crispEdges" role="img" aria-label="QR code for your sync link"><rect width="100%" height="100%" fill="#fff"/><path fill="#1E2A22" d="' + d + '"/></svg>';
+    } catch (e) { return ""; }
+  }
+
+  /* ---------- small UI pieces ---------- */
+  var toastEl = null, toastT = 0;
+  function toast(html) {
+    if (!document.body) return;
+    if (!toastEl) { toastEl = document.createElement("div"); toastEl.className = "pp-toast"; toastEl.setAttribute("role", "status"); document.body.appendChild(toastEl); }
+    toastEl.innerHTML = html; toastEl.classList.add("on");
+    clearTimeout(toastT); toastT = setTimeout(function () { toastEl.classList.remove("on"); }, 3200);
+  }
+  function syncBtn(b, item) {
+    var on = has(item.u);
+    b.setAttribute("aria-pressed", String(on));
+    b.setAttribute("aria-label", (on ? "Unpin " : "Pin ") + item.t);
+    b.title = on ? "Unpin" : "Pin";
+    var l = b.querySelector(".pl"); if (l) l.textContent = on ? "Pinned" : (b.dataset.label || "Pin");
+  }
+  /* a pin toggle for one item; opt.label shows a text label next to the icon */
+  function button(item, opt) {
+    opt = opt || {};
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "ppin" + (opt.label ? " lab" : "") + (opt.cls ? " " + opt.cls : "");
+    if (opt.label) b.dataset.label = opt.label;
+    b.innerHTML = ICON + (opt.label ? '<span class="pl"></span>' : "");
+    b.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); toggle(item); });
+    b._ppItem = item; syncBtn(b, item);
+    return b;
+  }
+  function refreshButtons() { document.querySelectorAll(".ppin").forEach(function (b) { if (b._ppItem) syncBtn(b, b._ppItem); }); }
+
+  /* ---------- the Pins menu in the nav bar ---------- */
+  function renderNav() {
+    var list = load();
+    document.querySelectorAll("[data-pp-pincount]").forEach(function (el) { el.textContent = list.length; el.hidden = !list.length; });
+    document.querySelectorAll("[data-pp-pinpanel]").forEach(function (p) {
+      p.innerHTML = '<p class="ptitle">My pins</p>' + (list.length ? list.map(function (x) {
+        return '<a class="mi pi" href="' + esc(x.u) + '"><span class="ico">' + ICON + '</span><span><em class="pg2">' + esc(x.g || "Page") + "</em><b>" + esc(x.t) + "</b>" + (x.n ? '<span class="pn">' + esc(x.n) + "</span>" : x.s ? '<span class="ps1">' + esc(x.s) + "</span>" : "") + "</span></a>";
+      }).join("") : '<p class="pempty">Nothing pinned yet. Tap ' + ICON + ' next to anything (a search result, a drug, a section) to keep it here.</p>') +
+        '<a class="pmanage" href="index.html#pins">' + (list.length ? "Reorder, add notes, or send to another device →" : "How pins work →") + "</a>";
+    });
+  }
+
+  /* ---------- automatic pin buttons on each page ---------- */
+  var PAGE = (location.pathname.split("/").pop() || "index.html");
+  function txt(el) { if (!el) return ""; var c = el.cloneNode(true); c.querySelectorAll("small,.ppin,button,svg").forEach(function (x) { x.remove(); }); return c.textContent.replace(/\s+/g, " ").trim(); }
+  var CARDS = {
+    "airway.html": ["article.card[id]", "Airway clearance"],
+    "sounds.html": ["article.scard[id]", "Breath sound"],
+    "formulas.html": ["div.card[id]", "Formula"]
+  };
+  function pageTitle() { return document.title.replace(/\s*·\s*Pocket Pulmo\s*$/, ""); }
+  function decorate() {
+    if (PAGE === "index.html") return;
+    var main = document.querySelector("main") || document.body;
+    /* the whole page, next to the main heading */
+    var h1 = main.querySelector("h1");
+    if (h1 && !h1.querySelector(".ppin")) {
+      var d = document.querySelector('meta[name="description"]');
+      h1.appendChild(button({ u: PAGE, t: pageTitle(), s: d ? d.content.split(/[.:]/)[0] : "", g: "Page" }, { label: "Pin page", cls: "h1pin" }));
+    }
+    /* each titled section */
+    main.querySelectorAll("section[id]").forEach(function (sec) {
+      var h = sec.querySelector(":scope > h2, :scope > .sec-head h2, :scope > header h2");
+      if (!h || h.querySelector(".ppin") || /^(check|opCheck)$/.test(sec.id)) return;
+      h.appendChild(button({ u: PAGE + "#" + sec.id, t: txt(h), s: pageTitle(), g: "Section" }));
+    });
+    /* page-specific cards */
+    var c = CARDS[PAGE];
+    if (c) main.querySelectorAll(c[0]).forEach(function (card) {
+      var h = card.querySelector("h3, h2"); if (!h || card.querySelector(".cpin")) return;
+      var sm = h.querySelector("small"), b = button({ u: PAGE + "#" + card.id, t: txt(h), s: sm ? sm.textContent : pageTitle(), g: c[1] }, { cls: "cpin" });
+      var head = card.querySelector(".shead");
+      if (head) { head.appendChild(b); return; }            /* sound cards: sits in the header row */
+      if (getComputedStyle(card).position === "static") card.style.position = "relative";
+      h.style.paddingRight = "40px"; card.appendChild(b);    /* other cards: top-right corner */
+    });
+  }
+
+  /* ---------- home page: My pins, editing, and sync ---------- */
+  var edit = false;
+  function renderHome() {
+    var box = document.getElementById("pinsHome"); if (!box) return;
+    var list = load(), grid = box.querySelector(".pgrid"), act = box.querySelector(".pact");
+    box.classList.toggle("empty", !list.length);
+    act.innerHTML = list.length ? '<button class="pbtn" type="button" data-edit aria-pressed="' + edit + '">' + (edit ? "Done" : "Edit") + '</button><button class="pbtn" type="button" data-sync>Send to another device</button>' : "";
+    grid.innerHTML = list.length ? list.map(function (x, i) {
+      return '<div class="pcard' + (edit ? " editing" : "") + '">' +
+        '<a href="' + esc(x.u) + '"' + (edit ? ' tabindex="-1"' : "") + '><span class="pg">' + esc(x.g || "Page") + "</span><b>" + esc(x.t) + "</b>" + (x.s ? '<span class="ps">' + esc(x.s) + "</span>" : "") + (x.n && !edit ? '<span class="pn">' + esc(x.n) + "</span>" : "") + "</a>" +
+        (edit ? '<div class="ped"><input type="text" maxlength="300" placeholder="Add a note (only you see it)" value="' + esc(x.n) + '" data-note="' + esc(x.u) + '" aria-label="Note for ' + esc(x.t) + '">' +
+          '<div class="pmv"><button type="button" data-mv="-1" data-u="' + esc(x.u) + '" aria-label="Move up"' + (i ? "" : " disabled") + '>↑</button><button type="button" data-mv="1" data-u="' + esc(x.u) + '" aria-label="Move down"' + (i < list.length - 1 ? "" : " disabled") + '>↓</button><button type="button" class="prm" data-rm="' + esc(x.u) + '">Remove</button></div></div>' : "") +
+        "</div>";
+    }).join("") : '<div class="phow"><p>Pin the things you look up most and they’ll show up right here, one tap away. Tap ' + ICON + ' next to a search result, a drug, a formula, a disease or any section. Pins stay on this device; use a sync link to copy them to another one.</p>' +
+      '<div class="ptry"><span>Try:</span>' + [["abg-o2.html#abg", "ABG values", "Normal ranges, ROME, compensation", "Section"], ["abg-o2.html#o2", "O₂ devices", "Flow and FiO₂ for each device", "Section"], ["formulas.html", "Formulas", "Every formula, with calculators", "Page"]].map(function (p) {
+        return '<button type="button" class="pbtn" data-quick="' + esc(JSON.stringify({ u: p[0], t: p[1], s: p[2], g: p[3] })) + '">' + ICON + " " + esc(p[1]) + "</button>";
+      }).join("") + "</div></div>";
+  }
+  function homeEvents(box) {
+    box.addEventListener("click", function (e) {
+      var t = e.target.closest("button"); if (!t) return;
+      if (t.hasAttribute("data-edit")) { edit = !edit; renderHome(); }
+      else if (t.hasAttribute("data-sync")) openSync(box);
+      else if (t.dataset.mv) { move(t.dataset.u, +t.dataset.mv); }
+      else if (t.dataset.rm) { remove(t.dataset.rm); }
+      else if (t.dataset.quick) { add(JSON.parse(t.dataset.quick)); toast("Pinned."); }
+    });
+    box.addEventListener("change", function (e) { if (e.target.dataset.note) setNote(e.target.dataset.note, e.target.value); });
+  }
+  function openSync(box) {
+    var p = box.querySelector(".psync");
+    if (!p.hidden) { p.hidden = true; return; }
+    p.hidden = false; p.innerHTML = "<p>Making your link…</p>";
+    link(load()).then(function (url) {
+      var qr = url.length < 2800 ? qrSVG(url) : "";
+      p.innerHTML = '<div class="pq">' + (qr ? '<div class="qr">' + qr + "</div>" : "") +
+        '<div class="pqt"><h3>Send your pins to another device</h3><ol><li>' + (qr ? "Scan this code with the other phone’s camera, <b>or</b> copy the link and open it on the other device (text or email it to yourself)." : "Copy the link and open it on the other device (text or email it to yourself).") + "</li><li>Choose <b>Add to my pins</b> there.</li></ol>" +
+        '<div class="plink"><input type="text" readonly value="' + esc(url) + '" aria-label="Sync link"><button class="pbtn primary" type="button" data-copy>Copy link</button>' + (navigator.share ? '<button class="pbtn" type="button" data-share>Share…</button>' : "") + "</div>" +
+        '<p class="pfine">The link holds only your pins and notes, packed inside the link itself. Nothing is uploaded anywhere. It copies your pins once; it won’t keep two devices in sync, so send a new link after you change them.</p></div></div>';
+      var inp = p.querySelector("input");
+      p.querySelector("[data-copy]").onclick = function () {
+        var done = function () { toast("Link copied."); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () { inp.select(); document.execCommand("copy"); done(); });
+        else { inp.select(); document.execCommand("copy"); done(); }
+      };
+      var sh = p.querySelector("[data-share]");
+      if (sh) sh.onclick = function () { navigator.share({ title: "My Pocket Pulmo pins", url: url }).catch(function () {}); };
+      inp.addEventListener("focus", function () { inp.select(); });
+    });
+  }
+  function importFromHash(box) {
+    var m = location.hash.match(/^#pins=([A-Za-z0-9_-]+)$/); if (!m) return;
+    var p = box.querySelector(".pimport");
+    box.scrollIntoView({ block: "start" });
+    decode(m[1]).then(function (items) {
+      if (!items.length) throw new Error("empty");
+      var mine = load(), fresh = items.filter(function (x) { return idx(mine, x.u) < 0; }).length;
+      p.hidden = false;
+      p.innerHTML = "<h3>Pins from another device</h3><p>This link has <b>" + items.length + " pin" + (items.length > 1 ? "s" : "") + "</b>" + (mine.length ? " (" + fresh + " you don’t have yet)" : "") + ":</p>" +
+        "<ul>" + items.slice(0, 12).map(function (x) { return "<li>" + esc(x.t) + (x.n ? " <em>· " + esc(x.n) + "</em>" : "") + "</li>"; }).join("") + (items.length > 12 ? "<li>…and " + (items.length - 12) + " more</li>" : "") + "</ul>" +
+        '<div class="prow"><button class="pbtn primary" type="button" data-imp="merge">Add to my pins</button>' + (mine.length ? '<button class="pbtn" type="button" data-imp="replace">Replace my ' + mine.length + " pins</button>" : "") + '<button class="pbtn" type="button" data-imp="cancel">Cancel</button></div>';
+      p.onclick = function (e) {
+        var b = e.target.closest("[data-imp]"); if (!b) return;
+        if (b.dataset.imp === "merge") { merge(items); toast("Pins added."); }
+        else if (b.dataset.imp === "replace") { replace(items); toast("Pins replaced."); }
+        p.hidden = true; history.replaceState(null, "", location.pathname + location.search + "#pins");
+      };
+    }).catch(function (err) {
+      p.hidden = false;
+      p.innerHTML = "<h3>That sync link didn’t work</h3><p>" + (err && err.message === "old" ? "This browser is too old to open it. Update it, or try a different browser." : "The link may be cut off or mistyped. Send a fresh link from the other device.") + '</p><div class="prow"><button class="pbtn" type="button">OK</button></div>';
+      p.onclick = function (e) { if (e.target.closest("button")) { p.hidden = true; history.replaceState(null, "", location.pathname + location.search + "#pins"); } };
+    });
+  }
+
+  function init() {
+    decorate(); renderNav();
+    var box = document.getElementById("pinsHome");
+    if (box) { renderHome(); homeEvents(box); importFromHash(box); window.addEventListener("hashchange", function () { importFromHash(box); }); }
+    document.querySelectorAll(".pins-menu").forEach(function (m) { m.addEventListener("toggle", function () { if (m.open) renderNav(); }); });
+  }
+  window.addEventListener("pp:pins", function () { refreshButtons(); renderNav(); renderHome(); });
+  window.addEventListener("storage", function (e) { if (e.key === KEY) { refreshButtons(); renderNav(); renderHome(); } });
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+
+  return { all: load, has: has, add: add, remove: remove, toggle: toggle, move: move, setNote: setNote, replace: replace, merge: merge,
+           button: button, link: link, encode: encode, decode: decode, ICON: ICON, decorate: decorate };
+})();
 </script>
 </head>
 <body>
@@ -506,6 +786,10 @@ window.PPMistakes = (function () {
         <a class="mi" data-id="mock" href="mock-exam.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M10 2h4M12 2v3"/></svg></span><span><b>Mock exam</b><span>Timed, TMC-style test pulling from every quiz</span></span></a>
         <a class="mi" data-id="review" href="review.html"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5"/></svg></span><span><b>Review my mistakes <em class="mbadge" data-pp-mistakes hidden></em></b><span>Every question you’ve missed, in one deck</span></span></a>
         </div>
+      </details>
+      <details class="menu pins-menu">
+        <summary class="sbtn pinbtn" aria-label="My pins"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg><span class="lbl">Pins</span><em class="pcount" data-pp-pincount hidden></em></summary>
+        <div class="panel pinp" data-pp-pinpanel></div>
       </details>
       <details class="menu search-menu">
         <summary class="sbtn" aria-label="Search the site"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="lbl">Search</span></summary>
@@ -1784,8 +2068,12 @@ init();
       res = find(q); act = res.length ? 0 : -1;
       if (!q) { list.innerHTML = ""; return; }
       list.innerHTML = res.length ? res.map(function (x, i) {
-        return '<li><a class="sr' + (i === 0 ? " act" : "") + '" href="' + esc(x.u) + '"><span class="sg">' + esc(x.g) + "</span><b>" + esc(x.t) + '</b><span class="ss">' + esc(x.s) + "</span></a></li>";
+        return '<li class="srow"><a class="sr' + (i === 0 ? " act" : "") + '" href="' + esc(x.u) + '"><span class="sg">' + esc(x.g) + "</span><b>" + esc(x.t) + '</b><span class="ss">' + esc(x.s) + "</span></a></li>";
       }).join("") : NONE;
+      /* a pin toggle on each result */
+      if (window.PPPins) list.querySelectorAll(".srow").forEach(function (li, i) {
+        var x = res[i]; li.appendChild(PPPins.button({ u: x.u, t: x.t, s: x.s, g: x.g }, { cls: "spin" }));
+      });
     }
     function mark() { list.querySelectorAll(".sr").forEach(function (a, i) { a.classList.toggle("act", i === act); if (i === act) a.scrollIntoView({ block: "nearest" }); }); }
     inp.addEventListener("input", render);

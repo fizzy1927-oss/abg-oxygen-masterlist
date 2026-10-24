@@ -9,6 +9,16 @@ It opens on a **landing page** that explains what's here and helps you pick wher
 - **Look up** menu: ABG values · Medications · O₂ devices · Formulas · Gas cylinders · Breath sounds · Lung volumes & PFTs · Disease one-pagers · Airway clearance · Mnemonics
 - **Practice** menu: O₂ device cases · Med cases · O₂ math quiz · Dosage calc practice · ABG practice · Assessment sim lab · Vent practice lab · Medication quiz · Med flashcards · Mock exam · Review my mistakes
 - **Search:** search the whole site from any page. Press `/` on a keyboard, or tap the magnifying glass.
+- **Pins:** tap the pin icon to see your pinned items from any page.
+
+### My pins
+Anyone can pin the things they look up most. Pins are personal and saved on that device only (no account).
+
+- **What can be pinned:** any search result (every drug, formula, disease, breath sound, device, gas, mnemonic and airway therapy), any page ("Pin page" next to the title), any titled section, airway clearance and breath sound cards, formula cards, and each disease one-pager.
+- **Where pins show up:** **My pins** on the home page, and the pin menu in the nav bar on every page. Up to 60 pins.
+- **Make them yours:** on the home page, tap **Edit** to reorder pins, add a short note to each (e.g. "Prof says know this cold"), or remove them.
+- **Send to another device:** makes a link and a QR code. Open it on the other phone or laptop and choose **Add to my pins** (or **Replace**). The pins and notes are compressed and packed inside the link itself, so nothing is uploaded and there's no account. It copies the pins once; it doesn't keep devices in sync.
+- **Safety:** a sync link can only add pins that point to this site's own pages, and all text is shown as plain text.
 
 ---
 
@@ -356,6 +366,6 @@ Pocket Pulmo works without internet after it's been opened once online.
 - **Mock exam:** `mock-exam.html` holds a copy of every quiz's questions (`MOCK_BANK`), so edits to other quizzes only show up in the mock exam after a rebuild.
 - **Site search:** each page has its own copy of the search list (`window.RTQ_INDEX`). If you add a drug, case or mnemonic by hand, it shows up on its page right away, but it won't appear in search until that list is rebuilt.
 
-Flashcard progress, your mistakes deck, filters, quiz settings and your last-used tab are saved in your browser, per device.
+Flashcard progress, your mistakes deck, your pins, filters, quiz settings and your last-used tab are saved in your browser, per device.
 
 > For exam study. Ranges, doses and ratios vary slightly between textbooks and facilities. Always follow your program's references, your facility's policies, and the current order / package insert in clinical practice.
