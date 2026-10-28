@@ -219,18 +219,18 @@ Values are typical textbook adult numbers for teaching. The lung-volume formulas
 ### 4e. Disease One-Pagers — `diseases.html`
 19 respiratory diseases, each laid out the same way: what it is, signs and symptoms, ABG, chest X-ray, breath sounds and exam, PFTs and tests, RT priorities, treatment, and a "remember" line, with links to the matching sounds, meds and calculators.
 
-- **Diseases:** COPD, asthma, bronchiectasis, cystic fibrosis, pulmonary fibrosis, neuromuscular weakness (Guillain-Barré, myasthenia gravis), pneumonia, tuberculosis, ARDS, cardiogenic pulmonary edema, atelectasis, pulmonary embolism, pneumothorax, pleural effusion, obstructive sleep apnea, croup, epiglottitis, bronchiolitis (RSV) and neonatal RDS.
+- **Diseases (A to Z):** ARDS, asthma, atelectasis, bronchiectasis, bronchiolitis (RSV), cardiogenic pulmonary edema, COPD, croup, cystic fibrosis, epiglottitis, neonatal RDS, neuromuscular weakness (Guillain-Barré, myasthenia gravis), obstructive sleep apnea, pleural effusion, pneumonia, pneumothorax, pulmonary embolism, pulmonary fibrosis and tuberculosis. Previous/next buttons follow the same order.
 - **Find one:** search by name, sign or finding (e.g. "stridor", "Kerley"), or filter by type (obstructive, restrictive, infection, and so on). Each disease has its own link (e.g. `diseases.html#copd`).
 - **Commonly confused:** croup vs epiglottitis, ARDS vs cardiogenic edema, and the chest exam by problem.
 - **Quick checks:** 2–3 questions on each disease page, plus a 10-question mix (45 questions in all). A **Print** button prints just that one page.
 
 ### 4f. Airway Clearance & Lung Expansion — `airway.html`
 - **Lung expansion:** who gets atelectasis and how to spot it; incentive spirometry (start at 2 × VT, slow 5–15 s breath with a 2–3 s pause, indications, hazards, monitoring), IPPB, CPAP/EPAP and the basics (deep breathing, splinting, walking).
-- **Airway clearance:** signs it's needed, what normal clearance needs, the 4 cough phases and what impairs each, what happens when secretions stay put; huff cough, assisted/quad cough, ACBT, autogenic drainage, PEP, oscillating PEP (flutter vs Acapella), the vest, IPV, cough assist (MI-E) and suctioning. Each card covers who, how, settings and what to watch for.
+- **Airway clearance:** signs it's needed, what normal clearance needs, the 4 cough phases and what impairs each, what happens when secretions stay put; huff cough, assisted/quad cough, ACBT, autogenic drainage, PEP, oscillating PEP (flutter vs Acapella), the vest, IPV, MetaNeb (CPEP, CHFO and aerosol modes, how a treatment runs, use on a vent), cough assist (MI-E) and suctioning. Each card covers who, how, settings and what to watch for.
 - **Postural drainage:** goals and indications of CPT, timing, percussion (5–10 min, never on bare skin) and vibration. Tap a lobe to see each segment's position as on the class chart, bed tilt (flat, foot raised 12 in or 18 in, or head up) with a drawing, and where to percuss.
 - **During & after therapy:** what to monitor, signs it worked, and what to do for each complication (hypoxemia, hypotension, hemorrhage, pain, dysrhythmias, vomiting, bronchospasm).
 - **Pick a therapy:** match the problem to the tool, how to modify therapy (aspiration risk, confused patients), and what decides the strategy. **Contraindications & hazards** table (absolute ones in red).
-- **Quick check:** 10 random questions from a 52-question set.
+- **Quick check:** 10 random questions from a 58-question set.
 
 Follows the program's Airway Clearance & Incentive Spirometry lecture (with Egan's postural drainage chart); anything not covered there comes from Egan's and the AARC clinical practice guidelines.
 
