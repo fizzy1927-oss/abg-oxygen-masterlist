@@ -75,24 +75,34 @@ Three tabs:
 - **Patient assessment (27 patients), done as a full RT visit.** Each patient walks you through 9 steps:
   1. **Chart:** reason for the visit, history, what the patient is on, isolation and the orders you're carrying out.
   2. **Walk in:** tap the entry steps in order (hand hygiene, the right PPE for the isolation sign, introduce yourself, two identifiers on the wristband, explain). Wrong moves like identifying by room number cost points.
-  3. **Equipment:** first look, then check the O₂ device, vent or trach item by item. Some setups have a problem to catch (a Venturi below its minimum flow, a collapsing non-rebreather bag, water in the aerosol tubing, a leaking BiPAP mask, prongs out of the nose, non-protective vent settings, auto-PEEP).
+  3. **Equipment:** first look, then check the O₂ device, vent or trach item by item. Some setups have a problem to catch (a Venturi below its minimum flow, a collapsing non-rebreather bag, water in the aerosol tubing, a leaking BiPAP mask, prongs out of the nose, a blocked infant nose, non-protective vent settings, auto-PEEP). Five of these you fix with your hands in step 7 instead of answering a question.
   4. **Pre-treatment vitals:** take them yourself or just reveal them. Respirations are counted for 15 s × 4 with front and side views; the pulse for 15 s × 4; the BP with the hold-the-valve gauge.
   5. **Assess:** inspect, palpate, listen, percuss and check fremitus on the chest map (listening plays that spot's breath sound). Trach and vent patients add an Airway & device group (tube position and cuff, vent readings, secretions).
-  6. **Decide:** which vitals are abnormal, what's going on, and what to do.
-  7. **Treat:** a question on how to deliver it (neb setup, in-line MDI, BiPAP neb placement, suction technique, CPAP start-up, HFNC weaning…), then the treatment runs on a live bedside monitor. Some patients have something happen mid-treatment (tachycardia and tremor, a BP drop on CPAP, bradycardia while suctioning) that you have to handle.
-  8. **Reassess:** post-treatment vitals (measured or revealed), listen again and a bedside recheck (peak flow, IS volume, ABG, plateau…), then a question on how the patient responded. The findings chart shows pre and post side by side.
-  9. **Chart it:** pick the note that documents the visit correctly.
+  6. **Decide:** which vitals are abnormal, and what's going on.
+  7. **Treat a live patient** (no multiple choice). See "The live patient" below.
+  8. **Reassess:** post-treatment vitals (measured or revealed) come from where your live patient ended up. Listen again and do a bedside recheck; if the patient got better, answer a question on how they responded. The findings chart shows pre and post side by side.
+  9. **Chart it:** pick the note that documents the visit correctly. The notes are built from what you actually did and the vitals you ended with.
   - **Patients:** 12 on room air and 15 on support: nasal cannula, non-rebreather, Venturi, HFNC, BiPAP, a trach collar and two ventilator patients (ARDS; COPD with auto-PEEP). Tiles show what each patient is on.
   - **Start my rounds:** a 4-patient assignment (two on room air, two on O₂/vent support) shown as an assignment sheet with room numbers, then a shift summary with your total stars.
 - **Vital signs skills:** drills to count respirations and a pulse (regular or irregular, both 15 s × 4), take a blood pressure with the valve, name the breathing pattern from a 40-second trace, judge normal or not by age, and do MAP / pulse pressure / temperature math.
 - **Name that breath sound:** an ear-training drill. Hear a sound, pick it from four choices, and compare it with the one you picked if you're wrong.
 - **Normal values:** adult and pediatric vital signs, chest exam findings by condition (breath sounds, percussion, fremitus, trachea), breath sounds (each with a play button) and breathing patterns.
 
-Missed questions (decisions, equipment, treatment, response and charting) go into Review my mistakes.
+**The live patient (step 7).** A bedside monitor runs in real time: ECG, pleth and resp (or airway pressure on the vent) waveforms, HR, SpO₂, RR and NIBP, a pulse tone whose pitch drops with the SpO₂, and alarms (SpO₂ low, HR, RR, high pressure, high leak). Sound is off until you turn it on; Silence mutes alarms for a minute and Pause stops the clock. The patient's numbers move toward better or worse depending on what you do, and some patients (asthma, CHF, epiglottitis, an opioid overdose) get worse if you wait. If they get bad enough, the rapid response team takes over and the visit ends. Four tabs:
+- **Bedside:** positioning (sit up, lay flat, side-lying, a parent's lap for kids), breathing coaching, IS, airway clearance, suction, bag-valve mask, a tongue blade, inner cannula change, and procedures (thoracentesis, chest tube, intubation, the airway team, walk tests).
+- **O₂ & equipment:** pick a device off the cart and set it: flowmeter (with a Thorpe tube), Venturi adapters with their minimum flows, HFNC flow and FiO₂, trach collar nebulizer dial, CPAP/BiPAP pressures and mask size (with leak and VT readings), and the vent's VT, rate, PEEP, FiO₂ and peak flow, with inspiratory and expiratory holds for plateau and auto-PEEP. Hands-on checks: put cannula prongs back in, drain condensate the right way.
+- **Nebs & meds:** take vials off the med cart (unit doses, or draw up albuterol concentrate, racemic epi or acetylcysteine by the mL; MDI by the puff), pick the interface (mouthpiece, masks, trach mask, in-line on the vent or BiPAP, MDI with a spacer), the gas (O₂ or air) and the flow. It's checked against the order. You can also ask the nurse for meds; ones that aren't ordered won't be given.
+- **Tests & calls:** ABG (calculated from the patient's current state), chest X-ray, peak flow, VC/NIF, sputum, the physician and a rapid response.
+
+The SpO₂ comes from an O₂ model: each device's FiO₂ (entrainment for Venturi and trach collars, dilution when total flow is below the patient's demand), the alveolar air equation and a shunt fraction that improves as the patient improves. The vent model uses compliance, resistance and time constants for plateau, PIP and auto-PEEP, and alveolar ventilation for the PaCO₂. Wrong moves have consequences (laying a CHF patient flat, positive pressure with a pneumothorax, a tongue blade in epiglottitis, sedating a DKA patient, too much O₂ for a CO₂ retainer, draining condensate toward the patient). A log shows everything that happened, with sim-clock times.
+
+Each patient's live behavior (start and treated O₂ settings, SpO₂ target, key actions, what helps and what harms, mid-treatment events) is in `assess.html`: search for `var LIVE =`. The engine is under `STEP 7 · THE LIVE PATIENT`.
+
+Missed questions (decisions, equipment, mid-treatment events, response and charting) go into Review my mistakes.
 
 **Breath sounds:** the site generates every sound in the browser (filtered noise, tones and clicks), so they work offline and there are no recordings to license. The sounds are vesicular, bronchial, diminished, absent (heart sounds only), wheezes, rhonchi, fine and coarse crackles, stridor, gurgling and pleural friction rub. In a patient case, the sound is picked from the written finding (for example "Fine late-inspiratory crackles" plays fine crackles late in each breath in), so new patients get sounds automatically. They're teaching approximations of timing and pitch. The sound code is in `assess.html`: search for `Pocket Pulmo breath sounds`.
 
-**Game layer:** each patient is scored out of 3 stars: walking in (50), the equipment question (100), vitals measured yourself accurately (50 each for HR, RR and BP), key findings (20 each), the three decision questions (100 each), treatment delivery (100), the mid-treatment event (100), reassessment (10 per post vital, 20 for listening again), the response question (100) and the note (100). 3 stars needs about 90%, which means measuring the vitals yourself. Patient tiles show your best stars or "New". The vital-sign drills keep a streak and your best streak. Points turn into XP; see "Stars, XP and badges" below.
+**Game layer:** each patient is scored out of 3 stars: walking in (50), the equipment question (100, when there is one), vitals measured yourself accurately (50 each for HR, RR and BP), key findings (20 each), the two decision questions (100 each), the patient's outcome (200 if they got better and are on target, 100 if partly better), key actions during treatment (40 each), fixing the equipment problem by hand (100), the mid-treatment event (100), minus 50 for each harmful action and 20 for each unneeded one, reassessment (10 per post vital, 20 for listening again), the response question (100) and the note (100). The results list the key actions you did and missed, and anything harmful. 3 stars needs about 90%, which means measuring the vitals yourself. Patient tiles show your best stars or "New". The vital-sign drills keep a streak and your best streak. Points turn into XP; see "Stars, XP and badges" below.
 
 ### 1d. Vent Practice Lab — `vent.html`
 A bedside ventilator simulator, restyled in the Pocket Pulmo look (light and dark).
@@ -299,7 +309,7 @@ The **Memory aids** tab of the medication chart:
 | `index.html` | Landing page: site search, Look up / Practice paths, quick numbers, case of the day |
 | `abg-o2.html` | ABG values and O₂ devices |
 | `abg-practice.html` | ABG practice: unlimited random gases to interpret |
-| `assess.html` | Assessment sim lab: full RT visits (27 patients), rounds mode, vital signs drills |
+| `assess.html` | Assessment sim lab: full RT visits (27 patients) with a live patient to treat, rounds mode, vital signs drills |
 | `vent.html` | Vent practice lab: ventilator simulator |
 | `review.html` | Review my mistakes: every missed question from every quiz |
 | `mock-exam.html` | Mock exam: timed, TMC-style test pulling from every quiz |
