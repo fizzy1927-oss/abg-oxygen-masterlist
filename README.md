@@ -72,19 +72,27 @@ Unlimited random blood gases to interpret.
 
 ### 1e. Assessment Sim Lab — `assess.html`
 Three tabs:
-- **Patient assessment (21 patients):** normal post-op, asthma, emphysema, chronic bronchitis with cor pulmonale, RLL pneumonia, pleural effusion, pneumothorax, atelectasis, CHF, pulmonary fibrosis, croup, epiglottitis, bronchiolitis, DKA (Kussmaul), opioid overdose, PE, anxiety hyperventilation, sepsis, stroke with Cheyne-Stokes breathing, CF and Guillain-Barré.
-  - **Vital signs:** take them yourself or just reveal them. Respirations are counted for 15 s × 4 while watching a front view and a side view of the patient in bed. The pulse is counted for 15 s × 4. For the BP you control the valve: hold the button (or space bar) to let air out at about 3 mmHg/s, let go to pause the needle, and tap Mark systolic / Mark diastolic at the first and last Korotkoff sounds (or watch the beat light). "Start over" re-pumps the cuff.
-  - **Exam:** inspect, palpate, then listen, percuss and check fremitus on a tappable chest map. Listening plays that patient's breath sound for the spot you tapped. A findings chart fills in and flags abnormal values for the patient's age.
-  - **Decide:** pick which vitals are abnormal, what's going on and what to do first. Then see the key findings and which ones you didn't check. "Surprise me" hides the patient's name.
+- **Patient assessment (27 patients), done as a full RT visit.** Each patient walks you through 9 steps:
+  1. **Chart:** reason for the visit, history, what the patient is on, isolation and the orders you're carrying out.
+  2. **Walk in:** tap the entry steps in order (hand hygiene, the right PPE for the isolation sign, introduce yourself, two identifiers on the wristband, explain). Wrong moves like identifying by room number cost points.
+  3. **Equipment:** first look, then check the O₂ device, vent or trach item by item. Some setups have a problem to catch (a Venturi below its minimum flow, a collapsing non-rebreather bag, water in the aerosol tubing, a leaking BiPAP mask, prongs out of the nose, non-protective vent settings, auto-PEEP).
+  4. **Pre-treatment vitals:** take them yourself or just reveal them. Respirations are counted for 15 s × 4 with front and side views; the pulse for 15 s × 4; the BP with the hold-the-valve gauge.
+  5. **Assess:** inspect, palpate, listen, percuss and check fremitus on the chest map (listening plays that spot's breath sound). Trach and vent patients add an Airway & device group (tube position and cuff, vent readings, secretions).
+  6. **Decide:** which vitals are abnormal, what's going on, and what to do.
+  7. **Treat:** a question on how to deliver it (neb setup, in-line MDI, BiPAP neb placement, suction technique, CPAP start-up, HFNC weaning…), then the treatment runs on a live bedside monitor. Some patients have something happen mid-treatment (tachycardia and tremor, a BP drop on CPAP, bradycardia while suctioning) that you have to handle.
+  8. **Reassess:** post-treatment vitals (measured or revealed), listen again and a bedside recheck (peak flow, IS volume, ABG, plateau…), then a question on how the patient responded. The findings chart shows pre and post side by side.
+  9. **Chart it:** pick the note that documents the visit correctly.
+  - **Patients:** 12 on room air and 15 on support: nasal cannula, non-rebreather, Venturi, HFNC, BiPAP, a trach collar and two ventilator patients (ARDS; COPD with auto-PEEP). Tiles show what each patient is on.
+  - **Start my rounds:** a 4-patient assignment (two on room air, two on O₂/vent support) shown as an assignment sheet with room numbers, then a shift summary with your total stars.
 - **Vital signs skills:** drills to count respirations and a pulse (regular or irregular, both 15 s × 4), take a blood pressure with the valve, name the breathing pattern from a 40-second trace, judge normal or not by age, and do MAP / pulse pressure / temperature math.
 - **Name that breath sound:** an ear-training drill. Hear a sound, pick it from four choices, and compare it with the one you picked if you're wrong.
 - **Normal values:** adult and pediatric vital signs, chest exam findings by condition (breath sounds, percussion, fremitus, trachea), breath sounds (each with a play button) and breathing patterns.
 
-Missed decision questions go into Review my mistakes.
+Missed questions (decisions, equipment, treatment, response and charting) go into Review my mistakes.
 
 **Breath sounds:** the site generates every sound in the browser (filtered noise, tones and clicks), so they work offline and there are no recordings to license. The sounds are vesicular, bronchial, diminished, absent (heart sounds only), wheezes, rhonchi, fine and coarse crackles, stridor, gurgling and pleural friction rub. In a patient case, the sound is picked from the written finding (for example "Fine late-inspiratory crackles" plays fine crackles late in each breath in), so new patients get sounds automatically. They're teaching approximations of timing and pitch. The sound code is in `assess.html`: search for `Pocket Pulmo breath sounds`.
 
-**Game layer:** each patient is scored out of 3 stars (100 points per question right, 20 per key finding found, 30 per vital measured yourself accurately). Patient tiles show your best stars or "New". The vital-sign drills keep a streak and your best streak. Points turn into XP; see "Stars, XP and badges" below.
+**Game layer:** each patient is scored out of 3 stars: walking in (50), the equipment question (100), vitals measured yourself accurately (50 each for HR, RR and BP), key findings (20 each), the three decision questions (100 each), treatment delivery (100), the mid-treatment event (100), reassessment (10 per post vital, 20 for listening again), the response question (100) and the note (100). 3 stars needs about 90%, which means measuring the vitals yourself. Patient tiles show your best stars or "New". The vital-sign drills keep a streak and your best streak. Points turn into XP; see "Stars, XP and badges" below.
 
 ### 1d. Vent Practice Lab — `vent.html`
 A bedside ventilator simulator, restyled in the Pocket Pulmo look (light and dark).
@@ -291,7 +299,7 @@ The **Memory aids** tab of the medication chart:
 | `index.html` | Landing page: site search, Look up / Practice paths, quick numbers, case of the day |
 | `abg-o2.html` | ABG values and O₂ devices |
 | `abg-practice.html` | ABG practice: unlimited random gases to interpret |
-| `assess.html` | Assessment sim lab: patient assessment and vital signs |
+| `assess.html` | Assessment sim lab: full RT visits (27 patients), rounds mode, vital signs drills |
 | `vent.html` | Vent practice lab: ventilator simulator |
 | `review.html` | Review my mistakes: every missed question from every quiz |
 | `mock-exam.html` | Mock exam: timed, TMC-style test pulling from every quiz |
